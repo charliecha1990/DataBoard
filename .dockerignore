@@ -1,0 +1,6 @@
+.git
+.meteor/local
+node_modules
+.env*
+packages/
+mongo/

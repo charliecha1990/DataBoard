@@ -1,0 +1,72 @@
+## Run sibyl as a standalone service
+version: "3.3"
+
+secrets:
+  METEOR_DOTENV:
+    external: true
+
+networks:
+  web:
+    # driver: overlay
+
+services:
+  meteor:
+    image: beastgroup/beast:sibyl-dev-latest
+    build: .
+    ports:
+      - "80:3000"
+    environment:
+      - "ROOT_URL=${ROOT_URL}"
+      - "MONGO_URL=mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/${MONGO_DATABASE}"
+      - NODE_VERSION=8.11.1
+      - STARTUP_DELAY=10
+      - SERVICE_PORTS=3000
+      - HTTP_FORWARDED_COUNT=1
+      - ENV_PATH=/run/secrets/meteor_env
+    secrets:
+      - source: METEOR_DOTENV
+        target: meteor_env
+    networks:
+      - web
+    # network_mode: host
+
+  mongo:
+    image: mongo:3.6.4
+    command: mongod --storageEngine=wiredTiger
+    environment:
+      - "MONGO_INITDB_ROOT_USERNAME=root"
+      - "MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}"
+      - "MONGO_INITDB_DATABASE=${MONGO_DATABASE}"
+      - "MONGO_INITDB_ADMIN_USERNAME=${MONGO_USER}"
+    volumes:
+      - sibyl-db-data:/data/db/
+      - "./mongo/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+    networks:
+      - web
+
+  # proxy:
+  #   image: dockercloud/haproxy
+  #   depends_on:
+  #     - meteor
+  #   environment:
+  #     - BALANCE=leastconn
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   ports:
+  #     - "80:80"
+  #   networks:
+  #     - web
+
+  # visualizer:
+  #   image: dockersamples/visualizer:stable
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   deploy:
+  #     placement:
+  #       constraints: [node.role == manager]
+  #   networks:
+  #     - web
+volumes:
+  sibyl-db-data:

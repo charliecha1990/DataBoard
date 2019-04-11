@@ -1,0 +1,31 @@
+version: "3.3"
+
+services:
+  meteor:
+    image: beastgroup/beast:sibyl-latest
+    build:
+      context: .
+      dockerfile: Dockerfile-production
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+  mongo:
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 60s
+
+  # proxy:
+  #   deploy:
+  #     placement:
+  #       constraints: [node.role == manager]

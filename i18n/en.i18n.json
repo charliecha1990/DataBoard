@@ -1,0 +1,18 @@
+{
+  "auth": {
+    "emailRequired": "Email required",
+    "passwordRequired": "Password required",
+    "passwordConfirm": "Please confirm your password",
+    "join": "Join.",
+    "joinReason": "Joining allows you to make private lists",
+    "yourEmail": "Your Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "joinNow": "Join Now",
+    "signInTitle": "Please sign in to continue.",
+    "signInError": "Something wasn't right about that username/password. Please try again.",
+    "signInButton": "Sign in",
+    "haveAccountSignIn": "Have an account? Sign in",
+    "needAccount": "Need an account? Join Now."
+  }
+}

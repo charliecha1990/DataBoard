@@ -1,0 +1,14 @@
+import { Meteor } from 'meteor/meteor';
+import authenticatedMethod from '/imports/util/authenticatedMethod';
+import User from '../User';
+
+Meteor.publish('currentUser', function() {
+  return User.find({ _id: this.userId });
+});
+
+Meteor.publish('users.all', authenticatedMethod('admin', function({ includeDeleted } = { includeDeleted: false }) {
+  // http://jagi.github.io/meteor-astronomy/v2#softremove
+  return User.find({}, {
+    disableEvents: includeDeleted
+  });
+}));
