@@ -7,14 +7,14 @@ const themeDefault = createMuiTheme({
     primary: {
       extraLight: '#B0FFEC',
       light: '#69ebff',
-      main: '#1eb8d5',
+      main: '#ffffff',
       dark: '#0088a4',
       contrastText: '#000',
     },
     secondary: {
-      light: '#b28fdf',
-      main: '#8161ad',
-      dark: '#52367d',
+      light: '#AFF62F',
+      main: '#86BC24',
+      dark: '#73A21F',
       contrastText: '#fff',
     }
   },

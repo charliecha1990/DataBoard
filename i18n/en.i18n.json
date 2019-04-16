@@ -9,7 +9,7 @@
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "joinNow": "Join Now",
-    "signInTitle": "Please sign in to continue.",
+    "signInTitle": "Please sign in to access practitioners' data board.",
     "signInError": "Something wasn't right about that username/password. Please try again.",
     "signInButton": "Sign in",
     "haveAccountSignIn": "Have an account? Sign in",

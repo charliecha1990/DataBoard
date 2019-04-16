@@ -8,9 +8,8 @@ import FlaskIcon from 'mdi-material-ui/FlaskOutline';
 
 import QueryPageContainer from '../containers/QueryPageContainer';
 import InsightsPageContainer from '/imports/ui/containers/InsightsPageContainer';
-import BoardsPage from '/imports/ui/pages/BoardsPage';
+import ProfilePage from '/imports/ui/pages/ProfilePage';
 import AdminPage from '/imports/ui/pages/AdminPage';
-import ExperimentsPageContainer from '/imports/ui/containers/ExperimentsPageContainer';
 import Authorization from '/imports/ui/helpers/Authorization';
 
 const Admin = Authorization(['admin']);
@@ -34,10 +33,10 @@ export const ROUTES = {
       retainSearchParams: ['query']
     },
     {
-      text: "Boards",
-      link: "/boards",
+      text: "Profile",
+      link: "/profile",
       hasSubRoutes: true,
-      component: BoardsPage,
+      component: ProfilePage,
       icon: <ViewQuiltIcon />,
       retainSearchParams: ['query']
     }
@@ -49,13 +48,6 @@ export const ROUTES = {
       hasSubRoutes: true,
       component: Admin(AdminPage),
       icon: <AdminIcon />
-    },
-    {
-      text: "Experiments",
-      link: "/experiments",
-      hasSubRoutes: true,
-      component: Admin(ExperimentsPageContainer),
-      icon: <FlaskIcon />
     },
   ]
 };

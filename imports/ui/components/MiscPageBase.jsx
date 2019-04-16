@@ -29,7 +29,7 @@ const MiscPageBase = ({ classes, ...props }) => (
     justify="center"
     alignItems="center">
     <Grid item>
-      <Typography className={classes.title}>Sibyl</Typography>
+      <Typography className={classes.title}>Talent Data Tracker</Typography>
     </Grid>
     <ErrorBoundary>
       { props.children }
