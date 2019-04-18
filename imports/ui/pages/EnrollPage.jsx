@@ -38,7 +38,7 @@ const styles = (theme) => ({
 	}
 });
 
-class LoginPage extends React.Component {
+class EnrollPage extends React.Component {
 	state = {
 		user: {},
 		errors: {},
@@ -194,4 +194,4 @@ class LoginPage extends React.Component {
 	}
 }
 
-export default withStyles(styles, { withTheme: true })(withRouter(LoginPage));
+export default withStyles(styles, { withTheme: true })(withRouter(EnrollPage));

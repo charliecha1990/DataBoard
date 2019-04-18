@@ -1,4 +1,4 @@
-# Sibyl - Dashboards for [Insight](https://github.com/beastgroup/insight)
+#  Practitioner data board https://github.com/charliecha1990/DataBoard
 
 ## Getting Started
 
@@ -38,6 +38,7 @@ meteor shell
 > .exit
 Shell exiting...
 ```
+##  admin:  admin@deloitte.ca  123
 
 You can now log in at `localhost:3000` and start using the app!
 

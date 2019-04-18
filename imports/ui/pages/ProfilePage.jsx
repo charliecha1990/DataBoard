@@ -12,10 +12,23 @@ import NewBoard from '../components/boards/NewBoard';
 
 import AddIcon from '@material-ui/icons/Add';
 
+
+
 const styles = _theme => ({
 })
 
 class BoardsPage extends React.Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      grid: [
+        [{value:  1}, {value:  3}],
+        [{value:  2}, {value:  4}]
+      ]
+    }
+  }
+
   addBoard = () => this.props.history.push(`${this.props.match.url}/new`)
 
   handleSelect = id => this.props.history.push(`${this.props.match.url}/${id}`)
@@ -31,16 +44,6 @@ class BoardsPage extends React.Component {
         actionIcon={<AddIcon />}
         onAction={this.addBoard}
       >
-        <Route exact path={`${match.url}/new`}
-          render={props => <NewBoard onCreated={this.handleSelect} onClose={this.resetRoute} {...props} />} />
-        <Switch>
-          <Route
-            exact
-            path={`${match.url}/:boardId`}
-            render={props => <BoardContainer loading={loading} {...props} />} />
-          <Route
-            render={props => <BoardsListContainer onSelect={this.handleSelect} {...props} />} />
-        </Switch>
       </PageBase>
     );
   }

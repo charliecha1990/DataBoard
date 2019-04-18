@@ -1,13 +1,11 @@
 import React from 'react';
 
 import SearchIcon from '@material-ui/icons/Search';
-import TimelineIcon from '@material-ui/icons/Timeline';
 import ViewQuiltIcon from '@material-ui/icons/ViewQuilt';
 import AdminIcon from '@material-ui/icons/Build';
-import FlaskIcon from 'mdi-material-ui/FlaskOutline';
 
 import QueryPageContainer from '../containers/QueryPageContainer';
-import InsightsPageContainer from '/imports/ui/containers/InsightsPageContainer';
+
 import ProfilePage from '/imports/ui/pages/ProfilePage';
 import AdminPage from '/imports/ui/pages/AdminPage';
 import Authorization from '/imports/ui/helpers/Authorization';
@@ -22,14 +20,6 @@ export const ROUTES = {
       hasSubRoutes: false,
       component: QueryPageContainer,
       icon: <SearchIcon />,
-      retainSearchParams: ['query']
-    },
-    {
-      text: "Insights",
-      link: "/insights",
-      hasSubRoutes: false,
-      component: InsightsPageContainer,
-      icon: <TimelineIcon />,
       retainSearchParams: ['query']
     },
     {

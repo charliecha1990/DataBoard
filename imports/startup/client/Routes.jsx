@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import AppContainerUnsecured from '/imports/ui/containers/AppContainer';
 import LoginPage from '/imports/ui/pages/LoginPage';
 import EnrollPage from '/imports/ui/pages/EnrollPage';
+// import App from '/imports/ui/layouts/App';
 
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import ThemeDefault from '/imports/ui/helpers/theme-default';
@@ -19,7 +20,8 @@ const Routes = () => (
     <MuiThemeProvider theme={ThemeDefault}>
       <Switch>
         <Route path="/signin" component={LoginPage} />
-        <Route path="/enroll-account/:token" component={EnrollPage} />
+        <Route path="/enroll-account" component={EnrollPage} />
+        {/* <Route path="/enroll-account/:token" component={EnrollPage} /> */}
         <AppContainer />
       </Switch>
     </MuiThemeProvider>
