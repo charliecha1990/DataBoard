@@ -38,7 +38,7 @@ meteor shell
 > .exit
 Shell exiting...
 ```
-##  admin:  admin@deloitte.ca  123
+##  admin:  admin@deloitte.ca  123 (for personal reference)
 
 You can now log in at `localhost:3000` and start using the app!
 
@@ -48,28 +48,7 @@ You can now log in at `localhost:3000` and start using the app!
 
 Create `.env` using `.env.example` for reference
 
-### Build docker image
 
-#### Prerequisites
-
-1. `.env` from `.env.example`
-
-#### Recommended: `docker-compose`
-
-1. `docker-compose build` or
-   `docker-compose -f docker-compose.yml -f docker-compose.prod.yml build`
-      for production.
-2. `docker-compose push`
-
-#### Or: Do It Yourself
-
-1. `docker build -t sibyl .`
-1. Tag according to the [publishing guide](https://github.com/beastgroup/devops#publishing-a-docker-image)
-
-    `docker tag sibyl:latest beastgroup/beast:sibyl-latest`
-1. Push to DockerHub
-
-    `docker push beastgroup/beast:sibyl-latest`
 
 ## Deploy
 

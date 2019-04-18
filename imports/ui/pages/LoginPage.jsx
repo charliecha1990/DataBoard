@@ -49,6 +49,7 @@ class LoginPage extends React.Component {
 
   onSubmit = event => {
     event.preventDefault();
+
     const email = this.state.email;
     const password = this.state.password;
     const errors = {};
@@ -74,6 +75,12 @@ class LoginPage extends React.Component {
         this.props.history.push('/');
       }
     });
+  }
+
+  handleEnroll = event => {
+    event.preventDefault();
+    console.log("enroll starts");
+    this.props.history.push('/enroll-account');
   }
 
   onClosePopover = () => {
@@ -129,9 +136,14 @@ class LoginPage extends React.Component {
                   fullWidth
                 />
               </Grid>
-              <RaisedButton type="submit" color="secondary">
-                <T>auth.signInButton</T>
-              </RaisedButton>
+              <Grid item xs={12}>
+                <RaisedButton type="submit" color="secondary">
+                  <T>auth.signInButton</T>
+                </RaisedButton>
+                <RaisedButton onClick={this.handleEnroll} color="secondary">
+                  <T>auth.EnrollButton</T>
+                </RaisedButton>
+              </Grid>
             </Grid>
           </form>
         </Paper>

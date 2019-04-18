@@ -5,13 +5,14 @@
     "passwordConfirm": "Please confirm your password",
     "join": "Join.",
     "joinReason": "Joining allows you to make private lists",
-    "yourEmail": "Your Email",
+    "email": "Your Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "joinNow": "Join Now",
     "signInTitle": "Please sign in to access practitioners' data board.",
     "signInError": "Something wasn't right about that username/password. Please try again.",
     "signInButton": "Sign in",
+    "EnrollButton": "Enroll",
     "haveAccountSignIn": "Have an account? Sign in",
     "needAccount": "Need an account? Join Now."
   }

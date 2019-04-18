@@ -130,12 +130,26 @@ class EnrollPage extends React.Component {
 					ref={(node) => (this.container = findDOMNode(node))}
 				>
 					<Typography variant="headline" paragraph style={{ textAlign: 'center' }}>
-						Almost there! Time to create a password for your Sibyl account.
+						Almost there!
 					</Typography>
 					<Grid container spacing={16} direction="column" alignItems="center">
 						<Grid item xs={12}>
-							<Typography>{email}</Typography>
-						</Grid>
+     						<TextField
+     								id="accountCreate"
+     								autoComplete="new-password"
+     								inputProps={{ autoComplete: 'new-password' }}
+     								disabled={working}
+     								error={!_.isEmpty(errors.password)}
+     								helperText={errors.password}
+     								type="password"
+     								name="emailCreate"
+     								value={password}
+     								onChange={({ target: { value } }) => this.updateField('email', value)}
+     								label={<T>auth.email</T>}
+     								placeholder={i18n.__('auth.password')}
+     								fullWidth
+     							/>
+     						</Grid>
 						<Grid item xs={12}>
 							<TextField
 								id="passwordCreate"
