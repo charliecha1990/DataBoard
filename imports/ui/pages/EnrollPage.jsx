@@ -65,11 +65,20 @@ class EnrollPage extends React.Component {
 		);
 	};
 
+	onSignIn = event =>{
+		event.preventDefault();
+		this.props.history.push('/signin');
+	}
+
 	createAccount = () =>
 		new Promise((resolve, reject) => {
-			const { password, confirm, token } = this.state;
+			const { email, password, confirm, token } = this.state;
 			const errors = {};
 
+
+			if (!email) {
+				errors.email = 'Email required';
+			}
 			if (!password) {
 				errors.password = 'Password required';
 			}
@@ -121,6 +130,7 @@ class EnrollPage extends React.Component {
 		}
 
 		const email = user.email();
+
 		return (
 			<MiscPageBase>
 				<Paper
@@ -136,17 +146,17 @@ class EnrollPage extends React.Component {
 						<Grid item xs={12}>
      						<TextField
      								id="accountCreate"
-     								autoComplete="new-password"
-     								inputProps={{ autoComplete: 'new-password' }}
+     								autoComplete="new-account"
+     								inputProps={{ autoComplete: 'new-account' }}
      								disabled={working}
-     								error={!_.isEmpty(errors.password)}
-     								helperText={errors.password}
-     								type="password"
+     								error={!_.isEmpty(errors.email)}
+     								helperText={errors.email}
+     								type="account"
      								name="emailCreate"
-     								value={password}
+     								// value={email}
      								onChange={({ target: { value } }) => this.updateField('email', value)}
      								label={<T>auth.email</T>}
-     								placeholder={i18n.__('auth.password')}
+     								placeholder={i18n.__('auth.email')}
      								fullWidth
      							/>
      						</Grid>
@@ -184,9 +194,14 @@ class EnrollPage extends React.Component {
 								fullWidth
 							/>
 						</Grid>
-						<RaisedButton color="secondary" onClick={this.onSubmit}>
-							Finalize Account
-						</RaisedButton>
+						<Grid item xs={12}>
+     						<RaisedButton color="secondary" onClick={this.onSubmit}>
+     							Finalize Account
+     						</RaisedButton>
+     						<RaisedButton color="secondary" onClick={this.onSignIn}>
+     							Sign In
+     						</RaisedButton>
+						</Grid>		
 					</Grid>
 				</Paper>
 				<Popover
