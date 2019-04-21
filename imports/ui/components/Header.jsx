@@ -118,7 +118,7 @@ class Header extends React.Component {
               <MenuIcon />
             </IconButton>
             <Grid container justify="space-between" alignItems="center" className={classes.container}>
-              <img src="/logo.svg"
+              <img src="/logo.png"
                    className={classes.logo}
                    onClick={this.handleLogoClick} />
 
