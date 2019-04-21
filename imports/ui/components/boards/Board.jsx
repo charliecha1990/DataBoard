@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { linkWithParams } from '/imports/ui/helpers/routes';
 import { Link } from 'react-router-dom';
 
-import { COLUMNS } from '/imports/api/boards/Board';
 import { PRESENTERS } from './presenters';
 
 import Loading from '/imports/ui/components/Loading';
@@ -157,7 +156,7 @@ class Board extends React.PureComponent {
                   className={classes.gridLayout}
                   layout={layout}
                   onLayoutChange={handleLayoutChange}
-                  cols={COLUMNS}
+                  // cols={COLUMNS}
                   rowHeight={30}
                   autoSize={true}
                   margin={[0, 0]}

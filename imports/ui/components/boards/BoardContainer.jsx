@@ -5,8 +5,6 @@ import { compose } from 'recompose';
 
 import { withMessageContext } from '/imports/ui/helpers/MessageContext';
 
-import BoardModel from '/imports/api/boards/Board';
-import Images from '/imports/api/images/Images';
 import Board from './Board';
 import ConfirmDeleteBoard from './ConfirmDeleteBoard';
 
@@ -31,28 +29,6 @@ class BoardContainer extends React.Component {
 
     this.setState({ lastLayout: nextLayout },
       () => board.setLayout(nextLayout));
-  }
-
-  handleFileChange = ({ files }) => {
-    for (var i = 0; i < files.length; i++) {
-      const file = files[i];
-      Images.insert({
-        file,
-        onStart: () => {
-          this.setState({ uploading: true });
-        },
-        onUploaded: (error, fileObj) => {
-          if (error) {
-            this.setState({ error })
-          } else {
-            const url = Images.link(fileObj, 'original')
-            this.props.board.addImage(url);
-          }
-        },
-        streams: 'dynamic',
-        chunkSize: 'dynamic',
-      })
-    }
   }
 
   handleAddImages = e => {
@@ -129,7 +105,6 @@ export default compose(
 
       return {
         loading: !boardsHandle.ready(),
-        board: BoardModel.findOne(props.match.params.boardId),
       }
     }
   ),

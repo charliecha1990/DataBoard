@@ -7,7 +7,7 @@ import { compose, setDisplayName } from 'recompose';
 import withSetStatePromise from '/imports/ui/helpers/withSetStatePromise';
 
 
-import Brand from '/imports/api/brands/Brand';
+// import Brand from '/imports/api/brands/Brand';
 
 
 import PageBase from '../components/PageBase';
@@ -75,7 +75,6 @@ export default compose(
 
     return {
       loading: !brandsHandle.ready(),
-      brands: _.sortBy(Brand.find().fetch(), 'name'),
     };
   }),
   withRouter,
