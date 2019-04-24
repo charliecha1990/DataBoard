@@ -115,7 +115,7 @@ class LoginPage extends React.Component {
                   name="email"
                   value={email}
                   onChange={({ target: {value} }) => this.updateField('email', value)}
-                  label={<T>auth.yourEmail</T>}
+                  label={<T>auth.email</T>}
                   placeholder={i18n.__('auth.yourEmail')}
                   fullWidth
                 />

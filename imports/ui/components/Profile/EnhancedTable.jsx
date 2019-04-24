@@ -20,9 +20,9 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
 let counter = 0;
-function createData(name, calories, fat, carbs, protein) {
+function createData(name, practitioner, frontEnd, backEnd, data) {
   counter += 1;
-  return { id: counter, name, calories, fat, carbs, protein };
+  return { id: counter, practitioner, frontEnd, backEnd, data};
 }
 
 function desc(a, b, orderBy) {
@@ -50,11 +50,11 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-  { id: 'Practitioner', numeric: false, disablePadding: true, label: 'Practitioner' },
-  { id: 'Backend', numeric: true, disablePadding: false, label: 'Backend' },
-  { id: 'Frontend', numeric: true, disablePadding: false, label: 'Frontend' },
-  { id: 'Data', numeric: true, disablePadding: false, label: 'Data' },
-  { id: 'Notes', numeric: true, disablePadding: false, label: 'Notes' },
+  { id: 'practitioner', numeric: false, disablePadding: true, label: 'practitioner' },
+  { id: 'backEnd', numeric: true, disablePadding: false, label: 'backEnd' },
+  { id: 'frontEnd', numeric: true, disablePadding: false, label: 'frontEnd' },
+  { id: 'data', numeric: true, disablePadding: false, label: 'data' },
+  // { id: 'Notes', numeric: true, disablePadding: false, label: 'Notes' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -193,7 +193,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
   },
   table: {
-    minWidth: 1020,
+    minWidth: 800,
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -265,7 +265,7 @@ class EnhancedTable extends React.Component {
   };
 
   handleEnableEdition = (event, id) => {
-    
+
   }
 
   handleChangePage = (event, page) => {
@@ -316,12 +316,11 @@ class EnhancedTable extends React.Component {
                         onClick={event => this.handleClick(event, n.id)} />
                       </TableCell>
                       <TableCell component="th" scope="row" padding="none">
-                        {n.name}
+                        {n.practitioner}
                       </TableCell>
-                      <TableCell align="right">{n.calories}</TableCell>
-                      <TableCell align="right">{n.fat}</TableCell>
-                      <TableCell align="right">{n.carbs}</TableCell>
-                      <TableCell align="right">{n.protein}</TableCell>
+                      <TableCell align="right">{n.frontEnd}</TableCell>
+                      <TableCell align="right">{n.backEnd}</TableCell>
+                      <TableCell align="right">{n.data}</TableCell>
                     </TableRow>
                   );
                 })}
