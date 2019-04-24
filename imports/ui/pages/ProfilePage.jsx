@@ -4,18 +4,20 @@ import { Switch, Route } from 'react-router';
 import { compose } from 'recompose';
 
 import { withStyles } from '@material-ui/core/styles';
+import AddIcon from '@material-ui/icons/Add';
 
 import PageBase from '../components/PageBase';
 import EnhancedTable from '../components/Profile/EnhancedTable';
+import PersonalTable from '../components/Profile/PersonalTable';
 
-import AddIcon from '@material-ui/icons/Add';
+
 
 
 
 const styles = _theme => ({
 })
 
-class BoardsPage extends React.Component {
+class ProfilePage extends React.Component {
 
   constructor (props) {
     super(props)
@@ -34,15 +36,19 @@ class BoardsPage extends React.Component {
   resetRoute = () => this.props.history.push(this.props.match.url);
 
   render() {
-    const { boards, loading, classes, match, ...props } = this.props;
+    const { dataSets, loading, classes, match, ...props } = this.props;
+    // const {  } = this.state;
 
+    console.log(dataSets)
+    
     return (
       <PageBase
         {...props}
         // actionIcon={<AddIcon />}
         // onAction={this.addBoard}
       >
-       <EnhancedTable/>
+        <PersonalTable/>
+        <EnhancedTable/>
       </PageBase>
     );
   }
@@ -51,4 +57,4 @@ class BoardsPage extends React.Component {
 export default compose(
   withRouter,
   withStyles(styles)
-)(BoardsPage);
+)(ProfilePage);

@@ -1,22 +1,16 @@
 import React from 'react';
+import { compose, setDisplayName } from 'recompose';
+
 import { withRouter } from 'react-router-dom';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withStyles } from '@material-ui/core/styles';
-import { compose, setDisplayName } from 'recompose';
-
 import withSetStatePromise from '/imports/ui/helpers/withSetStatePromise';
-
-
-// import Brand from '/imports/api/brands/Brand';
-
+import AddIcon from '@material-ui/icons/Add';
+import SearchIcon from '@material-ui/icons/Search';
 
 import PageBase from '../components/PageBase';
 
 
-
-import AddIcon from '@material-ui/icons/Add';
-
-import SearchIcon from '@material-ui/icons/Search';
 
 
 const styles = theme => ({
@@ -41,27 +35,13 @@ class QueryPage extends React.Component {
     this.setState({ queryControlsIn: true });
   }
 
-
-
   
   render() {
-    const {
-      handleChangeQuery,
-      query,
-      querySelected,
-      querySuccess,
-      saving,
-      brands,
-      categories,
-      classes,
-      ...props
-    } = this.props;
+    const { classes, ...props } = this.props;
 
     
     return (
       <PageBase
-        onAction={this.handleActionButton}
-        actionIcon={querySelected ? <SearchIcon /> : <AddIcon />}
         {...props}
       >
       </PageBase>
@@ -71,10 +51,9 @@ class QueryPage extends React.Component {
 
 export default compose(
   withTracker(() => {
-    const brandsHandle = Meteor.subscribe('brands');
+
 
     return {
-      loading: !brandsHandle.ready(),
     };
   }),
   withRouter,
