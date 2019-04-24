@@ -6,9 +6,7 @@ import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 
 import PageBase from '../components/PageBase';
-import BoardContainer from '../components/boards/BoardContainer';
-import BoardsListContainer from '../components/boards/BoardsListContainer';
-import NewBoard from '../components/boards/NewBoard';
+import EnhancedTable from '../components/Profile/EnhancedTable';
 
 import AddIcon from '@material-ui/icons/Add';
 
@@ -41,9 +39,10 @@ class BoardsPage extends React.Component {
     return (
       <PageBase
         {...props}
-        actionIcon={<AddIcon />}
-        onAction={this.addBoard}
+        // actionIcon={<AddIcon />}
+        // onAction={this.addBoard}
       >
+       <EnhancedTable/>
       </PageBase>
     );
   }
