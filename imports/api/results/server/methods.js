@@ -1,5 +1,4 @@
 import Result from '../Result';
-import Query from '/imports/api/queries/Query';
 import { Products } from '/imports/api/products/Product';
 import _ from 'lodash';
 

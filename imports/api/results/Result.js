@@ -1,5 +1,4 @@
 import { Class } from 'meteor/jagi:astronomy';
-import Query, { findQuery } from '/imports/api/queries/Query';
 import Product from '/imports/api/products/Product';
 import _ from 'lodash';
 

@@ -6,7 +6,6 @@ import withSetStatePromise from '/imports/ui/helpers/withSetStatePromise';
 import _ from 'lodash';
 import { compose } from 'recompose';
 
-import Query from '/imports/api/queries/Query';
 
 import MessageContext from '/imports/ui/helpers/MessageContext';
 

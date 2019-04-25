@@ -3,9 +3,9 @@ import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import ViewQuiltIcon from '@material-ui/icons/ViewQuilt';
 import AdminIcon from '@material-ui/icons/Build';
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 
-import QueryPageContainer from '../containers/QueryPageContainer';
-
+import BoardPage from '/imports/ui/pages/BoardPage';
 import ProfilePage from '/imports/ui/pages/ProfilePage';
 import AdminPage from '/imports/ui/pages/AdminPage';
 import Authorization from '/imports/ui/helpers/Authorization';
@@ -15,19 +15,19 @@ const Admin = Authorization(['admin']);
 export const ROUTES = {
   user: [
     {
-      text: "Query",
+      text: "Board",
       link: "/",
       hasSubRoutes: false,
-      component: QueryPageContainer,
-      icon: <SearchIcon />,
+      component: BoardPage,
+      icon: <ViewQuiltIcon />,
       retainSearchParams: ['query']
     },
     {
       text: "Profile",
       link: "/profile",
-      hasSubRoutes: true,
+      hasSubRoutes: false,
       component: ProfilePage,
-      icon: <ViewQuiltIcon />,
+      icon: <PermIdentityIcon />,
       retainSearchParams: ['query']
     }
   ],

@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 
 import PageBase from '../components/PageBase';
-import PersonalTable from '../components/Profile/PersonalTable';
+import EnhancedTable from '../components/Profile/EnhancedTable';
 
 
 
@@ -15,7 +15,7 @@ import PersonalTable from '../components/Profile/PersonalTable';
 const styles = _theme => ({
 })
 
-class ProfilePage extends React.Component {
+class BoardPage extends React.Component {
 
   constructor (props) {
     super(props)
@@ -39,7 +39,7 @@ class ProfilePage extends React.Component {
         // actionIcon={<AddIcon />}
         // onAction={this.addBoard}
       >
-        <PersonalTable/>
+        <EnhancedTable/>
       </PageBase>
     );
   }
@@ -48,4 +48,4 @@ class ProfilePage extends React.Component {
 export default compose(
   withRouter,
   withStyles(styles)
-)(ProfilePage);
+)(BoardPage);

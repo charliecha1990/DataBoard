@@ -1,4 +1,4 @@
-import Query, { Queries } from '/imports/api/queries/Query';
+// import Query, { Queries } from '/imports/api/queries/Query';
 
 /* Rename currentQuery to currentQueryId */
 Migrations.add({
