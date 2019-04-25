@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import TagFacesIcon from '@material-ui/icons/TagFaces';
 
 const styles = theme => ({
@@ -46,7 +46,7 @@ class ChipsArray extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Paper className={classes.root}>
+      <Grid className={classes.root}>
         {this.state.chipData.map(data => {
           let icon = null;
 
@@ -64,7 +64,7 @@ class ChipsArray extends React.Component {
             />
           );
         })}
-      </Paper>
+      </Grid>
     );
   }
 }

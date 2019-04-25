@@ -10,6 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 
 
+import ChipArray from './ChipArray';
+
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -66,13 +69,14 @@ class PersonalTable extends React.Component {
             <TableBody>            
                 <TableRow>
                   <TableCell align="center">
-                    <TextField
+                    <ChipArray />
+                    {/* <TextField
                     id="practitioner"
                     className={classes.textField}
                     value={practitioner}
                     onChange={()=>this.handleChange('practitioner',event)}
                     margin="normal"
-                    />
+                    /> */}
                   </TableCell>
                   <TableCell align="center">
                     <TextField

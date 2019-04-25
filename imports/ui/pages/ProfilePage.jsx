@@ -11,7 +11,6 @@ import PersonalTable from '../components/Profile/PersonalTable';
 
 
 
-
 const styles = _theme => ({
 })
 
@@ -27,6 +26,10 @@ class ProfilePage extends React.Component {
     }
   }
 
+  addSkills = () => {
+
+  }
+
   render() {
     const { dataSets, loading, classes, match, ...props } = this.props;
     // const {  } = this.state;
@@ -36,8 +39,8 @@ class ProfilePage extends React.Component {
     return (
       <PageBase
         {...props}
-        // actionIcon={<AddIcon />}
-        // onAction={this.addBoard}
+        actionIcon={<AddIcon />}
+        onAction={this.addSkills}
       >
         <PersonalTable/>
       </PageBase>
