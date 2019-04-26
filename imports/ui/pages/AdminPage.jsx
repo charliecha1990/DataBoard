@@ -6,8 +6,7 @@ import User from '/imports/api/users/User';
 
 import PageBase from '../components/PageBase';
 import DisplayItem from '../components/DisplayItem';
-import CreateUserForm from '../components/admin/CreateUserForm';
-import UserList from '../components/admin/UserList';
+import AdminTab from '../components/admin/AdminTab';
 import Loading from '../components/Loading';
 
 
@@ -23,12 +22,7 @@ class AdminPage extends React.Component {
     return (
       <PageBase {...props}>
         <Grid container justify="center">
-          <DisplayItem show xs={12} sm={7}>
-            <CreateUserForm />
-          </DisplayItem>
-          <DisplayItem show xs={12} sm={10}>
-            <UserList users={users} showRemoved={showRemoved} />
-          </DisplayItem>
+          <AdminTab />
         </Grid>
       </PageBase>
     );

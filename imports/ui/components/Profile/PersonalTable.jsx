@@ -69,23 +69,23 @@ class PersonalTable extends React.Component {
             <TableBody>            
                 <TableRow>
                   <TableCell align="center">
-                    <ChipArray />
-                    {/* <TextField
+                    <TextField
                     id="practitioner"
                     className={classes.textField}
                     value={practitioner}
                     onChange={()=>this.handleChange('practitioner',event)}
                     margin="normal"
-                    /> */}
+                    />
                   </TableCell>
                   <TableCell align="center">
-                    <TextField
+                    <ChipArray />
+                    {/* <TextField
                       id="frontEnd"
                       className={classes.textField}
                       value={frontEnd}
                       onChange={()=>this.handleChange('frontEnd',event)}
                       margin="normal"
-                      />
+                      /> */}
                   </TableCell>
                   <TableCell align="center">
                     <TextField
