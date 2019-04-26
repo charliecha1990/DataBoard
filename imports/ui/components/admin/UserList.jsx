@@ -149,11 +149,11 @@ class UserList extends React.Component {
 
     return (
       <Grid container spacing={16} direction="column" alignItems="center">
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Typography variant="headline" paragraph style={{ textAlign: 'center' }}>
             Users
           </Typography>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <FormControlLabel
             control={<Switch checked={showRemoved} onChange={(ev) => setSession({ showRemoved: ev.target.checked })} />}

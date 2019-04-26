@@ -32,7 +32,7 @@ TabContainer.propTypes = {
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: '100%',
+    // width: '100%',
   },
 });
 
@@ -57,6 +57,8 @@ class AdminTab extends React.Component {
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
+            fullWidth={true}
+            centered={true}
             value={this.state.value}
             onChange={this.handleChange}
             indicatorColor="secondary"
