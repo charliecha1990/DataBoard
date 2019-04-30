@@ -37,12 +37,14 @@ class PersonalTable extends React.Component {
     constructor(props) {
       super(props);
   
-      this.state = {
-        practitioner: String,
-        frontEnd: String,
-        backEnd: String,
-        data: String
-      }
+      // this.state = {
+      //   practitioner: String,
+      //   skill: {
+      //     frontEnd: String,
+      //     backEnd: String,
+      //     data: String
+      //   }
+      // }
     }
 
     handleChange = (field, event) => {
@@ -52,8 +54,8 @@ class PersonalTable extends React.Component {
     }
     
     render() {
-      const { classes } = this.props;
-      const { practitioner, frontEnd, backEnd, data } = this.state;
+      const { classes, practitionerData } = this.props;
+      // const {  } = this.state;
 
       return (
         <Paper className={classes.root}>
@@ -72,26 +74,27 @@ class PersonalTable extends React.Component {
                     <TextField
                     id="practitioner"
                     className={classes.textField}
-                    value={practitioner}
+                    value={practitionerData.name}
                     onChange={()=>this.handleChange('practitioner',event)}
                     margin="normal"
                     />
                   </TableCell>
                   <TableCell align="center">
                     <ChipArray />
-                    {/* <TextField
+                      <TextField
                       id="frontEnd"
                       className={classes.textField}
-                      value={frontEnd}
+                      value={practitionerData.frontEnd}
                       onChange={()=>this.handleChange('frontEnd',event)}
                       margin="normal"
-                      /> */}
+                      /> 
+                       {/*to decide to use skill chip or simple number*/}
                   </TableCell>
                   <TableCell align="center">
                     <TextField
                       id="textField"
                       className={classes.textField}
-                      value={backEnd}
+                      value={practitionerData.backEnd}
                       onChange={()=>this.handleChange('backEnd',event)}
                       margin="normal"
                       />
@@ -100,7 +103,7 @@ class PersonalTable extends React.Component {
                       <TextField
                         id="data"
                         className={classes.textField}
-                        value={data}
+                        value={practitionerData.data}
                         onChange={()=>this.handleChange('data',event)}
                         margin="normal"
                         />

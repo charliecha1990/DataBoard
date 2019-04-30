@@ -21,7 +21,7 @@ import Typography from '@material-ui/core/Typography';
 import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
-const styles = (theme) => ({
+const styles = _theme => ({
 	container: {
 		position: 'absolute',
 		top: '50%',
