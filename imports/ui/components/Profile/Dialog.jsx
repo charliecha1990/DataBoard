@@ -25,10 +25,21 @@ const styles = theme => ({
   }
 });
 class DialogSelect extends React.Component {
-
+  state = { backEndLevel: "", frontEndLevel: "", dataLevel: "" };
+  handleChange = name => event => {
+    this.setState({ [name]: Number(event.target.value) });
+  };
 
   render() {
-    const { classes, open, onSubmit, onClose, practitionerData, onSelect, onNameChange} = this.props;
+    const {
+      classes,
+      open,
+      onSubmit,
+      onClose,
+      practitionerData,
+      //onSelect,
+      onNameChange
+    } = this.props;
 
     return (
       <div>
@@ -43,20 +54,20 @@ class DialogSelect extends React.Component {
             <form className={classes.container}>
               <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="age-native-simple">Name</InputLabel>
-                  <TextField
-                    id="practitioner"
-                    className={classes.textField}
-                    value={practitionerData.name}
-                    onChange={()=> onNameChange(event)}
-                    margin="normal"
-                    />
+                <TextField
+                  id="practitioner"
+                  className={classes.textField}
+                  value={practitionerData.name}
+                  onChange={() => onNameChange(event)}
+                  margin="normal"
+                />
               </FormControl>
               <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="age-native-simple">Front-end</InputLabel>
                 <Select
                   native
-                  value={practitionerData.frontEnd}
-                  onChange={()=> onSelect("frontEnd",event)}
+                  value={this.state.frontEndLevel}
+                  onChange={this.handleChange("frontEndLevel")}
                   input={<Input id="age-native-simple" />}
                 >
                   <option value="" />
@@ -68,10 +79,10 @@ class DialogSelect extends React.Component {
                 </Select>
               </FormControl>
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-simple">Back-tend</InputLabel>
+                <InputLabel htmlFor="age-simple">Back-end</InputLabel>
                 <Select
-                  value={practitionerData.backEnd}
-                  onChange={()=> onSelect("backEnd",event)}
+                  value={this.state.backEndLevel}
+                  onChange={this.handleChange("backEndLevel")}
                   input={<Input id="age-simple" />}
                 >
                   <MenuItem value="">
@@ -87,8 +98,8 @@ class DialogSelect extends React.Component {
               <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="age-simple">Data</InputLabel>
                 <Select
-                  value={practitionerData.data}
-                  onChange={()=> onSelect("data",event)}
+                  value={this.state.dataLevel}
+                  onChange={this.handleChange("dataLevel")}
                   input={<Input id="age-simple" />}
                 >
                   <MenuItem value="">
@@ -107,7 +118,7 @@ class DialogSelect extends React.Component {
             <Button onClick={onClose} color="secondary">
               Cancel
             </Button>
-            <Button onClick={onSubmit}color="secondary">
+            <Button onClick={onSubmit} color="secondary">
               Ok
             </Button>
           </DialogActions>

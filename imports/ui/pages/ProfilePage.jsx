@@ -9,9 +9,7 @@ import Dialog from "../components/Profile/Dialog";
 import PageBase from "../components/PageBase";
 import PersonalTable from "../components/Profile/PersonalTable";
 
-
-const styles = _theme => ({
-})
+const styles = _theme => ({});
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -27,19 +25,19 @@ class ProfilePage extends React.Component {
     };
   }
 
-  handleSelect = (field, event) => {
-    this.setState({ [this.state.practitionerData.field]: Number(event.target.value) });
-  };  // needs to be finished
+  // handleSelect = (field, event) => {
+  // this.setState({ [this.state.practitionerData.field]: Number(event.target.value) });
+  //};  // needs to be finished
 
   handleNameChange = event => {
     this.setState({
       name: event.target.value
-    })
-  }
-    
+    });
+  };
+
   handleSubmit = () => {
     this.setState({ open: false });
-  }
+  };
 
   handleClose = () => {
     this.setState({ open: false });
@@ -47,7 +45,7 @@ class ProfilePage extends React.Component {
 
   render() {
     const { dataSets, loading, classes, match, ...props } = this.props;
-    const {practitionerData, open  } = this.state;
+    const { practitionerData, open } = this.state;
 
     console.log(dataSets);
 
@@ -59,12 +57,12 @@ class ProfilePage extends React.Component {
           this.setState({ open: true });
         }}
       >
-        <PersonalTable practitionerData = {practitionerData}/>
-        <Dialog 
+        <PersonalTable practitionerData={practitionerData} />
+        <Dialog
           practitionerData={practitionerData}
-          open={open} 
-          onClose={this.handleClose} 
-          onSelect={this.handleSelect}
+          open={open}
+          onClose={this.handleClose}
+          //onSelect={this.handleSelect}
           onNameChange={this.handleNameChange}
           onSubmit={this.handleSubmit}
         />
