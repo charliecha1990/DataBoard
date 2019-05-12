@@ -8,7 +8,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
-import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { TextField } from "@material-ui/core";
@@ -21,15 +20,12 @@ const styles = theme => ({
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120
+    minWidth: 160
   }
 });
 class DialogSelect extends React.Component {
-  state = { backEndLevel: "", frontEndLevel: "", dataLevel: "" };
-  handleChange = name => event => {
-    this.setState({ [name]: Number(event.target.value) });
-  };
-
+  // state = { backEndLevel: "", frontEndLevel: "", dataLevel: "" };
+  
   render() {
     const {
       classes,
@@ -37,8 +33,8 @@ class DialogSelect extends React.Component {
       onSubmit,
       onClose,
       practitionerData,
-      //onSelect,
-      onNameChange
+      onChange, // on number change
+      onNameChange // on practitioner's name change
     } = this.props;
 
     return (
@@ -49,26 +45,26 @@ class DialogSelect extends React.Component {
           open={open}
           onClose={onClose}
         >
-          <DialogTitle>Enter Skill Level</DialogTitle>
+          <DialogTitle>Enter Name and Skill Level</DialogTitle>
           <DialogContent>
             <form className={classes.container}>
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-native-simple">Name</InputLabel>
+                {/* <InputLabel htmlFor="age-native-simple">Name</InputLabel> */}
                 <TextField
                   id="practitioner"
                   className={classes.textField}
                   value={practitionerData.name}
-                  onChange={() => onNameChange(event)}
+                  onChange={onNameChange}
                   margin="normal"
                 />
               </FormControl>
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-native-simple">Front-end</InputLabel>
+                <InputLabel disableAnimation='true' htmlFor="front-end">Front-end</InputLabel>
                 <Select
                   native
-                  value={this.state.frontEndLevel}
-                  onChange={this.handleChange("frontEndLevel")}
-                  input={<Input id="age-native-simple" />}
+                  value={practitionerData.frontEndLevel}
+                  onChange={onChange("frontEndLevel")}
+                  input={<Input id="front-end" />}
                 >
                   <option value="" />
                   <option value={1}>1</option>
@@ -79,37 +75,35 @@ class DialogSelect extends React.Component {
                 </Select>
               </FormControl>
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-simple">Back-end</InputLabel>
+                <InputLabel htmlFor="back-end">Back-end</InputLabel>
                 <Select
-                  value={this.state.backEndLevel}
-                  onChange={this.handleChange("backEndLevel")}
-                  input={<Input id="age-simple" />}
+                  native
+                  value={practitionerData.backEndLevel}
+                  onChange={onChange("backEndLevel")}
+                  input={<Input name='back-end' id="back-end" />}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={4}>4</MenuItem>
-                  <MenuItem value={5}>5</MenuItem>
+                  <option value="" />
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
                 </Select>
               </FormControl>
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-simple">Data</InputLabel>
+                <InputLabel htmlFor="data">Data</InputLabel>
                 <Select
-                  value={this.state.dataLevel}
-                  onChange={this.handleChange("dataLevel")}
-                  input={<Input id="age-simple" />}
+                  native
+                  value={practitionerData.dataLevel}
+                  onChange={onChange("dataLevel")}
+                  input={<Input id="data" />}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={4}>4</MenuItem>
-                  <MenuItem value={5}>5</MenuItem>
+                  <option value="" />
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
                 </Select>
               </FormControl>
             </form>
