@@ -73,38 +73,42 @@ class PersonalTable extends React.Component {
                   <TableCell align="center">
                     <TextField
                     id="practitioner"
+                    InputProps={{
+                      disableUnderline: true,
+                     }}
                     className={classes.textField}
                     value={practitionerData.name}
-                    onChange={()=>this.handleChange('practitioner',event)}
                     margin="normal"
                     />
                   </TableCell>
                   <TableCell align="center">
                     <ChipArray />
-                      <TextField
+                      {/* <TextField
                       id="frontEnd"
                       className={classes.textField}
-                      value={practitionerData.frontEnd}
-                      onChange={()=>this.handleChange('frontEnd',event)}
+                      value={practitionerData.frontEndLevel}
                       margin="normal"
-                      /> 
-                       {/*to decide to use skill chip or simple number*/}
+                      />  */}
                   </TableCell>
                   <TableCell align="center">
                     <TextField
                       id="textField"
+                      InputProps={{
+                        disableUnderline: true,
+                       }}
                       className={classes.textField}
-                      value={practitionerData.backEnd}
-                      onChange={()=>this.handleChange('backEnd',event)}
+                      value={practitionerData.backEndLevel}
                       margin="normal"
                       />
                     </TableCell>
-                    <TableCell align="center"vvvvvv>
+                    <TableCell align="center">
                       <TextField
                         id="data"
+                        InputProps={{
+                          disableUnderline: true,
+                         }}
                         className={classes.textField}
-                        value={practitionerData.data}
-                        onChange={()=>this.handleChange('data',event)}
+                        value={practitionerData.dataLevel}
                         margin="normal"
                         />
                     </TableCell>

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import SearchIcon from '@material-ui/icons/Search';
 import ViewQuiltIcon from '@material-ui/icons/ViewQuilt';
 import AdminIcon from '@material-ui/icons/Build';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import Badge from '@material-ui/core/Badge';
 
 import BoardPage from '/imports/ui/pages/BoardPage';
 import ProfilePage from '/imports/ui/pages/ProfilePage';
@@ -37,7 +37,9 @@ export const ROUTES = {
       link: "/admin",
       hasSubRoutes: true,
       component: Admin(AdminPage),
-      icon: <AdminIcon />
+        icon: <Badge color="secondary" badgeContent={3}> {/* badge number needes to be coded  */}
+                <AdminIcon />
+              </Badge>
     },
   ]
 };

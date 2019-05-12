@@ -17,26 +17,33 @@ class ProfilePage extends React.Component {
     this.state = {
       open: false,
       practitionerData: {
-        frontEnd: String,
-        backEnd: String,
-        data: String,
-        name: String
+        frontEndLevel: '',
+        backEndLevel: '',
+        dataLevel: '',
+        name: ''
       }
     };
   }
 
-  // handleSelect = (field, event) => {
-  // this.setState({ [this.state.practitionerData.field]: Number(event.target.value) });
-  //};  // needs to be finished
+  handleChange = name => event => {
+    this.setState({ 
+      practitionerData: {
+        [name]: Number(event.target.value)
+      }
+    });
+  };
 
   handleNameChange = event => {
     this.setState({
-      name: event.target.value
+      practitionerData: {
+        name: event.target.value
+      }
     });
   };
 
   handleSubmit = () => {
     this.setState({ open: false });
+    
   };
 
   handleClose = () => {
@@ -47,7 +54,7 @@ class ProfilePage extends React.Component {
     const { dataSets, loading, classes, match, ...props } = this.props;
     const { practitionerData, open } = this.state;
 
-    console.log(dataSets);
+    console.log(dataSets,this.state.practitionerData);
 
     return (
       <PageBase
@@ -62,7 +69,7 @@ class ProfilePage extends React.Component {
           practitionerData={practitionerData}
           open={open}
           onClose={this.handleClose}
-          //onSelect={this.handleSelect}
+          onChange={this.handleChange}
           onNameChange={this.handleNameChange}
           onSubmit={this.handleSubmit}
         />
