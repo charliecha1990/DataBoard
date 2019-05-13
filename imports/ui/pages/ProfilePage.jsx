@@ -9,6 +9,8 @@ import Dialog from "../components/Profile/Dialog";
 import PageBase from "../components/PageBase";
 import PersonalTable from "../components/Profile/PersonalTable";
 
+import callWithPromise from '/imports/util/callWithPromise';
+
 const styles = _theme => ({});
 
 class ProfilePage extends React.Component {
@@ -16,28 +18,16 @@ class ProfilePage extends React.Component {
     super(props);
     this.state = {
       open: false,
-      practitionerData: {
-        frontEndLevel: '',
-        backEndLevel: '',
-        dataLevel: '',
-        name: ''
-      }
+      frontEndLevel: '',
+      backEndLevel: '',
+      dataLevel: '',
+      name: ''
     };
   }
 
-  handleChange = name => event => {
+  handleChange = attribute => event => {
     this.setState({ 
-      practitionerData: {
-        [name]: Number(event.target.value)
-      }
-    });
-  };
-
-  handleNameChange = event => {
-    this.setState({
-      practitionerData: {
-        name: event.target.value
-      }
+        [attribute]: event.target.value
     });
   };
 
@@ -48,13 +38,25 @@ class ProfilePage extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
+
+    console.log(this.state)
+
+    callWithPromise('dataSet.create',{
+      name: this.state.name,
+      frontEndLevel:this.state.frontEndLevel,
+      backEndLevel: this.state.backEndLevel,
+      dataLevel: this.state.dataLevel,
+      isApproved: true
+    })
+      .then(id => console.log(id))
+      .then(() => {})
   };
 
   render() {
     const { dataSets, loading, classes, match, ...props } = this.props;
-    const { practitionerData, open } = this.state;
+    const { name, frontEndLevel, backEndLevel, dataLevel, open } = this.state;
 
-    console.log(dataSets,this.state.practitionerData);
+    console.log(dataSets,this.state);
 
     return (
       <PageBase
@@ -64,13 +66,20 @@ class ProfilePage extends React.Component {
           this.setState({ open: true });
         }}
       >
-        <PersonalTable practitionerData={practitionerData} />
+        <PersonalTable 
+         name={name}
+         frontEndLevel={frontEndLevel}
+         backEndLevel={backEndLevel}
+         dataLevel={dataLevel}
+         />
         <Dialog
-          practitionerData={practitionerData}
+          name={name}
+          frontEndLevel={frontEndLevel}
+          backEndLevel={backEndLevel}
+          dataLevel={dataLevel}
           open={open}
           onClose={this.handleClose}
           onChange={this.handleChange}
-          onNameChange={this.handleNameChange}
           onSubmit={this.handleSubmit}
         />
       </PageBase>

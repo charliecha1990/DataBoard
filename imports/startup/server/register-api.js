@@ -8,7 +8,9 @@
 
 import '/imports/api/users/server/publications';
 
-// import '/imports/api/brands/server/publications';
+import '/imports/api/dataSet/server/publications';
+import '/imports/api/dataSet/methods';
+
 
 // import '/imports/api/categories/server/publications';
 

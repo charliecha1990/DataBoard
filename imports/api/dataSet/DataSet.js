@@ -14,10 +14,10 @@ const DataSet = Class.create({
   collection: DataSets,
   fields: {
     userId: String,
-    practitioner: String,
-    frontEnd: String,
-    backEnd: String,
-    data: String,
+    name: String,
+    frontEndLevel: String,
+    backEndLevel: String,
+    dataLevel: String,
     isApproved: Boolean
   },
   behaviors: {

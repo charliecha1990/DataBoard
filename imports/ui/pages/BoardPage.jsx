@@ -23,7 +23,7 @@ class BoardPage extends React.Component {
       grid: [
         [{value:  1}, {value:  3}],
         [{value:  2}, {value:  4}]
-      ]
+      ] 
     }
   }
 
@@ -36,8 +36,8 @@ class BoardPage extends React.Component {
     return (
       <PageBase
         {...props}
-        // actionIcon={<AddIcon />}
-        // onAction={this.addBoard}
+        actionIcon={<AddIcon />}
+        onAction={this.addBoard}
       >
         <EnhancedTable/>
       </PageBase>

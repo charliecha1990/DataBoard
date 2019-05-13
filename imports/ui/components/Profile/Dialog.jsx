@@ -32,9 +32,11 @@ class DialogSelect extends React.Component {
       open,
       onSubmit,
       onClose,
-      practitionerData,
       onChange, // on number change
-      onNameChange // on practitioner's name change
+      name,
+      frontEndLevel,
+      backEndLevel,
+      dataLevel
     } = this.props;
 
     return (
@@ -53,16 +55,16 @@ class DialogSelect extends React.Component {
                 <TextField
                   id="practitioner"
                   className={classes.textField}
-                  value={practitionerData.name}
-                  onChange={onNameChange}
+                  value={name}
+                  onChange={onChange("name")}
                   margin="normal"
                 />
               </FormControl>
               <FormControl className={classes.formControl}>
-                <InputLabel disableAnimation='true' htmlFor="front-end">Front-end</InputLabel>
+                <InputLabel htmlFor="front-end">Front-end</InputLabel>
                 <Select
                   native
-                  value={practitionerData.frontEndLevel}
+                  value={frontEndLevel}
                   onChange={onChange("frontEndLevel")}
                   input={<Input id="front-end" />}
                 >
@@ -78,7 +80,7 @@ class DialogSelect extends React.Component {
                 <InputLabel htmlFor="back-end">Back-end</InputLabel>
                 <Select
                   native
-                  value={practitionerData.backEndLevel}
+                  value={backEndLevel}
                   onChange={onChange("backEndLevel")}
                   input={<Input name='back-end' id="back-end" />}
                 >
@@ -94,7 +96,7 @@ class DialogSelect extends React.Component {
                 <InputLabel htmlFor="data">Data</InputLabel>
                 <Select
                   native
-                  value={practitionerData.dataLevel}
+                  value={dataLevel}
                   onChange={onChange("dataLevel")}
                   input={<Input id="data" />}
                 >

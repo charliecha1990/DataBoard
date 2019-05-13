@@ -37,24 +37,10 @@ class PersonalTable extends React.Component {
     constructor(props) {
       super(props);
   
-      // this.state = {
-      //   practitioner: String,
-      //   skill: {
-      //     frontEnd: String,
-      //     backEnd: String,
-      //     data: String
-      //   }
-      // }
-    }
-
-    handleChange = (field, event) => {
-      this.setState({
-        [field]: event.target.value
-      })
     }
     
     render() {
-      const { classes, practitionerData } = this.props;
+      const { classes, name, frontEndLevel, backEndLevel, dataLevel} = this.props;
       // const {  } = this.state;
 
       return (
@@ -77,18 +63,21 @@ class PersonalTable extends React.Component {
                       disableUnderline: true,
                      }}
                     className={classes.textField}
-                    value={practitionerData.name}
+                    value={name}
                     margin="normal"
                     />
                   </TableCell>
                   <TableCell align="center">
-                    <ChipArray />
-                      {/* <TextField
+                    {/* <ChipArray /> */}
+                      <TextField
                       id="frontEnd"
+                      InputProps={{
+                        disableUnderline: true,
+                       }}
                       className={classes.textField}
-                      value={practitionerData.frontEndLevel}
+                      value={frontEndLevel}
                       margin="normal"
-                      />  */}
+                      /> 
                   </TableCell>
                   <TableCell align="center">
                     <TextField
@@ -97,7 +86,7 @@ class PersonalTable extends React.Component {
                         disableUnderline: true,
                        }}
                       className={classes.textField}
-                      value={practitionerData.backEndLevel}
+                      value={backEndLevel}
                       margin="normal"
                       />
                     </TableCell>
@@ -108,7 +97,7 @@ class PersonalTable extends React.Component {
                           disableUnderline: true,
                          }}
                         className={classes.textField}
-                        value={practitionerData.dataLevel}
+                        value={dataLevel}
                         margin="normal"
                         />
                     </TableCell>
