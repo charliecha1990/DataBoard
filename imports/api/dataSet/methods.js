@@ -1,4 +1,3 @@
-// import Experiment from "./Experiment";
 import DataSet from "./DataSet";
 
 Meteor.methods({
@@ -6,7 +5,7 @@ Meteor.methods({
     const dataSet = new DataSet(
       Object.assign({}, params, { userId: Meteor.userId() })
     );
-    console.log('dataSet created')
+    
     return new Promise((res, rej) =>
       dataSet.save((err, id) => err ? rej(err) : res(id)));
   },

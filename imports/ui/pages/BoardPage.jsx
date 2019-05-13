@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Switch, Route } from 'react-router';
 import { compose } from 'recompose';
 
 import { withStyles } from '@material-ui/core/styles';

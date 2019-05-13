@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { Switch, Route } from "react-router";
 import { compose } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -10,6 +9,8 @@ import PageBase from "../components/PageBase";
 import PersonalTable from "../components/Profile/PersonalTable";
 
 import callWithPromise from '/imports/util/callWithPromise';
+// import DataSet from '/imports/api/dataSet/DataSet';
+
 
 const styles = _theme => ({});
 
@@ -33,30 +34,32 @@ class ProfilePage extends React.Component {
 
   handleSubmit = () => {
     this.setState({ open: false });
-    
-  };
 
-  handleClose = () => {
-    this.setState({ open: false });
-
-    console.log(this.state)
-
-    callWithPromise('dataSet.create',{
+    const para = {
       name: this.state.name,
       frontEndLevel:this.state.frontEndLevel,
       backEndLevel: this.state.backEndLevel,
       dataLevel: this.state.dataLevel,
       isApproved: true
-    })
+    }
+
+    console.log(this.state)
+
+    callWithPromise('dataSet.create',para)
       .then(id => console.log(id))
       .then(() => {})
+    
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
   };
 
   render() {
-    const { dataSets, loading, classes, match, ...props } = this.props;
+    const { dataSets, dataSet, loading, classes, match, ...props } = this.props;
     const { name, frontEndLevel, backEndLevel, dataLevel, open } = this.state;
 
-    console.log(dataSets,this.state);
+    console.log(dataSets, dataSet,this.state);
 
     return (
       <PageBase
