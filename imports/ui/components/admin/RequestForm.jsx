@@ -215,9 +215,9 @@ class RequestForm extends React.Component {
     orderBy: 'practitioner',
     selected: [],
     data: [
-      createData('Cupcake', 305, 3.7, 67),
-      createData('Donut', 452, 25.0, 51),
-      createData('Eclair', 262, 16.0, 24),
+      createData('Cupcake', 3, 3, 4),
+      createData('Donut', 4, 4, 5),
+      createData('Eclair', 2, 4, 4),
     ],
     mockData:{
       practitioner: 'string',

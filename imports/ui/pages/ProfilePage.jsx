@@ -48,7 +48,6 @@ class ProfilePage extends React.Component {
     callWithPromise('dataSet.create',para)
       .then(id => console.log(id))
       .then(() => {})
-    
   };
 
   handleClose = () => {
@@ -63,7 +62,7 @@ class ProfilePage extends React.Component {
     // if(loading) {
     //   { return <PageBase loading /> }
     // }
-    console.log(this.state, dataSet)
+    console.log(this.state,loading, dataSet, dataSets)
 
     return (
       <PageBase
@@ -74,6 +73,7 @@ class ProfilePage extends React.Component {
         }}
       >
         <PersonalTable 
+         dataSet={dataSet}
          name={name}
          frontEndLevel={frontEndLevel}
          backEndLevel={backEndLevel}

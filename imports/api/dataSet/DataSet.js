@@ -10,7 +10,7 @@ DataSets.deny({
 });
 
 const DataSet = Class.create({
-  name: "dataSet",
+  name: "DataSet",
   collection: DataSets,
   fields: {
     userId: String,

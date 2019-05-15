@@ -39,9 +39,12 @@ class PersonalTable extends React.Component {
     }
     
     render() {
-      const { classes, name, frontEndLevel, backEndLevel, dataLevel} = this.props;
+      const { classes, name, frontEndLevel, backEndLevel, dataLevel, dataSet} = this.props;
       // const {  } = this.state;
 
+
+      console.log(dataSet);
+      
       return (
         <Paper className={classes.root}>
           <Table className={classes.table}>
