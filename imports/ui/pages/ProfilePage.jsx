@@ -89,10 +89,10 @@ class ProfilePage extends React.Component {
                 }}
             >
                 <PersonalTable
-                    name={name}
-                    frontEndLevel={frontEndLevel}
-                    backEndLevel={backEndLevel}
-                    dataLevel={dataLevel}
+                    name={dataSet.name}
+                    frontEndLevel={dataSet.frontEndLevel}
+                    backEndLevel={dataSet.backEndLevel}
+                    dataLevel={dataSet.dataLevel}
                 />
                 <Dialog
                     name={name}
@@ -117,6 +117,7 @@ export default compose(
 
         const dataSet = DataSet.find({ userId: Meteor.userId() }).fetch();
         const dataSets = DataSet.find({}).fetch();
+        console.log("exported dataSet", dataSet);
         return {
             dataSet,
             dataSets,
