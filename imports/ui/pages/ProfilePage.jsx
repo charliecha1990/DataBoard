@@ -2,6 +2,9 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
+import { withTracker } from "meteor/react-meteor-data";
+import { withMessageContext } from "/imports/ui/helpers/MessageContext";
+import DataSet from "/imports/api/dataSet/DataSet";
 import AddIcon from "@material-ui/icons/Add";
 
 import Dialog from "../components/Profile/Dialog";
@@ -106,4 +109,21 @@ class ProfilePage extends React.Component {
     }
 }
 
-export default compose(withRouter, withStyles(styles))(ProfilePage);
+// export default compose(withRouter, withStyles(styles))(ProfilePage);
+export default compose(
+    withRouter,
+    withTracker(() => {
+        const dataSetsHandle = Meteor.subscribe("dataSets");
+
+        const dataSet = DataSet.find({ userId: Meteor.userId() }).fetch();
+        const dataSets = DataSet.find({}).fetch();
+        return {
+            dataSet,
+            dataSets,
+            connected: Meteor.status().connected,
+            loading: !dataSetsHandle.ready()
+        };
+    }),
+    withMessageContext,
+    withStyles(styles)
+)(ProfilePage);
