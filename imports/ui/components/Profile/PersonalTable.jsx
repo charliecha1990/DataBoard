@@ -25,10 +25,10 @@ const styles = theme => ({
     // backgroundColor: theme.palette.secondary.main,
     // color:'white'
   },
-  textField: {
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
+  // textField: {
+  //   marginRight: theme.spacing.unit,
+  //   width: 200,
+  // },
 });
 
 
@@ -56,7 +56,7 @@ class PersonalTable extends React.Component {
             <TableBody>            
                 <TableRow>
                   <TableCell align="center">
-                    <TextField
+                    {/* <TextField
                     id="practitioner"
                     InputProps={{
                       disableUnderline: true,
@@ -64,11 +64,12 @@ class PersonalTable extends React.Component {
                     className={classes.textField}
                     value={name}
                     margin="normal"
-                    />
+                    /> */}
+                    {name}
                   </TableCell>
                   <TableCell align="center">
                     {/* <ChipArray /> */}
-                      <TextField
+                      {/* <TextField
                       id="frontEnd"
                       InputProps={{
                         disableUnderline: true,
@@ -76,10 +77,11 @@ class PersonalTable extends React.Component {
                       className={classes.textField}
                       value={frontEndLevel}
                       margin="normal"
-                      /> 
+                      />  */}
+                      {frontEndLevel}
                   </TableCell>
                   <TableCell align="center">
-                    <TextField
+                    {/* <TextField
                       id="textField"
                       InputProps={{
                         disableUnderline: true,
@@ -87,10 +89,11 @@ class PersonalTable extends React.Component {
                       className={classes.textField}
                       value={backEndLevel}
                       margin="normal"
-                      />
+                      /> */}
+                      {backEndLevel}
                     </TableCell>
                     <TableCell align="center">
-                      <TextField
+                      {/* <TextField
                         id="data"
                         InputProps={{
                           disableUnderline: true,
@@ -98,7 +101,8 @@ class PersonalTable extends React.Component {
                         className={classes.textField}
                         value={dataLevel}
                         margin="normal"
-                        />
+                        /> */}
+                        {dataLevel}
                     </TableCell>
                 </TableRow>
             </TableBody>

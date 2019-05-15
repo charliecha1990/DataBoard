@@ -8,86 +8,102 @@ import Dialog from "../components/Profile/Dialog";
 import PageBase from "../components/PageBase";
 import PersonalTable from "../components/Profile/PersonalTable";
 
-import callWithPromise from '/imports/util/callWithPromise';
+import callWithPromise from "/imports/util/callWithPromise";
 // import DataSet from '/imports/api/dataSet/DataSet';
-
 
 const styles = _theme => ({});
 
 class ProfilePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-      frontEndLevel: '',
-      backEndLevel: '',
-      dataLevel: '',
-      name: ''
-    };
-  }
-
-  handleChange = attribute => event => {
-    this.setState({ 
-        [attribute]: event.target.value
-    });
-  };
-
-  handleSubmit = () => {
-    this.setState({ open: false });
-
-    const para = {
-      name: this.state.name,
-      frontEndLevel:this.state.frontEndLevel,
-      backEndLevel: this.state.backEndLevel,
-      dataLevel: this.state.dataLevel,
-      isApproved: true
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            frontEndLevel: "",
+            backEndLevel: "",
+            dataLevel: "",
+            name: ""
+        };
     }
 
-    console.log(this.state)
+    handleChange = attribute => event => {
+        this.setState({
+            [attribute]: event.target.value
+        });
+    };
 
-    callWithPromise('dataSet.create',para)
-      .then(id => console.log(id))
-      .then(() => {})
-    
-  };
+    handleSubmit = () => {
+        // Alert when name is empty
+        if (this.state.name == "") {
+            alert("Please enter your name.");
+        } else {
+            this.setState({ open: false });
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
+            const para = {
+                name: this.state.name,
+                frontEndLevel: this.state.frontEndLevel,
+                backEndLevel: this.state.backEndLevel,
+                dataLevel: this.state.dataLevel,
+                isApproved: true
+            };
 
-  render() {
-    const { dataSets, dataSet, loading, classes, match, ...props } = this.props;
-    const { name, frontEndLevel, backEndLevel, dataLevel, open } = this.state;
+            console.log(this.state);
 
-    console.log(dataSets, dataSet,this.state);
+            callWithPromise("dataSet.create", para)
+                .then(id => console.log(id))
+                .then(() => {});
+        }
+    };
 
-    return (
-      <PageBase
-        {...props}
-        actionIcon={<AddIcon />}
-        onAction={() => {
-          this.setState({ open: true });
-        }}
-      >
-        <PersonalTable 
-         name={name}
-         frontEndLevel={frontEndLevel}
-         backEndLevel={backEndLevel}
-         dataLevel={dataLevel}
-         />
-        <Dialog
-          name={name}
-          frontEndLevel={frontEndLevel}
-          backEndLevel={backEndLevel}
-          dataLevel={dataLevel}
-          open={open}
-          onClose={this.handleClose}
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-        />
-      </PageBase>
-    );
-  }
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
+    render() {
+        const {
+            dataSets,
+            dataSet,
+            loading,
+            classes,
+            match,
+            ...props
+        } = this.props;
+        const {
+            name,
+            frontEndLevel,
+            backEndLevel,
+            dataLevel,
+            open
+        } = this.state;
+
+        console.log(dataSets, dataSet, this.state);
+
+        return (
+            <PageBase
+                {...props}
+                actionIcon={<AddIcon />}
+                onAction={() => {
+                    this.setState({ open: true });
+                }}
+            >
+                <PersonalTable
+                    name={name}
+                    frontEndLevel={frontEndLevel}
+                    backEndLevel={backEndLevel}
+                    dataLevel={dataLevel}
+                />
+                <Dialog
+                    name={name}
+                    frontEndLevel={frontEndLevel}
+                    backEndLevel={backEndLevel}
+                    dataLevel={dataLevel}
+                    open={open}
+                    onClose={this.handleClose}
+                    onChange={this.handleChange}
+                    onSubmit={this.handleSubmit}
+                />
+            </PageBase>
+        );
+    }
 }
 
 export default compose(withRouter, withStyles(styles))(ProfilePage);
