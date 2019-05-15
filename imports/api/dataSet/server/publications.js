@@ -4,15 +4,15 @@ import DataSet from '../DataSet';
 
 
 Meteor.publish('dataSet', function () {
-  // if (!this.userId) {
-  //   return this.ready();
-  // }
-  return DataSet.find({ userId: this.userId() });
+  if (!this.userId) {
+    return this.ready();
+  }
+  return DataSet.find({ userId: Meteor.userId() });
 });
 
 Meteor.publish('dataSets', function () {
-  // if (!this.userId) {
-  //   return this.ready();
-  // }
+  if (!this.userId) {
+    return this.ready();
+  }
   return DataSet.find({});
 });

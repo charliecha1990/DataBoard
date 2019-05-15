@@ -10,14 +10,15 @@ import _ from "lodash";
 export default compose(
   withRouter,
   withTracker(() => {
-    const dataSetHandle = Meteor.subscribe("dataSet");
     const dataSetsHandle = Meteor.subscribe("dataSets");
+    const dataSet = DataSet.find({ userId: Meteor.userId() }).fetch();
+    const dataSets = DataSet.find({}).fetch();
 
     return {
-      dataSet: DataSet.find({ userId: Meteor.userId() }).fetch(),
-      dataSets: DataSet.find({}).fetch(),
+      dataSet,
+      dataSets,
       connected: Meteor.status().connected,
-      loading: !(dataSetHandle.ready() && dataSetsHandle.ready()),
+      loading: !dataSetsHandle.ready(),
     };
   }),
   withMessageContext
