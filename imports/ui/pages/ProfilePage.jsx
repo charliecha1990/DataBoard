@@ -9,7 +9,7 @@ import PageBase from "../components/PageBase";
 import PersonalTable from "../components/Profile/PersonalTable";
 
 import callWithPromise from "/imports/util/callWithPromise";
-// import DataSet from '/imports/api/dataSet/DataSet';
+import DataSet from "/imports/api/dataSet/DataSet";
 
 const styles = _theme => ({});
 
@@ -46,7 +46,7 @@ class ProfilePage extends React.Component {
                 isApproved: true
             };
 
-            console.log(this.state);
+            console.log(this.state, this.props.dataSet);
 
             callWithPromise("dataSet.create", para)
                 .then(id => console.log(id))
@@ -74,8 +74,12 @@ class ProfilePage extends React.Component {
             dataLevel,
             open
         } = this.state;
+        // const dataSet = DataSet.find({ userId: Meteor.userId() }).fetch(),
 
-        console.log(dataSets, dataSet, this.state);
+        // if(loading) {
+        //   { return <PageBase loading /> }
+        // }
+        console.log(this.state, dataSet);
 
         return (
             <PageBase
