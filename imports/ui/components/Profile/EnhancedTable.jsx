@@ -151,11 +151,11 @@ let EnhancedTableToolbar = props => {
     >
       <div className={classes.title}>
         {numSelected > 0 ? (
-          <Typography color="inherit" variant="subtitle1">
+          <Typography color="inherit" variant="subheading">
             {numSelected} selected
           </Typography>
         ) : (
-          <Typography variant="title" id="tableTitle">
+          <Typography variant="subheading" id="tableTitle">
             Data Tracking
           </Typography>
         )}
@@ -206,19 +206,19 @@ class EnhancedTable extends React.Component {
     orderBy: 'practitioner',
     selected: [],
     data: [
-      createData('Cupcake', 305, 3.7, 67),
-      createData('Donut', 452, 25.0, 51),
-      createData('Eclair', 262, 16.0, 24),
-      createData('Frozen yoghurt', 159, 6.0, 24),
-      createData('Gingerbread', 356, 16.0, 49),
-      createData('Honeycomb', 408, 3.2, 87),
-      createData('Ice cream sandwich', 237, 9.0, 37),
-      createData('Jelly Bean', 375, 0.0, 94),
-      createData('KitKat', 518, 26.0, 65),
-      createData('Lollipop', 392, 0.2, 98),
-      createData('Marshmallow', 318, 0, 81),
-      createData('Nougat', 360, 19.0, 9),
-      createData('Oreo', 437, 18.0, 63),
+      createData('Cupcake', 5, 3, 2),
+      createData('Donut', 2, 3, 1),
+      createData('Eclair', 2, 1, 4),
+      createData('Frozen yoghurt', 4, 4, 4),
+      createData('Gingerbread', 3, 3, 4),
+      createData('Honeycomb', 4, 2, 3),
+      createData('Ice cream sandwich', 3, 2, 5),
+      createData('Jelly Bean', 4, 3, 3),
+      createData('KitKat', 5, 3, 2),
+      createData('Lollipop', 3, 5, 4),
+      createData('Marshmallow', 3, 4, 5),
+      createData('Nougat', 3, 4, 4),
+      createData('Oreo', 4, 1, 3),
     ],
     mockData:{
       practitioner: 'string',

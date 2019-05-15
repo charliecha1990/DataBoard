@@ -12,14 +12,12 @@ export default compose(
   withTracker(() => {
     const dataSetHandle = Meteor.subscribe("dataSet");
     const dataSetsHandle = Meteor.subscribe("dataSets");
-    const dataSet = DataSet.find({ userId: Meteor.userId() }).fetch();
-    const dataSets = DataSet.find().fetch();
 
     return {
-      dataSets,
-      dataSet,
+      dataSet: DataSet.find({ userId: Meteor.userId() }).fetch(),
+      dataSets: DataSet.find({}).fetch(),
       connected: Meteor.status().connected,
-      loading: !(dataSetHandle.ready() && dataSetsHandle.ready())
+      loading: !(dataSetHandle.ready() && dataSetsHandle.ready()),
     };
   }),
   withMessageContext
