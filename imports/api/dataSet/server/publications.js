@@ -14,5 +14,5 @@ Meteor.publish('dataSets', function () {
   if (!this.userId) {
     return this.ready();
   }
-  return DataSet.find({});
+  return DataSet.find({ userId: Meteor.userId() });
 });

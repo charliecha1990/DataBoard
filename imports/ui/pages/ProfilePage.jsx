@@ -62,7 +62,7 @@ class ProfilePage extends React.Component {
     // if(loading) {
     //   { return <PageBase loading /> }
     // }
-    console.log(this.state,loading, dataSet, dataSets)
+    console.log(loading,dataSet, dataSets)
 
     return (
       <PageBase
