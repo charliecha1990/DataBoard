@@ -23,3 +23,24 @@ import _ from "lodash";
 //     }),
 //     withMessageContext
 // )(ProfilePage);
+
+// export default compose(
+//     withRouter,
+//     withTracker(() => {
+//         console.log("in profile page container")
+//         const dataSetsHandle = Meteor.subscribe("dataSets");
+
+//         var dataSet = DataSet.find({userId: Meteor.userId()}, {sort: {createdAt:-1}, limit:1}).fetch();
+//         dataSet = dataSet.length == 0 ? "" : dataSet[0];
+//         var dataSets = DataSet.find({}).fetch();
+
+//         return {
+//             dataSet,
+//             dataSets,
+//             connected: Meteor.status().connected,
+//             loading: !dataSetsHandle.ready()
+//         };
+//     }),
+//     withMessageContext,
+//     withStyles(styles)
+// )(ProfilePage);

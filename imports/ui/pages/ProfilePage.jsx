@@ -1,18 +1,19 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
-import { withStyles } from "@material-ui/core/styles";
 import { withTracker } from "meteor/react-meteor-data";
-import { withMessageContext } from "/imports/ui/helpers/MessageContext";
-import DataSet from "/imports/api/dataSet/DataSet";
+
+import { withStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 
 import Dialog from "../components/Profile/Dialog";
 import PageBase from "../components/PageBase";
 import PersonalTable from "../components/Profile/PersonalTable";
 
+import DataSet from "/imports/api/dataSet/DataSet";
 import callWithPromise from "/imports/util/callWithPromise";
-// import DataSet from '/imports/api/dataSet/DataSet';
+import { withMessageContext } from "/imports/ui/helpers/MessageContext";
+import DataSets from "../../api/dataSet/DataSet";
 
 const styles = _theme => ({});
 
@@ -26,6 +27,22 @@ class ProfilePage extends React.Component {
             dataLevel: "",
             name: ""
         };
+    }
+
+    componentWillMount() {
+        const dataSetsHandle = Meteor.subscribe("dataSets");
+
+        var dataSet = DataSet.find({userId: Meteor.userId()}, {sort: {createdAt:-1}, limit:1}).fetch();
+        dataSet = dataSet.length == 0 ? "" : dataSet[0];
+        var dataSets = DataSet.find({}).fetch();
+
+        this.setState({
+            frontEndLevel: dataSet.frontEndLevel,
+            backEndLevel: dataSet.backEndLevel,
+            dataLevel: dataSet.backEndLevel,
+            name: dataSet.name
+        })
+        console.log("mounted")
     }
 
     handleChange = attribute => event => {
@@ -48,7 +65,6 @@ class ProfilePage extends React.Component {
                 dataLevel: this.state.dataLevel,
                 isApproved: true
             };
-
             console.log(this.state);
 
             callWithPromise("dataSet.create", para)
@@ -70,7 +86,7 @@ class ProfilePage extends React.Component {
             match,
             ...props
         } = this.props;
-        const {
+        var {
             name,
             frontEndLevel,
             backEndLevel,
@@ -115,9 +131,16 @@ export default compose(
     withTracker(() => {
         const dataSetsHandle = Meteor.subscribe("dataSets");
 
-        const dataSet = DataSet.find({ userId: Meteor.userId() }).fetch();
-        const dataSets = DataSet.find({}).fetch();
-        console.log("exported dataSet", dataSet);
+        var dataSet = DataSet.find({userId: Meteor.userId()}, {sort: {createdAt:-1}, limit:1}).fetch();
+        dataSet = dataSet.length == 0 ? "" : dataSet[0];
+        var dataSets = DataSet.find({}).fetch();
+
+        console.log(
+            "userID: " + Meteor.userId(),
+            "my exported dataSet:",
+            dataSet
+        );
+
         return {
             dataSet,
             dataSets,

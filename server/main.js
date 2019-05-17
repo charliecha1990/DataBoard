@@ -1,5 +1,8 @@
-import loadEnv from './load-env';
-import Raven from 'raven';
+import loadEnv from "./load-env";
+import Raven from "raven";
+import { Meteor } from "meteor/meteor";
+
+import DataSet, { DataSets } from "../imports/api/dataSet/DataSet";
 
 /*
   First, load environment variables. loadEnv will contain a promise which will
@@ -11,12 +14,25 @@ import Raven from 'raven';
 */
 
 loadEnv.then(() => {
-  Raven.config(process.env.SENTRY_SERVER_URL).install();
+    Raven.config(process.env.SENTRY_SERVER_URL).install();
 
-  Raven.context(function() {
-    Meteor.startup(() => {
-      require('/imports/startup/server');
-      require('/imports/startup/both');
+    Raven.context(function() {
+        Meteor.startup(() => {
+            require("/imports/startup/server");
+            require("/imports/startup/both");
+        });
     });
-  });
+});
+Meteor.publish("dataSet", function() {
+    if (!this.userId) {
+        return this.ready();
+    }
+    return DataSet.find({ userId: Meteor.userId() });
+});
+
+Meteor.publish("dataSets", function() {
+    if (!this.userId) {
+        return this.ready();
+    }
+    return DataSet.find({});
 });

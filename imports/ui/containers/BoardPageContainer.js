@@ -5,6 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import BoardPage from '/imports/ui/pages/BoardPage';
 
 export default withTracker(() => {
+  console.log("in board page container")
   const queryHandle = Meteor.subscribe('queries.currentUser');
 
   return {
