@@ -29,8 +29,6 @@ class BoardPage extends React.Component {
   render() {
     const { dataSets, loading, classes, match, ...props } = this.props;
     // const {  } = this.state;
-
-    console.log(dataSets)
     
     return (
       <PageBase

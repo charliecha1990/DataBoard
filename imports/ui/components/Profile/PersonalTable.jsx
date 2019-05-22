@@ -9,6 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 
+import _ from 'lodash';
+
 import ChipArray from './ChipArray';
 
 
@@ -40,11 +42,15 @@ class PersonalTable extends React.Component {
     
     render() {
       const { classes, name, frontEndLevel, backEndLevel, dataLevel, dataSet} = this.props;
-      // const {  } = this.state;
-
-
-      console.log(dataSet);
       
+
+/*
+------------------------------------------------------------------------------------------
+Make sure we render the page using data from dataSet instead of states
+For  Mireille
+*/ 
+
+
       return (
         <Paper className={classes.root}>
           <Table className={classes.table}>
@@ -70,8 +76,8 @@ class PersonalTable extends React.Component {
                     />
                   </TableCell>
                   <TableCell align="center">
-                    {/* <ChipArray /> */}
-                      <TextField
+                    <ChipArray />
+                    <TextField
                       id="frontEnd"
                       InputProps={{
                         disableUnderline: true,

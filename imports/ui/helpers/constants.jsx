@@ -6,7 +6,7 @@ import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import Badge from '@material-ui/core/Badge';
 
 import BoardPage from '/imports/ui/pages/BoardPage';
-import ProfilePage from '/imports/ui/pages/ProfilePage';
+import ProfilePageContainer from '/imports/ui/containers/ProfilePageContainer';
 import AdminPage from '/imports/ui/pages/AdminPage';
 import Authorization from '/imports/ui/helpers/Authorization';
 
@@ -26,7 +26,7 @@ export const ROUTES = {
       text: "Profile",
       link: "/profile",
       hasSubRoutes: false,
-      component: ProfilePage,
+      component: ProfilePageContainer,
       icon: <PermIdentityIcon />,
       retainSearchParams: ['query']
     }

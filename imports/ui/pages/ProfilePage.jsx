@@ -3,13 +3,13 @@ import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
+import _ from 'lodash';
 
 import Dialog from "../components/Profile/Dialog";
 import PageBase from "../components/PageBase";
 import PersonalTable from "../components/Profile/PersonalTable";
 
 import callWithPromise from '/imports/util/callWithPromise';
-import DataSet from '/imports/api/dataSet/DataSet';
 
 
 const styles = _theme => ({});
@@ -31,7 +31,13 @@ class ProfilePage extends React.Component {
         [attribute]: event.target.value
     });
   };
-
+/*
+------------------------------------------------------------------------------------------
+isEmpty(DataSet)?
+Yes:   callWithPromise('dataSet.create',para)
+No:    callWithPromise('dataSet.update',para)
+For  Satark
+*/
   handleSubmit = () => {
     this.setState({ open: false });
 
@@ -43,13 +49,13 @@ class ProfilePage extends React.Component {
       isApproved: true
     }
 
-    console.log(this.state, this.props.dataSet)
-
     callWithPromise('dataSet.create',para)
       .then(id => console.log(id))
       .then(() => {})
   };
-
+/*
+------------------------------------------------------------------------------------------
+*/
   handleClose = () => {
     this.setState({ open: false });
   };
@@ -57,12 +63,8 @@ class ProfilePage extends React.Component {
   render() {
     const { dataSets, dataSet, loading, classes, match, ...props } = this.props;
     const { name, frontEndLevel, backEndLevel, dataLevel, open } = this.state;
-    // const dataSet = DataSet.find({ userId: Meteor.userId() }).fetch(),
 
-    // if(loading) {
-    //   { return <PageBase loading /> }
-    // }
-    console.log(loading,dataSet, dataSets)
+     console.log('dataSet from the backend:', dataSet)
 
     return (
       <PageBase

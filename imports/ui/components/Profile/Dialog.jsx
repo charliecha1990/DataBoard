@@ -11,7 +11,10 @@ import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { TextField } from "@material-ui/core";
-//import { Add } from "@material-ui/icons";
+
+import ChipArray from './ChipArray' 
+
+
 
 const styles = theme => ({
   container: {
@@ -24,7 +27,15 @@ const styles = theme => ({
   }
 });
 class DialogSelect extends React.Component {
-  // state = { backEndLevel: "", frontEndLevel: "", dataLevel: "" };
+/*
+------------------------------------------------------------------------------------------
+When user want to input their skills
+Check LinkedIn -> add a new skill
+For  Helen
+*/
+
+
+
   
   render() {
     const {
