@@ -9,7 +9,7 @@ import PageBase from '../components/PageBase';
 import AdminTab from '../components/admin/AdminTab';
 import Loading from '../components/Loading';
 import RejectDialog from '../components/admin/RejectDialog';
-
+import { Provider } from "../helpers/Context";
 
 import Grid from '@material-ui/core/Grid';
 
@@ -20,10 +20,10 @@ class AdminPage extends React.Component {
     notice: ''
   }
 
+
   handleApprove = () => {
     const para = {
-      userId: Meteor.userId(),
-      isApproved: true
+      _isApproved: true
     }
 
     callWithPromise('dataSet.approve', para)
@@ -53,6 +53,11 @@ class AdminPage extends React.Component {
   handleSendRejection = reason => {
     this.setState({ rejectDialogOpen: false, notice: reason})
   }
+  
+  handleNoticeChange = event => {
+    this.setState({ notice: event.target.value})
+  }
+
 
 /********************************************************************************/  
 
@@ -66,6 +71,7 @@ class AdminPage extends React.Component {
 
     return (
       <PageBase {...props}>
+        <Provider value={this.state.notice}>
         <Grid container justify="center">
           <Grid item xs={12}>
             <AdminTab 
@@ -77,9 +83,11 @@ class AdminPage extends React.Component {
               notice={notice}
               onClose={this.handleRejectDialogClose}
               onSend={this.handleSendRejection}
+              onNoticeChange={this.handleNoticeChange}
             />
           </Grid>
         </Grid>
+        </Provider>
       </PageBase>
     );
   }

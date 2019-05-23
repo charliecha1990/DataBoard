@@ -30,7 +30,7 @@ Meteor.methods({
   },
 
   async "dataSet.approve"(params= {}) {
-    const dataSet = DataSet.findOne(params.user_id);
+    const dataSet = DataSet.findOne( Meteor.userId() );
     dataSet.set({
       isApproved: params._isApproved
     });
