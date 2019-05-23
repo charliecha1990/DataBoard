@@ -27,5 +27,14 @@ Meteor.methods({
   async "dataSets.delete"(params = {}) {
     const dataSet = DataSet.findOne(params.dataSet_id);
     dataSet.softRemove();
-  }
+  },
+
+  async "dataSet.approve"(params= {}) {
+    const dataSet = DataSet.findOne(params.user_id);
+    dataSet.set({
+      isApproved: params._isApproved
+    });
+    return new Promise((res, rej) =>
+      dataSet.save((err, id) => err ? rej(err) : res(id)));
+  },
 });

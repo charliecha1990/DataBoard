@@ -4,11 +4,11 @@ import { compose } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import _ from 'lodash';
+import Grid from '@material-ui/core/Grid';
 
 import Dialog from "../components/Profile/Dialog";
 import PageBase from "../components/PageBase";
 import PersonalTable from "../components/Profile/PersonalTable";
-
 import callWithPromise from '/imports/util/callWithPromise';
 
 
@@ -74,23 +74,27 @@ For  Satark
           this.setState({ open: true });
         }}
       >
-        <PersonalTable 
-         dataSet={dataSet}
-         name={name}
-         frontEndLevel={frontEndLevel}
-         backEndLevel={backEndLevel}
-         dataLevel={dataLevel}
-         />
-        <Dialog
-          name={name}
-          frontEndLevel={frontEndLevel}
-          backEndLevel={backEndLevel}
-          dataLevel={dataLevel}
-          open={open}
-          onClose={this.handleClose}
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-        />
+        <Grid container justify="center">
+          <Grid item xs={12}>
+             <PersonalTable 
+            dataSet={dataSet}
+            name={name}
+            frontEndLevel={frontEndLevel}
+            backEndLevel={backEndLevel}
+            dataLevel={dataLevel}
+            />
+           <Dialog
+             name={name}
+             frontEndLevel={frontEndLevel}
+             backEndLevel={backEndLevel}
+             dataLevel={dataLevel}
+             open={open}
+             onClose={this.handleClose}
+             onChange={this.handleChange}
+             onSubmit={this.handleSubmit}
+           />      
+          </Grid>
+        </Grid>
       </PageBase>
     );
   }

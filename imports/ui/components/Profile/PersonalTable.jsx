@@ -21,7 +21,7 @@ const styles = theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 700,
+    minWidth: 500,
   },
   head: {
     // backgroundColor: theme.palette.secondary.main,

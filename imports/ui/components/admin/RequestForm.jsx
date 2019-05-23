@@ -18,7 +18,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
 import Grid from '@material-ui/core/Grid';
-
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
@@ -66,7 +65,13 @@ class EnhancedTableHead extends React.Component {
   };
 
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
+    const { 
+      onSelectAllClick, 
+      order, 
+      orderBy, 
+      numSelected, 
+      rowCount
+     } = this.props;
 
     return (
       <TableHead>
@@ -145,7 +150,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
+  const { numSelected, classes, onReject, onApprove} = props;
 
   return (
     <Toolbar
@@ -170,10 +175,10 @@ let EnhancedTableToolbar = props => {
           <Grid container>
             <Grid item xs={12}>
               <IconButton aria-label="delete">
-                <DeleteIcon />
+                <DeleteIcon onClick={onReject}/>
               </IconButton>
               <IconButton aria-label="approve">
-                <DoneIcon />
+                <DoneIcon onClick={onApprove}/>
               </IconButton>
           </Grid>
         </Grid>
@@ -280,13 +285,13 @@ class RequestForm extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes } = this.props;
+    const { classes, onApprove, onReject } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} onApprove={onApprove} onReject={onReject} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
