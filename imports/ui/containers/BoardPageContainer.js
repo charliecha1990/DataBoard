@@ -1,15 +1,13 @@
-import { Meteor } from 'meteor/meteor';
-import { Session } from 'meteor/session';
-import { withTracker } from 'meteor/react-meteor-data';
+import { Meteor } from "meteor/meteor";
+import { withTracker } from "meteor/react-meteor-data";
 
-import BoardPage from '/imports/ui/pages/BoardPage';
+import BoardPage from "/imports/ui/pages/BoardPage";
 
 export default withTracker(() => {
-  console.log("in board page container")
-  const queryHandle = Meteor.subscribe('queries.currentUser');
+    const queryHandle = Meteor.subscribe("queries.currentUser");
 
-  return {
-    connected: Meteor.status().connected,
-    loading: queryHandle.ready(),
-  };
+    return {
+        connected: Meteor.status().connected,
+        loading: queryHandle.ready()
+    };
 })(BoardPage);

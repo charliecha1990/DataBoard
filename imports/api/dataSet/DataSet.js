@@ -1,5 +1,4 @@
 import { Class } from "meteor/jagi:astronomy";
-// import createRemoteCollection from '/imports/api/createRemoteCollection';
 
 export const DataSets = new Mongo.Collection("dataSets");
 

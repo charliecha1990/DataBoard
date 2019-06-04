@@ -23,6 +23,7 @@ loadEnv.then(() => {
         });
     });
 });
+
 Meteor.publish("dataSet", function() {
     if (!this.userId) {
         return this.ready();

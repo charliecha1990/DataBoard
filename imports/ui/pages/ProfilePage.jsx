@@ -1,7 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
-import { withTracker } from "meteor/react-meteor-data";
 
 import { withStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -10,10 +8,7 @@ import Dialog from "../components/Profile/Dialog";
 import PageBase from "../components/PageBase";
 import PersonalTable from "../components/Profile/PersonalTable";
 
-import DataSet from "/imports/api/dataSet/DataSet";
 import callWithPromise from "/imports/util/callWithPromise";
-import { withMessageContext } from "/imports/ui/helpers/MessageContext";
-import DataSets from "../../api/dataSet/DataSet";
 
 const styles = _theme => ({});
 
@@ -29,25 +24,6 @@ class ProfilePage extends React.Component {
         };
     }
 
-    componentWillMount() {
-        const dataSetsHandle = Meteor.subscribe("dataSets");
-
-        var dataSet = DataSet.find(
-            { userId: Meteor.userId() },
-            { sort: { createdAt: -1 }, limit: 1 }
-        ).fetch();
-        dataSet = dataSet.length == 0 ? "" : dataSet[0];
-        var dataSets = DataSet.find({}).fetch();
-
-        this.setState({
-            frontEndLevel: dataSet.frontEndLevel,
-            backEndLevel: dataSet.backEndLevel,
-            dataLevel: dataSet.backEndLevel,
-            name: dataSet.name
-        });
-        console.log("mounted");
-    }
-
     handleChange = attribute => event => {
         this.setState({
             [attribute]: event.target.value
@@ -55,7 +31,6 @@ class ProfilePage extends React.Component {
     };
 
     handleSubmit = () => {
-        // Alert when name is empty
         if (this.state.name == "") {
             alert("Please enter your name.");
         } else {
@@ -68,11 +43,8 @@ class ProfilePage extends React.Component {
                 dataLevel: this.state.dataLevel,
                 isApproved: true
             };
-            console.log(this.state);
 
-            callWithPromise("dataSet.create", para)
-                .then(id => console.log(id))
-                .then(() => {});
+            callWithPromise("dataSet.create", para).then(() => {});
         }
     };
 
@@ -96,8 +68,6 @@ class ProfilePage extends React.Component {
             dataLevel,
             open
         } = this.state;
-
-        console.log(dataSets, dataSet, this.state);
 
         return (
             <PageBase
@@ -129,31 +99,3 @@ class ProfilePage extends React.Component {
 }
 
 export default compose(withStyles(styles))(ProfilePage);
-// export default compose(
-//     withRouter,
-//     withTracker(() => {
-//         const dataSetsHandle = Meteor.subscribe("dataSets");
-
-//         var dataSet = DataSet.find(
-//             { userId: Meteor.userId() },
-//             { sort: { createdAt: -1 }, limit: 1 }
-//         ).fetch();
-//         dataSet = dataSet.length == 0 ? "" : dataSet[0];
-//         var dataSets = DataSet.find({}).fetch();
-
-//         console.log(
-//             "userID: " + Meteor.userId(),
-//             "my exported dataSet:",
-//             dataSet
-//         );
-
-//         return {
-//             dataSet,
-//             dataSets,
-//             connected: Meteor.status().connected,
-//             loading: !dataSetsHandle.ready()
-//         };
-//     }),
-//     withMessageContext,
-//     withStyles(styles)
-// )(ProfilePage);

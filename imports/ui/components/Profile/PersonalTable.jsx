@@ -1,65 +1,62 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-
-import ChipArray from './ChipArray';
-
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 700,
-  },
-  head: {
-    // backgroundColor: theme.palette.secondary.main,
-    // color:'white'
-  },
-  // textField: {
-  //   marginRight: theme.spacing.unit,
-  //   width: 200,
-  // },
+    root: {
+        width: "100%",
+        marginTop: theme.spacing.unit * 3,
+        overflowX: "auto"
+    },
+    table: {
+        minWidth: 700
+    }
 });
-
 
 class PersonalTable extends React.Component {
     constructor(props) {
-      super(props);
-  
+        super(props);
     }
-    
+
     render() {
-      const { classes, name, frontEndLevel, backEndLevel, dataLevel, dataSet} = this.props;
-      // const {  } = this.state;
+        const {
+            classes,
+            name,
+            frontEndLevel,
+            backEndLevel,
+            dataLevel,
+            dataSet
+        } = this.props;
 
-
-      console.log(dataSet);
-      
-      return (
-        <Paper className={classes.root}>
-          <Table className={classes.table}>
-            <TableHead className={classes.head}> 
-              <TableRow>
-                <TableCell variant="head" align="center">Practitioner</TableCell>
-                <TableCell variant="head" align="center">Front-end</TableCell>
-                <TableCell variant="head" align="center">Back-end</TableCell>
-                <TableCell variant="head" align="center">Data</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>            
-                <TableRow>
-                  <TableCell align="center">
-                    {/* <TextField
+        return (
+            <Paper className={classes.root}>
+                <Table className={classes.table}>
+                    <TableHead className={classes.head}>
+                        <TableRow>
+                            <TableCell variant="head" align="center">
+                                Practitioner
+                            </TableCell>
+                            <TableCell variant="head" align="center">
+                                Front-end
+                            </TableCell>
+                            <TableCell variant="head" align="center">
+                                Back-end
+                            </TableCell>
+                            <TableCell variant="head" align="center">
+                                Data
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell align="center">
+                                {/* <TextField
                     id="practitioner"
                     InputProps={{
                       disableUnderline: true,
@@ -67,12 +64,13 @@ class PersonalTable extends React.Component {
                     className={classes.textField}
                     value={name}
                     margin="normal"
-                    /> */}
-                    {name}
-                  </TableCell>
-                  <TableCell align="center">
-                    {/* <ChipArray /> */}
-                      {/* <TextField
+                    /> */
+                                }
+                                {name}
+                            </TableCell>
+                            <TableCell align="center">
+                                {/* <ChipArray /> */}
+                                {/* <TextField
                       id="frontEnd"
                       InputProps={{
                         disableUnderline: true,
@@ -80,11 +78,12 @@ class PersonalTable extends React.Component {
                       className={classes.textField}
                       value={frontEndLevel}
                       margin="normal"
-                      />  */}
-                      {frontEndLevel}
-                  </TableCell>
-                  <TableCell align="center">
-                    {/* <TextField
+                      />  */
+                                }
+                                {frontEndLevel}
+                            </TableCell>
+                            <TableCell align="center">
+                                {/* <TextField
                       id="textField"
                       InputProps={{
                         disableUnderline: true,
@@ -92,11 +91,12 @@ class PersonalTable extends React.Component {
                       className={classes.textField}
                       value={backEndLevel}
                       margin="normal"
-                      /> */}
-                      {backEndLevel}
-                    </TableCell>
-                    <TableCell align="center">
-                      {/* <TextField
+                      /> */
+                                }
+                                {backEndLevel}
+                            </TableCell>
+                            <TableCell align="center">
+                                {/* <TextField
                         id="data"
                         InputProps={{
                           disableUnderline: true,
@@ -104,14 +104,15 @@ class PersonalTable extends React.Component {
                         className={classes.textField}
                         value={dataLevel}
                         margin="normal"
-                        /> */}
-                        {dataLevel}
-                    </TableCell>
-                </TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
-      );
+                        /> */
+                                }
+                                {dataLevel}
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </Paper>
+        );
     }
 }
 
