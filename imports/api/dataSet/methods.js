@@ -30,9 +30,9 @@ Meteor.methods({
   },
 
   async "dataSet.approve"(params= {}) {
-    const dataSet = DataSet.findOne( Meteor.userId() );
+    const dataSet = DataSet.findOne( params.dataSetId );
     dataSet.set({
-      isApproved: params._isApproved
+      isApproved: true
     });
     return new Promise((res, rej) =>
       dataSet.save((err, id) => err ? rej(err) : res(id)));

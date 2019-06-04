@@ -10,6 +10,7 @@ import AdminTab from '../components/admin/AdminTab';
 import Loading from '../components/Loading';
 import RejectDialog from '../components/admin/RejectDialog';
 import { Provider } from "../helpers/Context";
+import DataSet from "/imports/api/dataSet/DataSet";
 
 import Grid from '@material-ui/core/Grid';
 
@@ -24,7 +25,7 @@ class AdminPage extends React.Component {
   handleApprove = () => {
     const para = {
       _isApproved: true
-    }
+    }  // should get the ids of target dataSets
 
     callWithPromise('dataSet.approve', para)
     .then(id => console.log(id))
@@ -34,6 +35,7 @@ class AdminPage extends React.Component {
   handleReject= () => {
     const para = {
       userId: Meteor.userId(),
+      dataSetId:this.props.dataSet._id, 
       isApproved: false
     }
 
@@ -62,9 +64,11 @@ class AdminPage extends React.Component {
 /********************************************************************************/  
 
   render() {
-    const { users, showRemoved, loading, ...props } = this.props;
-
+    const { users, showRemoved, dataSet, loading, ...props } = this.props;
     const { rejectDialogOpen, notice } = this.state;
+
+    console.log(dataSet)
+
     if (loading) {
       return <PageBase {...props}><Loading /></PageBase>;
     }
@@ -95,11 +99,18 @@ class AdminPage extends React.Component {
 
 export default withTracker(() => {
   const usersHandle = Meteor.subscribe('users.all', { includeDeleted: true });
+  const dataSetsHandle = Meteor.subscribe("dataSets");
+
+  var UnapprovedDataSets = DataSet.find(
+      { userId: Meteor.userId() },
+      { sort: { createdAt: -1 }, limit: 1 }
+  ).fetch();  // should filter those not have been approved
 
   return {
-    loading: !usersHandle.ready(),
+    loading: !(usersHandle.ready() && dataSetsHandle.ready()),
     users: User.find({}, {
       disableEvents: true
     }).fetch(),
+    UnapprovedDataSets
   };
 })(AdminPage);
