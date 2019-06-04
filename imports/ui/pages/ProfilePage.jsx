@@ -32,7 +32,10 @@ class ProfilePage extends React.Component {
     componentWillMount() {
         const dataSetsHandle = Meteor.subscribe("dataSets");
 
-        var dataSet = DataSet.find({userId: Meteor.userId()}, {sort: {createdAt:-1}, limit:1}).fetch();
+        var dataSet = DataSet.find(
+            { userId: Meteor.userId() },
+            { sort: { createdAt: -1 }, limit: 1 }
+        ).fetch();
         dataSet = dataSet.length == 0 ? "" : dataSet[0];
         var dataSets = DataSet.find({}).fetch();
 
@@ -41,8 +44,8 @@ class ProfilePage extends React.Component {
             backEndLevel: dataSet.backEndLevel,
             dataLevel: dataSet.backEndLevel,
             name: dataSet.name
-        })
-        console.log("mounted")
+        });
+        console.log("mounted");
     }
 
     handleChange = attribute => event => {
@@ -125,29 +128,32 @@ class ProfilePage extends React.Component {
     }
 }
 
-// export default compose(withRouter, withStyles(styles))(ProfilePage);
-export default compose(
-    withRouter,
-    withTracker(() => {
-        const dataSetsHandle = Meteor.subscribe("dataSets");
+export default compose(withStyles(styles))(ProfilePage);
+// export default compose(
+//     withRouter,
+//     withTracker(() => {
+//         const dataSetsHandle = Meteor.subscribe("dataSets");
 
-        var dataSet = DataSet.find({userId: Meteor.userId()}, {sort: {createdAt:-1}, limit:1}).fetch();
-        dataSet = dataSet.length == 0 ? "" : dataSet[0];
-        var dataSets = DataSet.find({}).fetch();
+//         var dataSet = DataSet.find(
+//             { userId: Meteor.userId() },
+//             { sort: { createdAt: -1 }, limit: 1 }
+//         ).fetch();
+//         dataSet = dataSet.length == 0 ? "" : dataSet[0];
+//         var dataSets = DataSet.find({}).fetch();
 
-        console.log(
-            "userID: " + Meteor.userId(),
-            "my exported dataSet:",
-            dataSet
-        );
+//         console.log(
+//             "userID: " + Meteor.userId(),
+//             "my exported dataSet:",
+//             dataSet
+//         );
 
-        return {
-            dataSet,
-            dataSets,
-            connected: Meteor.status().connected,
-            loading: !dataSetsHandle.ready()
-        };
-    }),
-    withMessageContext,
-    withStyles(styles)
-)(ProfilePage);
+//         return {
+//             dataSet,
+//             dataSets,
+//             connected: Meteor.status().connected,
+//             loading: !dataSetsHandle.ready()
+//         };
+//     }),
+//     withMessageContext,
+//     withStyles(styles)
+// )(ProfilePage);

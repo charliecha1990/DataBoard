@@ -1,47 +1,51 @@
-import React from 'react';
+import React from "react";
 
-import ViewQuiltIcon from '@material-ui/icons/ViewQuilt';
-import AdminIcon from '@material-ui/icons/Build';
-import PermIdentityIcon from '@material-ui/icons/PermIdentity';
-import Badge from '@material-ui/core/Badge';
+import ViewQuiltIcon from "@material-ui/icons/ViewQuilt";
+import AdminIcon from "@material-ui/icons/Build";
+import PermIdentityIcon from "@material-ui/icons/PermIdentity";
+import Badge from "@material-ui/core/Badge";
 
-import BoardPage from '/imports/ui/pages/BoardPage';
-import ProfilePage from '/imports/ui/pages/ProfilePage';
-import AdminPage from '/imports/ui/pages/AdminPage';
-import Authorization from '/imports/ui/helpers/Authorization';
+import BoardPage from "/imports/ui/pages/BoardPage";
+import ProfilePage from "/imports/ui/pages/ProfilePage";
+import AdminPage from "/imports/ui/pages/AdminPage";
+import Authorization from "/imports/ui/helpers/Authorization";
+import ProfilePageContainer from "../containers/ProfilePageContainer";
 
-const Admin = Authorization(['admin']);
+const Admin = Authorization(["admin"]);
 
 export const ROUTES = {
-  user: [
-    {
-      text: "Board",
-      link: "/",
-      hasSubRoutes: false,
-      component: BoardPage,
-      icon: <ViewQuiltIcon />,
-      retainSearchParams: ['query']
-    },
-    {
-      text: "Profile",
-      link: "/profile",
-      hasSubRoutes: false,
-      component: ProfilePage,
-      icon: <PermIdentityIcon />,
-      retainSearchParams: ['query']
-    }
-  ],
-  admin: [
-    {
-      text: "Admin",
-      link: "/admin",
-      hasSubRoutes: true,
-      component: Admin(AdminPage),
-        icon: <Badge color="secondary" badgeContent={3}> {/* badge number needes to be coded  */}
-                <AdminIcon />
-              </Badge>
-    },
-  ]
+    user: [
+        {
+            text: "Board",
+            link: "/",
+            hasSubRoutes: false,
+            component: BoardPage,
+            icon: <ViewQuiltIcon />,
+            retainSearchParams: ["query"]
+        },
+        {
+            text: "Profile",
+            link: "/profile",
+            hasSubRoutes: false,
+            component: ProfilePageContainer,
+            icon: <PermIdentityIcon />,
+            retainSearchParams: ["query"]
+        }
+    ],
+    admin: [
+        {
+            text: "Admin",
+            link: "/admin",
+            hasSubRoutes: true,
+            component: Admin(AdminPage),
+            icon: (
+                <Badge color="secondary" badgeContent={3}>
+                    {" "}{/* badge number needes to be coded  */}
+                    <AdminIcon />
+                </Badge>
+            )
+        }
+    ]
 };
 
 export const DRAWER_WIDTH = 216;

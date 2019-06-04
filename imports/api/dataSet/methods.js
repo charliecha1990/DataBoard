@@ -1,6 +1,5 @@
 // import DataSet from "./DataSet";
 // import DataSets from "./DataSet";
-
 // Meteor.methods({
 //     async "subscribe.now"(params = {}) {
 //         try {
@@ -25,7 +24,6 @@
 //             dataSet.save((err, id) => err ? rej(err) : res(id));
 //         });
 //     },
-
 //     async "dataSet.update"(params = {}) {
 //         const dataSet = DataSet.findOne(params.user_id);
 //         dataSet.set({
@@ -35,11 +33,9 @@
 //             data: params._data,
 //             isApproved: params._isApproved
 //         });
-
 //         return new Promise((res, rej) =>
 //             dataSet.save((err, id) => err ? rej(err) : res(id)));
 //     },
-
 //     async "dataSets.delete"(params = {}) {
 //         const dataSet = DataSet.findOne(params.dataSet_id);
 //         dataSet.softRemove();
