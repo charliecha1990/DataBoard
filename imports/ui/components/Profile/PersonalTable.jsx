@@ -49,6 +49,7 @@ class PersonalTable extends React.Component {
 Make sure we render the page using data from dataSet instead of states
 For  Mireille
 */ 
+console.log('dataSet from the backend:', JSON.stringify(dataSet));
 
 
       return (

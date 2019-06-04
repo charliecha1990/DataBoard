@@ -64,7 +64,7 @@ For  Satark
     const { dataSets, dataSet, loading, classes, match, ...props } = this.props;
     const { name, frontEndLevel, backEndLevel, dataLevel, open } = this.state;
 
-     console.log('dataSet from the backend:', dataSet)
+    //  console.log('dataSet from the backend:', dataSet)
 
     return (
       <PageBase
