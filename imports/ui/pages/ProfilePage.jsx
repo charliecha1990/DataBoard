@@ -64,8 +64,6 @@ For  Satark
     const { dataSets, dataSet, loading, classes, match, ...props } = this.props;
     const { name, frontEndLevel, backEndLevel, dataLevel, open } = this.state;
 
-    //  console.log('dataSet from the backend:', dataSet)
-
     return (
       <PageBase
         {...props}
@@ -77,11 +75,10 @@ For  Satark
         <Grid container justify="center">
           <Grid item xs={12}>
              <PersonalTable 
-            dataSet={dataSet}
-            name={name}
-            frontEndLevel={frontEndLevel}
-            backEndLevel={backEndLevel}
-            dataLevel={dataLevel}
+            name={dataSet.name}
+            frontEndLevel={dataSet.frontEndLevel}
+            backEndLevel={dataSet.backEndLevel}
+            dataLevel={dataSet.dataLevel}
             />
            <Dialog
              name={name}
@@ -100,4 +97,4 @@ For  Satark
   }
 }
 
-export default compose(withRouter, withStyles(styles))(ProfilePage);
+export default withStyles(styles)(ProfilePage);

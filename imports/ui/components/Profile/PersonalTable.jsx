@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,7 +6,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
 
 import _ from 'lodash';
 
@@ -41,17 +39,8 @@ class PersonalTable extends React.Component {
     }
     
     render() {
-      const { classes, name, frontEndLevel, backEndLevel, dataLevel, dataSet} = this.props;
+      const { classes, name, frontEndLevel, backEndLevel, dataLevel} = this.props;
       
-
-/*
-------------------------------------------------------------------------------------------
-Make sure we render the page using data from dataSet instead of states
-For  Mireille
-*/ 
-console.log('dataSet from the backend:', JSON.stringify(dataSet));
-
-
       return (
         <Paper className={classes.root}>
           <Table className={classes.table}>
@@ -66,7 +55,7 @@ console.log('dataSet from the backend:', JSON.stringify(dataSet));
             <TableBody>            
                 <TableRow>
                   <TableCell align="center">
-                    <TextField
+                    {/* <TextField
                     id="practitioner"
                     InputProps={{
                       disableUnderline: true,
@@ -74,11 +63,12 @@ console.log('dataSet from the backend:', JSON.stringify(dataSet));
                     className={classes.textField}
                     value={name}
                     margin="normal"
-                    />
+                    /> */}
+                    {name}
                   </TableCell>
                   <TableCell align="center">
-                    <ChipArray />
-                    <TextField
+                    {/* <ChipArray /> */}
+                    {/* <TextField
                       id="frontEnd"
                       InputProps={{
                         disableUnderline: true,
@@ -86,10 +76,11 @@ console.log('dataSet from the backend:', JSON.stringify(dataSet));
                       className={classes.textField}
                       value={frontEndLevel}
                       margin="normal"
-                      /> 
+                      />  */}
+                    {frontEndLevel}
                   </TableCell>
                   <TableCell align="center">
-                    <TextField
+                    {/* <TextField
                       id="textField"
                       InputProps={{
                         disableUnderline: true,
@@ -97,10 +88,11 @@ console.log('dataSet from the backend:', JSON.stringify(dataSet));
                       className={classes.textField}
                       value={backEndLevel}
                       margin="normal"
-                      />
+                      /> */}
+                      {backEndLevel}
                     </TableCell>
                     <TableCell align="center">
-                      <TextField
+                      {/* <TextField
                         id="data"
                         InputProps={{
                           disableUnderline: true,
@@ -108,7 +100,8 @@ console.log('dataSet from the backend:', JSON.stringify(dataSet));
                         className={classes.textField}
                         value={dataLevel}
                         margin="normal"
-                        />
+                        /> */}
+                        {dataLevel}
                     </TableCell>
                 </TableRow>
             </TableBody>
