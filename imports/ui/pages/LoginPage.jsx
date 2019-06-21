@@ -1,8 +1,10 @@
 import React from 'react';
+import User from '/imports/api/users/User'
 import { findDOMNode } from 'react-dom';
 import { withRouter } from 'react-router';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
+import {Accounts} from "meteor/accounts-base";
 
 import RaisedButton from '/imports/ui/components/buttons/RaisedButton';
 import MiscPageBase from '/imports/ui/components/MiscPageBase';
@@ -77,11 +79,13 @@ class LoginPage extends React.Component {
     });
   }
 
+
   handleEnroll = event => {
     event.preventDefault();
     console.log("enroll starts");
-    this.props.history.push('/enroll-account');
-  }
+
+    this.props.history.push('/');
+  };
 
   onClosePopover = () => {
     this.setState({ errors: {} });

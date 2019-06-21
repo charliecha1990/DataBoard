@@ -27,16 +27,17 @@ class BoardPage extends React.Component {
   }
 
   render() {
-    const { dataSets, loading, classes, match, ...props } = this.props;
+    const { dataSet, loading, classes, match, ...props } = this.props;
     // const {  } = this.state;
     
     return (
       <PageBase
         {...props}
         actionIcon={<AddIcon />}
-        onAction={this.addBoard}
       >
-        <EnhancedTable/>
+        <EnhancedTable
+        data={dataSet} /*Pass data from the container to enhanced table as props */
+        />
       </PageBase>
     );
   }
