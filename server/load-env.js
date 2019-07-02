@@ -13,6 +13,8 @@ const loadEnv = new Promise((resolve, reject) => {
     path: path.resolve(process.env.ENV_PATH || `${process.env.PWD}/.env.meteor`)
   });
 
+  resolve();
+
   if (result.error) {
     reject(result.error);
   } else {
