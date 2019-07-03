@@ -18,7 +18,8 @@ const DataSet = Class.create({
     frontEndLevel: String,
     backEndLevel: String,
     dataLevel: String,
-    isApproved: Boolean
+    isApproved: Boolean,
+    // availability: String
   },
   behaviors: {
     timestamp: {
