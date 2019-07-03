@@ -18,11 +18,12 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import DataSet from '../../../api/dataSet/DataSet';
 
 let counter = 0;
 function createData( practitioner, frontEnd, backEnd, data) {
   counter += 1;
-  return { id: counter, practitioner, frontEnd, backEnd, data};
+  return { id: counter, practitioner:practitioner, frontEnd:frontEnd, backEnd:backEnd, dataLevel:data};
 }
 
 function desc(a, b, orderBy) {
@@ -36,6 +37,7 @@ function desc(a, b, orderBy) {
 }
 
 function stableSort(array, cmp) {
+  // console.log("Array is ",array);
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = cmp(a[0], b[0]);
@@ -51,9 +53,9 @@ function getSorting(order, orderBy) {
 
 const rows = [
   { id: 'practitioner', numeric: false, disablePadding: true, label: 'Practitioner' },
-  { id: 'backEnd', numeric: true, disablePadding: false, label: 'Back-end' },
   { id: 'frontEnd', numeric: true, disablePadding: false, label: 'Front-end' },
-  { id: 'data', numeric: true, disablePadding: false, label: 'Data' },
+  { id: 'backEnd', numeric: true, disablePadding: false, label: 'Back-end' },
+  { id: 'dataLevel', numeric: true, disablePadding: false, label: 'Data' },
   // { id: 'Notes', numeric: true, disablePadding: false, label: 'Notes' },
 ];
 
@@ -200,35 +202,35 @@ const styles = theme => ({
   },
 });
 
+/*
+@author:Sujay
+maps data from props to the format {id,practitioner,frontEnd,backEnd,data}
+ */
+let mapData = (allRecords) => {
+  return allRecords.map((c) => ({id:++counter,practitioner:c.name,frontEnd:c.frontEndLevel,
+    backEnd:c.backEndLevel,data:c.dataLevel}));
+};
+
 class EnhancedTable extends React.Component {
+
+  /*
+  @author:Sujay
+  removed data field from state
+   */
   state = {
     order: 'asc',
     orderBy: 'practitioner',
     selected: [],
-    data: [
-      createData('Cupcake', 5, 3, 2),
-      createData('Donut', 2, 3, 1),
-      createData('Eclair', 2, 1, 4),
-      createData('Frozen yoghurt', 4, 4, 4),
-      createData('Gingerbread', 3, 3, 4),
-      createData('Honeycomb', 4, 2, 3),
-      createData('Ice cream sandwich', 3, 2, 5),
-      createData('Jelly Bean', 4, 3, 3),
-      createData('KitKat', 5, 3, 2),
-      createData('Lollipop', 3, 5, 4),
-      createData('Marshmallow', 3, 4, 5),
-      createData('Nougat', 3, 4, 4),
-      createData('Oreo', 4, 1, 3),
-    ],
     mockData:{
       practitioner: 'string',
       frontEnd: 'string',
       backEnd: 'string',
-      data: 'string'
+      dataLevel: 'string'
     },
     page: 0,
     rowsPerPage: 5,
   };
+
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
@@ -286,9 +288,9 @@ class EnhancedTable extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
+    const {order, orderBy, selected, rowsPerPage, page } = this.state;
+    const data = mapData(this.props.data); /* @author:Sujay. Removed data from state and got it from props*/
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-
     return (
       <Paper className={classes.root}>
         <EnhancedTableToolbar numSelected={selected.length} />

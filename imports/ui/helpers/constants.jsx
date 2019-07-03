@@ -9,6 +9,7 @@ import BoardPage from '/imports/ui/pages/BoardPage';
 import ProfilePageContainer from '/imports/ui/containers/ProfilePageContainer';
 import AdminPage from '/imports/ui/pages/AdminPage';
 import Authorization from '/imports/ui/helpers/Authorization';
+import BoardPageContainer from "../containers/BoardPageContainer";
 
 const Admin = Authorization(['admin']);
 
@@ -18,7 +19,7 @@ export const ROUTES = {
       text: "Board",
       link: "/",
       hasSubRoutes: false,
-      component: BoardPage,
+      component: BoardPageContainer, /* @author:Sujay Updated component to BoardPageContainer*/
       icon: <ViewQuiltIcon />,
       retainSearchParams: ['query']
     },

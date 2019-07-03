@@ -19,46 +19,46 @@ class AdminPage extends React.Component {
   state = {
     rejectDialogOpen: false,
     notice: ''
-  }
+  };
 
 
   handleApprove = () => {
     const para = {
       _isApproved: true
-    }  // should get the ids of target dataSets
+    } ; // should get the ids of target dataSets
 
     callWithPromise('dataSet.approve', para)
     .then(id => console.log(id))
     .then(() => {})
-  }
+  };
 
   handleReject= () => {
     const para = {
       userId: Meteor.userId(),
       dataSetId:this.props.dataSet._id, 
       isApproved: false
-    }
+    };
 
     this.setState({ rejectDialogOpen: true})
 
     callWithPromise('dataSet.approve', para)
     .then(id => console.log(id))
     .then(() => {})
-  }
+  };
 
 /******************************** Event handlers for reject dialog   *******************************/
   
   handleRejectDialogClose = () => {
     this.setState({ rejectDialogOpen: false})
-  }
+  };
 
   handleSendRejection = reason => {
     this.setState({ rejectDialogOpen: false, notice: reason})
-  }
+  };
   
   handleNoticeChange = event => {
     this.setState({ notice: event.target.value})
-  }
+  };
 
 
 /********************************************************************************/  
@@ -67,7 +67,7 @@ class AdminPage extends React.Component {
     const { users, showRemoved, dataSet, loading, ...props } = this.props;
     const { rejectDialogOpen, notice } = this.state;
 
-    console.log(dataSet)
+    console.log(dataSet);
 
     if (loading) {
       return <PageBase {...props}><Loading /></PageBase>;

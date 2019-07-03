@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 USERNAME=$MONGO_INITDB_ADMIN_USERNAME
 echo ">> Creating user $USERNAME as admin on $MONGO_INITDB_DATABASE..."
 "${mongo[@]}" "$rootAuthDatabase" <<-EOJS
@@ -9,13 +10,13 @@ echo ">> Creating user $USERNAME as admin on $MONGO_INITDB_DATABASE..."
 	db = db.getSiblingDB("$MONGO_INITDB_DATABASE");
 	print(db);
 
-	if (db.getUser("$USERNAME")) {
-		print(">> User $USERNAME exists. Updating.");
-		db.updateUser("$USERNAME", userProps);
+	if (db.getUser("${USERNAME}")) {
+		print(">> User ${USERNAME} exists. Updating.");
+		db.updateUser("${USERNAME}", userProps);
 		quit();
 	}
 
-	db.getUser("$USERNAME") || db.createUser(Object.assign(
+	db.getUser("${USERNAME}") || db.createUser(Object.assign(
 		{
 			user: $(jq --arg 'user' "$USERNAME" --null-input '$user'),
 		},

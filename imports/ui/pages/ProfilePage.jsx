@@ -47,7 +47,7 @@ For  Satark
       backEndLevel: this.state.backEndLevel,
       dataLevel: this.state.dataLevel,
       isApproved: false
-    }
+    };
 
     callWithPromise('dataSet.create',para)
       .then(id => console.log(id))
@@ -62,6 +62,7 @@ For  Satark
 
   render() {
     const { dataSets, dataSet, loading, classes, match, ...props } = this.props;
+    // console.log(dataSet,dataSets);
     const { name, frontEndLevel, backEndLevel, dataLevel, open } = this.state;
 
     return (

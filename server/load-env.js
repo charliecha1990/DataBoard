@@ -10,8 +10,19 @@ import dotenv from 'dotenv';
 
 const loadEnv = new Promise((resolve, reject) => {
   const result = dotenv.config({
-    path: path.resolve(process.env.ENV_PATH || `${process.env.PWD}/.env.meteor`)
+    path: path.resolve(process.env.PATH || `${process.env.PWD}`+'/.env.meteor.example')
   });
+<<<<<<< HEAD
+  // console.log("Env path ",process.env.PATH);
+  // console.log("Env pwd ",process.env.PWD);
+  resolve();
+  // if (result.error) {
+  //   console.log(process.env.PWD);
+  //   reject(result.error);
+  // } else {
+  //   resolve();
+  // }
+=======
 
   resolve();
 
@@ -20,6 +31,7 @@ const loadEnv = new Promise((resolve, reject) => {
   } else {
     resolve();
   }
+>>>>>>> master
 });
 
 export default loadEnv;
