@@ -21,15 +21,21 @@ class AdminPage extends React.Component {
     notice: ''
   };
 
+  handleApprove = (event,ids) => {
+     
+    event.preventDefault();
 
-  handleApprove = () => {
-    const para = {
-      _isApproved: true
-    } ; // should get the ids of target dataSets
-
+    ids.forEach( id => {
+      const para = {
+        dataSetId: id
+      } 
+  
     callWithPromise('dataSet.approve', para)
-    .then(id => console.log(id))
-    .then(() => {})
+      .then(id => console.log(id))
+      .then(() => {})
+
+    })
+   
   };
 
   handleReject= () => {
@@ -64,10 +70,9 @@ class AdminPage extends React.Component {
 /********************************************************************************/  
 
   render() {
-    const { users, showRemoved, dataSet, loading, ...props } = this.props;
+    const { users, showRemoved, dataSet, requestArray, loading, ...props } = this.props;
     const { rejectDialogOpen, notice } = this.state;
 
-    console.log(dataSet);
 
     if (loading) {
       return <PageBase {...props}><Loading /></PageBase>;
@@ -79,6 +84,7 @@ class AdminPage extends React.Component {
         <Grid container justify="center">
           <Grid item xs={12}>
             <AdminTab 
+              dataSet={dataSet}
               onApprove={this.handleApprove} 
               onReject={this.handleReject}
             />

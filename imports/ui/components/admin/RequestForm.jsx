@@ -56,6 +56,7 @@ const rows = [
   { id: 'backEnd', numeric: true, disablePadding: false, label: 'Back-end' },
   { id: 'frontEnd', numeric: true, disablePadding: false, label: 'Front-end' },
   { id: 'data', numeric: true, disablePadding: false, label: 'Data' },
+  { id: 'requestDate', numeric: true, disablePadding: false, label: 'Request Date' },
   // { id: 'Notes', numeric: true, disablePadding: false, label: 'Notes' },
 ];
 
@@ -105,8 +106,7 @@ class EnhancedTableHead extends React.Component {
                         </TableSortLabel>
                       </Tooltip>
                     </TableCell>
-                ),
-                this,
+                )
             )}
           </TableRow>
         </TableHead>
@@ -165,7 +165,6 @@ let EnhancedTableToolbar = props => {
               </Typography>
           ) : (
               <Typography variant="subheading" id="tableTitle">
-                Data Tracking
               </Typography>
           )}
         </div>
@@ -219,17 +218,6 @@ class RequestForm extends React.Component {
     order: 'asc',
     orderBy: 'practitioner',
     selected: [],
-    data: [
-      createData('Cupcake', 3, 3, 4),
-      createData('Donut', 4, 4, 5),
-      createData('Eclair', 2, 4, 4),
-    ],
-    mockData:{
-      practitioner: 'string',
-      frontEnd: 'string',
-      backEnd: 'string',
-      data: 'string'
-    },
     page: 0,
     rowsPerPage: 5,
   };
@@ -247,7 +235,7 @@ class RequestForm extends React.Component {
 
   handleSelectAllClick = event => {
     if (event.target.checked) {
-      this.setState(state => ({ selected: state.data.map(n => n.id) }));
+      this.setState(state => ({ selected: this.props.dataSet.map(n => n._id) }));
       return;
     }
     this.setState({ selected: [] });
@@ -285,13 +273,15 @@ class RequestForm extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes, onApprove, onReject } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const { classes, onApprove, onReject, dataSet , requestArray} = this.props;
+    const { order, orderBy, selected, rowsPerPage, page } = this.state;
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataSet.length - page * rowsPerPage);
+
+    console.log(selected)
 
     return (
         <Paper className={classes.root}>
-          <EnhancedTableToolbar numSelected={selected.length} onApprove={onApprove} onReject={onReject} />
+          <EnhancedTableToolbar numSelected={selected.length} onApprove={onApprove(event,selected)} onReject={onReject} />
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
               <EnhancedTableHead
@@ -300,34 +290,36 @@ class RequestForm extends React.Component {
                   orderBy={orderBy}
                   onSelectAllClick={this.handleSelectAllClick}
                   onRequestSort={this.handleRequestSort}
-                  rowCount={data.length}
+                  rowCount={dataSet.length}
               />
               <TableBody>
-                {stableSort(data, getSorting(order, orderBy))
+                {stableSort(dataSet, getSorting(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map(n => {
-                      const isSelected = this.isSelected(n.id);
+                      const isSelected = this.isSelected(n._id);
                       return (
-                          <TableRow
-                              hover
-                              onClick={event => this.handleEnableEdition (event, n.id)} // click to make each row editable instead of being checked
-                              role="checkbox"
-                              aria-checked={isSelected}
-                              tabIndex={-1}
-                              key={n.id}
-                              selected={isSelected}
-                          >
-                            <TableCell padding="checkbox">
-                              <Checkbox checked={isSelected}
-                                        onClick={event => this.handleClick(event, n.id)} />
-                            </TableCell>
-                            <TableCell component="th" scope="row" padding="none">
-                              {n.practitioner}
-                            </TableCell>
-                            <TableCell align="right">{n.frontEnd}</TableCell>
-                            <TableCell align="right">{n.backEnd}</TableCell>
-                            <TableCell align="right">{n.data}</TableCell>
-                          </TableRow>
+                            <TableRow
+                            hover
+                            onClick={event => this.handleEnableEdition (event, n._id)} // click to make each row editable instead of being checked
+                            role="checkbox"
+                            aria-checked={isSelected}
+                            tabIndex={-1}
+                            key={n._id}
+                            selected={isSelected}
+                        >
+                          <TableCell padding="checkbox">
+                            <Checkbox checked={isSelected}
+                                      onClick={event => this.handleClick(event, n._id)} />
+                          </TableCell>
+                          <TableCell component="th" scope="row" padding="none">
+                            {n.name}
+                          </TableCell>
+                          <TableCell align="right">{n.frontEndLevel}</TableCell>
+                          <TableCell align="right">{n.backEndLevel}</TableCell>
+                          <TableCell align="right">{n.dataLevel}</TableCell>
+                          <TableCell align="right">{n.createdAt.toString().substring(0, 16)}</TableCell>
+                        </TableRow>
+                
                       );
                     })}
                 {emptyRows > 0 && (
@@ -341,7 +333,7 @@ class RequestForm extends React.Component {
           <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={data.length}
+              count={dataSet.length}
               rowsPerPage={rowsPerPage}
               page={page}
               backIconButtonProps={{

@@ -7,11 +7,29 @@ import Badge from '@material-ui/core/Badge';
 
 import BoardPage from '/imports/ui/pages/BoardPage';
 import ProfilePageContainer from '/imports/ui/containers/ProfilePageContainer';
-import AdminPage from '/imports/ui/pages/AdminPage';
 import Authorization from '/imports/ui/helpers/Authorization';
 import BoardPageContainer from "../containers/BoardPageContainer";
+import AdminPageContainer from '../containers/AdminPageContainer';
+import DataSet from "../../api/dataSet/DataSet";
 
 const Admin = Authorization(['admin']);
+
+
+const getRequestNumber = () => {
+  var requestArray = [];
+  let dataSet = DataSet.find().fetch();
+
+  console.log('Const',dataSet, 'request array', requestArray)
+
+  dataSet.forEach(element => {
+    if(element.isApproved == false){
+        requestArray.push(element);
+    }
+  });
+
+  return requestArray.length;
+
+};
 
 export const ROUTES = {
   user: [
@@ -37,8 +55,8 @@ export const ROUTES = {
       text: "Admin",
       link: "/admin",
       hasSubRoutes: true,
-      component: Admin(AdminPage),
-        icon: <Badge color="secondary" badgeContent={3}> {/* badge number needes to be coded  */}
+      component: Admin(AdminPageContainer),
+        icon: <Badge color="secondary" badgeContent={getRequestNumber()}> {/* badge number needes to be coded  */}
                 <AdminIcon />
               </Badge>
     },
