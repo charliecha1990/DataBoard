@@ -25,12 +25,15 @@ class AdminPage extends React.Component {
      
     event.preventDefault();
 
+    console.log('selected IDs are:', ids)
+
     ids.forEach( id => {
-      const para = {
-        dataSetId: id
+      const paras = {
+        dataSet_id: id,
+        approve: true
       } 
   
-    callWithPromise('dataSet.approve', para)
+    callWithPromise('dataSet.approve', paras)
       .then(id => console.log(id))
       .then(() => {})
 
@@ -38,18 +41,24 @@ class AdminPage extends React.Component {
    
   };
 
-  handleReject= () => {
-    const para = {
-      userId: Meteor.userId(),
-      dataSetId:this.props.dataSet._id, 
-      isApproved: false
-    };
+  handleReject= (event,ids) => {
+    event.preventDefault();
 
-    this.setState({ rejectDialogOpen: true})
 
-    callWithPromise('dataSet.approve', para)
-    .then(id => console.log(id))
-    .then(() => {})
+    ids.forEach( id => {
+      const paras = {
+        dataSet_id: id,
+        approve: false
+      } 
+  
+    callWithPromise('dataSet.approve', paras)
+      .then(id => console.log(id))
+      .then(() => {})
+
+    })
+
+    // this.setState({ rejectDialogOpen: true})
+
   };
 
 /******************************** Event handlers for reject dialog   *******************************/
@@ -84,9 +93,8 @@ class AdminPage extends React.Component {
         <Grid container justify="center">
           <Grid item xs={12}>
             <AdminTab 
-              dataSet={dataSet}
+              requestArray={ requestArray}
               onApprove={this.handleApprove} 
-              onReject={this.handleReject}
             />
             <RejectDialog
               open={rejectDialogOpen} 
@@ -105,18 +113,11 @@ class AdminPage extends React.Component {
 
 export default withTracker(() => {
   const usersHandle = Meteor.subscribe('users.all', { includeDeleted: true });
-  const dataSetsHandle = Meteor.subscribe("dataSets");
-
-  var UnapprovedDataSets = DataSet.find(
-      { userId: Meteor.userId() },
-      { sort: { createdAt: -1 }, limit: 1 }
-  ).fetch();  // should filter those not have been approved
 
   return {
-    loading: !(usersHandle.ready() && dataSetsHandle.ready()),
+    loading: !(usersHandle.ready()),
     users: User.find({}, {
       disableEvents: true
     }).fetch(),
-    UnapprovedDataSets
   };
 })(AdminPage);

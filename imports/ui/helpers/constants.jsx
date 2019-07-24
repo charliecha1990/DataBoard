@@ -14,23 +14,6 @@ import DataSet from "../../api/dataSet/DataSet";
 
 const Admin = Authorization(['admin']);
 
-
-const getRequestNumber = () => {
-  var requestArray = [];
-  let dataSet = DataSet.find().fetch();
-
-  console.log('Const',dataSet, 'request array', requestArray)
-
-  dataSet.forEach(element => {
-    if(element.isApproved == false){
-        requestArray.push(element);
-    }
-  });
-
-  return requestArray.length;
-
-};
-
 export const ROUTES = {
   user: [
     {
@@ -56,7 +39,7 @@ export const ROUTES = {
       link: "/admin",
       hasSubRoutes: true,
       component: Admin(AdminPageContainer),
-        icon: <Badge color="secondary" badgeContent={getRequestNumber()}> {/* badge number needes to be coded  */}
+        icon: <Badge color="secondary" badgeContent={3}> {/* badge number needes to be coded  */}
                 <AdminIcon />
               </Badge>
     },

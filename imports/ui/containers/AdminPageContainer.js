@@ -24,10 +24,23 @@ export default compose(
       });
 
 
-      console.log("AdminContainer",dataSet)
+      const getRequestNumber = () => {
+        var requestArray = [];
+        let dataSet = DataSet.find().fetch();
+      
+      
+        dataSet.forEach(element => {
+          if(element.isApproved == false){
+              requestArray.push(element);
+          }
+        });
+      
+        return requestArray.length;
+      
+      };
+      
 
       return {
-        dataSet,
         requestArray,
         connected: Meteor.status().connected,
         loading: !dataSetsHandle.ready()

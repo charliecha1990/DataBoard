@@ -51,7 +51,7 @@ class AdminTab extends React.Component {
 
   render() {
 
-    const { users, classes, dataSet, theme, showRemoved, onApprove, onReject} = this.props;
+    const { users, classes, requestArray, theme, showRemoved, onApprove} = this.props;
 
     return (
       <div className={classes.root}>
@@ -78,8 +78,7 @@ class AdminTab extends React.Component {
           <TabContainer dir={theme.direction}>
               <RequestForm 
               onApprove={onApprove} 
-              onReject={onReject}
-              dataSet={dataSet}
+              requestArray={requestArray}
               />
           </TabContainer>
           <TabContainer dir={theme.direction}>

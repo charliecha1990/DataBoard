@@ -312,7 +312,7 @@ class EnhancedTable extends React.Component {
                   return (
                     <TableRow
                       hover
-                      onClick={event => this.handleEnableEdition (event, n.id)} // click to make each row editable instead of being checked
+                   //   onClick={event => this.handleEnableEdition (event, n.id)} // click to make each row editable instead of being checked
                       role="checkbox"
                       aria-checked={isSelected}
                       tabIndex={-1}
