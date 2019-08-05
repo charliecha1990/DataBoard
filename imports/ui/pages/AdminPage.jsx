@@ -21,10 +21,7 @@ class AdminPage extends React.Component {
     notice: ''
   };
 
-  handleApprove = (event,ids) => {
-     
-    event.preventDefault();
-
+  handleApprove = ids => {
     console.log('selected IDs are:', ids)
 
     ids.forEach( id => {
@@ -41,10 +38,7 @@ class AdminPage extends React.Component {
    
   };
 
-  handleReject= (event,ids) => {
-    event.preventDefault();
-
-
+  handleReject= (ids) => {
     ids.forEach( id => {
       const paras = {
         dataSet_id: id,
@@ -93,8 +87,9 @@ class AdminPage extends React.Component {
         <Grid container justify="center">
           <Grid item xs={12}>
             <AdminTab 
-              requestArray={ requestArray}
+              requestArray={requestArray}
               onApprove={this.handleApprove} 
+              onReject={this.handleReject}
             />
             <RejectDialog
               open={rejectDialogOpen} 
