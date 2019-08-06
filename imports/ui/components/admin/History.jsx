@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,19 +8,21 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
   table: {
-    minWidth: 650,
+    minWidth: 700,
   },
-}));
+});
 
+let id = 0;
 function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+  id += 1;
+  return { id, name, calories, fat, carbs, protein };
 }
 
 const rows = [
@@ -30,24 +33,24 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function History() {
-  const classes = useStyles();
+function History(props) {
+  const { classes } = props;
 
   return (
-    <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Practitioner</TableCell>
+            <TableCell align="right">Front-end</TableCell>
+            <TableCell align="right">Back-end</TableCell>
+            <TableCell align="right">Data</TableCell>
+            <TableCell align="right">Status</TableCell>
+            <TableCell align="right">Date</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map(row => (
-            <TableRow key={row.name}>
+            <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
@@ -59,6 +62,11 @@ export default function History() {
           ))}
         </TableBody>
       </Table>
-    </Paper>
   );
 }
+
+History.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(History);
