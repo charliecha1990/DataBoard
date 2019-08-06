@@ -36,6 +36,10 @@ const rows = [
 function History(props) {
   const { classes } = props;
 
+
+  console.log(props.requestHistory);
+  
+
   return (
       <Table className={classes.table}>
         <TableHead>

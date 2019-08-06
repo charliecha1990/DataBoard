@@ -10,7 +10,7 @@ import AdminTab from '../components/admin/AdminTab';
 import Loading from '../components/Loading';
 import RejectDialog from '../components/admin/RejectDialog';
 import { Provider } from "../helpers/Context";
-import DataSet from "/imports/api/dataSet/DataSet";
+
 
 import Grid from '@material-ui/core/Grid';
 
@@ -34,8 +34,11 @@ class AdminPage extends React.Component {
       .then(id => console.log(id))
       .then(() => {})
 
-    })
-   
+    callWithPromise('history.create', paras)
+    .then(id => console.log(id))
+    .then(() => {})
+    });
+    
   };
 
   handleReject= (ids) => {
@@ -44,16 +47,22 @@ class AdminPage extends React.Component {
         dataSet_id: id,
         approve: false
       } 
+
+      const dataSetId = id;
   
     callWithPromise('dataSet.approve', paras)
       .then(id => console.log(id))
       .then(() => {})
-
     })
 
-    // this.setState({ rejectDialogOpen: true})
-
+    callWithPromise('dataSet.search', dataSetId)
+    .then(response =>{
+      callWithPromise('history.create', response)
+    })
+    .then(() => {})
   };
+
+
 
 /******************************** Event handlers for reject dialog   *******************************/
   
@@ -73,7 +82,7 @@ class AdminPage extends React.Component {
 /********************************************************************************/  
 
   render() {
-    const { users, showRemoved, dataSet, requestArray, loading, ...props } = this.props;
+    const { users, showRemoved, dataSet, requestArray, loading, requestHistory,  ...props } = this.props;
     const { rejectDialogOpen, notice } = this.state;
 
 
@@ -87,6 +96,7 @@ class AdminPage extends React.Component {
         <Grid container justify="center">
           <Grid item xs={12}>
             <AdminTab 
+              requestHistory={requestHistory}
               requestArray={requestArray}
               onApprove={this.handleApprove} 
               onReject={this.handleReject}

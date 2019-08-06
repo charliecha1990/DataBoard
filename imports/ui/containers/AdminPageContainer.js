@@ -5,24 +5,25 @@ import AdminPage from '/imports/ui/pages/AdminPage';
 import {compose} from "recompose";
 import {withRouter} from "react-router-dom";
 import DataSet from "../../api/dataSet/DataSet";
+import History from "../../api/history/History";
 import {withMessageContext} from "../helpers/MessageContext";
 
 
 export default compose(
     withRouter,
     withTracker(() => {
-
       const dataSetsHandle = Meteor.subscribe("dataSets");
+      const requestHistoryHandle = Meteor.subscribe("histories")
 
-      let dataSet = DataSet.find().fetch();
-      var requestArray = [];
+      const dataSet = DataSet.find().fetch();
+      const requestHistory = History.find().fetch();
+      const requestArray = [];
 
       dataSet.forEach(element => {
           if(element.isApproved == false){
               requestArray.push(element);
           }
       });
-
 
       const getRequestNumber = () => {
         var requestArray = [];
@@ -42,8 +43,9 @@ export default compose(
 
       return {
         requestArray,
+        requestHistory,
         connected: Meteor.status().connected,
-        loading: !dataSetsHandle.ready()
+        loading: (!dataSetsHandle.ready() && requestHistoryHandle.ready())
       };
     }),
     withMessageContext

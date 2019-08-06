@@ -7,5 +7,5 @@ Meteor.publish('history', function () {
   if (!this.userId) {
     return this.ready();
   }
-  return History.find({});
+  return History.find();
 });

@@ -28,7 +28,9 @@ Meteor.methods({
     const dataSet = DataSet.findOne(params.dataSet_id);
     dataSet.softRemove();
   },
-
+  async "dataSets.search"(dataSetId) {
+    return DataSet.findOne(dataSetId);
+  },
   async "dataSet.approve"(params= {}) {
     const dataSet = DataSet.findOne( params.dataSet_id );
 

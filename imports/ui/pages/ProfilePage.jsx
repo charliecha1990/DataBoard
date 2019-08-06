@@ -51,7 +51,7 @@ For  Satark
 
     callWithPromise('dataSet.create',para)
       .then(id => console.log(id))
-      .then(() => {})
+      .then(() => {});
   };
 /*
 ------------------------------------------------------------------------------------------

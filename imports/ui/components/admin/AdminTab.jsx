@@ -52,7 +52,7 @@ class AdminTab extends React.Component {
 
   render() {
 
-    const { users, classes, requestArray, theme, showRemoved, onApprove, onReject} = this.props;
+    const { users, classes, requestArray, theme, showRemoved, onApprove, onReject, requestHistory} = this.props;
 
     return (
       <div className={classes.root}>
@@ -90,7 +90,9 @@ class AdminTab extends React.Component {
           </TabContainer>
           <TabContainer dir={theme.direction}>
             <DisplayItem show xs={12} sm={12}>
-              <History />
+              <History 
+                requestHistory={requestHistory}
+              />
             </DisplayItem>
           </TabContainer>
         </SwipeableViews>
