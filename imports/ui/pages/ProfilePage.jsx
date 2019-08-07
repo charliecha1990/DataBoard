@@ -41,7 +41,6 @@ class ProfilePage extends Component {
     // console.log(this.props);
   }
 
-<<<<<<< HEAD
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.dataSet !== this.props.dataSet) {
       let updatedData = [];
@@ -58,18 +57,6 @@ class ProfilePage extends Component {
       this.setState({ data: updatedData });
     }
   }
-=======
-    callWithPromise('dataSet.create',para)
-      .then(id => console.log(id))
-      .then(() => {});
-  };
-/*
-------------------------------------------------------------------------------------------
-*/
-  handleClose = () => {
-    this.setState({ open: false });
-  };
->>>>>>> 195f2ce13ab3a367c24aff99a98a817491f68aeb
 
   render() {
     const { dataSets, dataSet, loading, classes,match, frontendSkills, backendSkills, dataSkills, ...props } = this.props;

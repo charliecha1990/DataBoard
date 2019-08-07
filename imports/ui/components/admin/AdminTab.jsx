@@ -77,14 +77,8 @@ class AdminTab extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-<<<<<<< HEAD
               <RequestForm
               onApprove={onApprove}
-=======
-              <RequestForm 
-              onApprove={onApprove} 
-              onReject={onReject}
->>>>>>> 195f2ce13ab3a367c24aff99a98a817491f68aeb
               requestArray={requestArray}
               />
           </TabContainer>

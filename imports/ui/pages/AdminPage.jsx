@@ -11,65 +11,41 @@ import Loading from "../components/Loading";
 import RejectDialog from "../components/admin/RejectDialog";
 import { Provider } from "../helpers/Context";
 
-
 import Grid from "@material-ui/core/Grid";
 
 class AdminPage extends React.Component {
-
   state = {
     rejectDialogOpen: false,
     notice: ""
   };
 
-<<<<<<< HEAD
   handleApprove = (event, ids) => {
-
     event.preventDefault();
 
     console.log("selected IDs are:", ids);
-=======
-  handleApprove = ids => {
-    console.log('selected IDs are:', ids)
->>>>>>> 195f2ce13ab3a367c24aff99a98a817491f68aeb
 
     ids.forEach(id => {
       const paras = {
         dataSet_id: id,
         approve: true
-<<<<<<< HEAD
       };
 
       callWithPromise("dataSet.approve", paras)
         .then(id => console.log(id))
-        .then(() => {
-        });
-
+        .then(() => {});
     });
-
   };
 
   handleReject = (event, ids) => {
     event.preventDefault();
-=======
-      } 
-  
-    callWithPromise('dataSet.approve', paras)
-      .then(id => console.log(id))
-      .then(() => {})
 
->>>>>>> 195f2ce13ab3a367c24aff99a98a817491f68aeb
-
-    callWithPromise('dataSet.search', id)
+    callWithPromise("dataSet.search", id)
       .then(response => {
-        callWithPromise('requestHistory.create', response);
-        console.log(response)
-        })
-    .then(() => {})
-    });
-    
-  };
+        callWithPromise("requestHistory.create", response);
+        console.log(response);
+      })
+      .then(() => {});
 
-<<<<<<< HEAD
     ids.forEach(id => {
       const paras = {
         dataSet_id: id,
@@ -78,34 +54,9 @@ class AdminPage extends React.Component {
 
       callWithPromise("dataSet.approve", paras)
         .then(id => console.log(id))
-        .then(() => {
-        });
-
+        .then(() => {});
     });
-=======
-  handleReject= (ids) => {
-    ids.forEach( id => {
-      const paras = {
-        dataSet_id: id,
-        approve: false
-      } 
-
-      const dataSetId = id;
-  
-    callWithPromise('dataSet.approve', paras)
-      .then(id => console.log(id))
-      .then(() => {})
-    })
-
-    callWithPromise('dataSet.search', dataSetId)
-    .then(response =>{
-      callWithPromise('requestHistory.create', response)
-    })
-    .then(() => {})
   };
->>>>>>> 195f2ce13ab3a367c24aff99a98a817491f68aeb
-
-
 
   /******************************** Event handlers for reject dialog   *******************************/
 
@@ -121,22 +72,27 @@ class AdminPage extends React.Component {
     this.setState({ notice: event.target.value });
   };
 
-
   /********************************************************************************/
 
   render() {
-    const { users, showRemoved, dataSet, requestArray, loading, requestHistory,  ...props } = this.props;
+    const {
+      users,
+      showRemoved,
+      dataSet,
+      requestArray,
+      loading,
+      requestHistory,
+      ...props
+    } = this.props;
     const { rejectDialogOpen, notice } = this.state;
 
-
     if (loading) {
-      return <PageBase {...props}><Loading/></PageBase>;
+      return <PageBase {...props}><Loading /></PageBase>;
     }
 
     return (
       <PageBase {...props}>
         <Provider value={this.state.notice}>
-<<<<<<< HEAD
           <Grid container justify="center">
             <Grid item xs={12}>
               <AdminTab
@@ -151,23 +107,6 @@ class AdminPage extends React.Component {
                 onNoticeChange={this.handleNoticeChange}
               />
             </Grid>
-=======
-        <Grid container justify="center">
-          <Grid item xs={12}>
-            <AdminTab 
-              requestHistory={requestHistory}
-              requestArray={requestArray}
-              onApprove={this.handleApprove} 
-              onReject={this.handleReject}
-            />
-            <RejectDialog
-              open={rejectDialogOpen} 
-              notice={notice}
-              onClose={this.handleRejectDialogClose}
-              onSend={this.handleSendRejection}
-              onNoticeChange={this.handleNoticeChange}
-            />
->>>>>>> 195f2ce13ab3a367c24aff99a98a817491f68aeb
           </Grid>
         </Provider>
       </PageBase>
@@ -179,9 +118,12 @@ export default withTracker(() => {
   const usersHandle = Meteor.subscribe("users.all", { includeDeleted: true });
 
   return {
-    loading: !(usersHandle.ready()),
-    users: User.find({}, {
-      disableEvents: true
-    }).fetch()
+    loading: !usersHandle.ready(),
+    users: User.find(
+      {},
+      {
+        disableEvents: true
+      }
+    ).fetch()
   };
 })(AdminPage);
