@@ -24,11 +24,11 @@ Meteor.methods({
       dataSet.save((err, id) => err ? rej(err) : res(id)));
   },
 
-  async "dataSets.delete"(params = {}) {
+  async "dataSet.delete"(params = {}) {
     const dataSet = DataSet.findOne(params.dataSet_id);
     dataSet.softRemove();
   },
-  async "dataSets.search"(dataSetId) {
+  async "dataSet.search"(dataSetId) {
     return DataSet.findOne(dataSetId);
   },
   async "dataSet.approve"(params= {}) {

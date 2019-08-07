@@ -5,7 +5,7 @@ import AdminPage from '/imports/ui/pages/AdminPage';
 import {compose} from "recompose";
 import {withRouter} from "react-router-dom";
 import DataSet from "../../api/dataSet/DataSet";
-import History from "../../api/history/History";
+import RequestHistory from "../../api/requestHistory/RequestHistory";
 import {withMessageContext} from "../helpers/MessageContext";
 
 
@@ -16,7 +16,7 @@ export default compose(
       const requestHistoryHandle = Meteor.subscribe("histories")
 
       const dataSet = DataSet.find().fetch();
-      const requestHistory = History.find().fetch();
+      const requestHistory = RequestHistory.find().fetch();
       const requestArray = [];
 
       dataSet.forEach(element => {

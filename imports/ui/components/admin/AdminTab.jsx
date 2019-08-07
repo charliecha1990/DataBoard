@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import RequestForm from './RequestForm';
 import UserList from './UserList';
 import DisplayItem from '../DisplayItem';
-import History from './History';
+import RequestHistory from './RequestHistory';
 
 import { withTracker } from 'meteor/react-meteor-data';
 import User from '/imports/api/users/User';
@@ -90,7 +90,7 @@ class AdminTab extends React.Component {
           </TabContainer>
           <TabContainer dir={theme.direction}>
             <DisplayItem show xs={12} sm={12}>
-              <History 
+              <RequestHistory
                 requestHistory={requestHistory}
               />
             </DisplayItem>

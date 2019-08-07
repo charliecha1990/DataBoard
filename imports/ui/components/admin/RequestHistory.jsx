@@ -33,7 +33,7 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-function History(props) {
+function RequestHistory(props) {
   const { classes } = props;
 
 
@@ -69,8 +69,8 @@ function History(props) {
   );
 }
 
-History.propTypes = {
+RequestHistory.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(History);
+export default withStyles(styles)(RequestHistory);

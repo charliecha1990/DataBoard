@@ -9,8 +9,8 @@ Histories.deny({
   remove: () => true
 });
 
-const History = Class.create({
-  name: "History",
+const RequestHistory = Class.create({
+  name: "RequestHistory",
   collection: Histories,
   fields: {
     userId: String,
@@ -34,5 +34,5 @@ const History = Class.create({
   }
 });
 
-export default History;
+export default RequestHistory;
  

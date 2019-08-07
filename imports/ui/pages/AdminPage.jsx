@@ -34,8 +34,12 @@ class AdminPage extends React.Component {
       .then(id => console.log(id))
       .then(() => {})
 
-    callWithPromise('history.create', paras)
-    .then(id => console.log(id))
+
+    callWithPromise('dataSet.search', id)
+      .then(response => {
+        callWithPromise('requestHistory.create', response);
+        console.log(response)
+        })
     .then(() => {})
     });
     
@@ -57,7 +61,7 @@ class AdminPage extends React.Component {
 
     callWithPromise('dataSet.search', dataSetId)
     .then(response =>{
-      callWithPromise('history.create', response)
+      callWithPromise('requestHistory.create', response)
     })
     .then(() => {})
   };
