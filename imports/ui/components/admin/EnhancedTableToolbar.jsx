@@ -23,7 +23,7 @@ import { lighten } from '@material-ui/core/styles/colorManipulator';
 
 const toolbarStyles = theme => ({
     root: {
-      paddingRight: theme.spacing.unit,
+      paddingRight: theme.spacing(1),
     },
     highlight:
         theme.palette.type === 'light'

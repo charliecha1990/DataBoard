@@ -64,10 +64,10 @@ const styles = theme => ({
     position: 'relative',
     flex: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing.unit,
-      paddingRight: theme.spacing.unit,
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
     }
   },
   progress: {
@@ -83,14 +83,14 @@ const styles = theme => ({
   actionButtonBar: {
     position: 'absolute',
     // transform is overriden when we're wrapped in a Zoom component
-    bottom: 0 - muiButtonStyles(theme).fab.height / 2,
+    // bottom: 0 - muiButtonStyles(theme).fab.height / 2,
     right: 36 * 4, // 4 buttons away
     zIndex: 1,
   },
   actionButtonPage: {
     position: 'fixed',
-    bottom: theme.mixins.toolbar.minHeight + theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
+    bottom: theme.mixins.toolbar.minHeight + theme.spacing * 2,
+    right: theme.spacing(2),
   }
 });
 

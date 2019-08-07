@@ -15,7 +15,7 @@ import ChipArray from './ChipArray';
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
     overflowX: 'auto',
   },
   table: {
@@ -26,7 +26,7 @@ const styles = theme => ({
     // color:'white'
   },
   textField: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
     width: 200,
   },
 });
