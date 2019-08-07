@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import RequestForm from './RequestForm';
 import UserList from './UserList';
 import DisplayItem from '../DisplayItem';
+import RequestHistory from './RequestHistory';
 
 import { withTracker } from 'meteor/react-meteor-data';
 import User from '/imports/api/users/User';
@@ -51,7 +52,7 @@ class AdminTab extends React.Component {
 
   render() {
 
-    const { users, classes, requestArray, theme, showRemoved, onApprove} = this.props;
+    const { users, classes, requestArray, theme, showRemoved, onApprove, onReject, requestHistory} = this.props;
 
     return (
       <div className={classes.root}>
@@ -78,12 +79,20 @@ class AdminTab extends React.Component {
           <TabContainer dir={theme.direction}>
               <RequestForm 
               onApprove={onApprove} 
+              onReject={onReject}
               requestArray={requestArray}
               />
           </TabContainer>
           <TabContainer dir={theme.direction}>
             <DisplayItem show xs={12} sm={12}>
               <UserList users={users} showRemoved={showRemoved} />
+            </DisplayItem>
+          </TabContainer>
+          <TabContainer dir={theme.direction}>
+            <DisplayItem show xs={12} sm={12}>
+              <RequestHistory
+                requestHistory={requestHistory}
+              />
             </DisplayItem>
           </TabContainer>
         </SwipeableViews>

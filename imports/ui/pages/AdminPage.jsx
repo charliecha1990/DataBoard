@@ -10,7 +10,7 @@ import AdminTab from '../components/admin/AdminTab';
 import Loading from '../components/Loading';
 import RejectDialog from '../components/admin/RejectDialog';
 import { Provider } from "../helpers/Context";
-import DataSet from "/imports/api/dataSet/DataSet";
+
 
 import Grid from '@material-ui/core/Grid';
 
@@ -21,10 +21,7 @@ class AdminPage extends React.Component {
     notice: ''
   };
 
-  handleApprove = (event,ids) => {
-     
-    event.preventDefault();
-
+  handleApprove = ids => {
     console.log('selected IDs are:', ids)
 
     ids.forEach( id => {
@@ -37,29 +34,39 @@ class AdminPage extends React.Component {
       .then(id => console.log(id))
       .then(() => {})
 
-    })
-   
+
+    callWithPromise('dataSet.search', id)
+      .then(response => {
+        callWithPromise('requestHistory.create', response);
+        console.log(response)
+        })
+    .then(() => {})
+    });
+    
   };
 
-  handleReject= (event,ids) => {
-    event.preventDefault();
-
-
+  handleReject= (ids) => {
     ids.forEach( id => {
       const paras = {
         dataSet_id: id,
         approve: false
       } 
+
+      const dataSetId = id;
   
     callWithPromise('dataSet.approve', paras)
       .then(id => console.log(id))
       .then(() => {})
-
     })
 
-    // this.setState({ rejectDialogOpen: true})
-
+    callWithPromise('dataSet.search', dataSetId)
+    .then(response =>{
+      callWithPromise('requestHistory.create', response)
+    })
+    .then(() => {})
   };
+
+
 
 /******************************** Event handlers for reject dialog   *******************************/
   
@@ -79,7 +86,7 @@ class AdminPage extends React.Component {
 /********************************************************************************/  
 
   render() {
-    const { users, showRemoved, dataSet, requestArray, loading, ...props } = this.props;
+    const { users, showRemoved, dataSet, requestArray, loading, requestHistory,  ...props } = this.props;
     const { rejectDialogOpen, notice } = this.state;
 
 
@@ -93,8 +100,10 @@ class AdminPage extends React.Component {
         <Grid container justify="center">
           <Grid item xs={12}>
             <AdminTab 
-              requestArray={ requestArray}
+              requestHistory={requestHistory}
+              requestArray={requestArray}
               onApprove={this.handleApprove} 
+              onReject={this.handleReject}
             />
             <RejectDialog
               open={rejectDialogOpen} 

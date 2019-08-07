@@ -21,6 +21,8 @@ import Grid from '@material-ui/core/Grid';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
+import EnhancedTableToolbar from './EnhancedTableToolbar'
+
 let counter = 0;
 function createData( practitioner, frontEnd, backEnd, data) {
   counter += 1;
@@ -198,95 +200,20 @@ class RequestForm extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes, onApprove, requestArray} = this.props;
+    const { classes, onApprove, onReject, requestArray} = this.props;
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, requestArray.length - page * rowsPerPage);
 
 
     console.log("request array",requestArray)
-    const toolbarStyles = theme => ({
-      root: {
-        paddingRight: theme.spacing.unit,
-      },
-      highlight:
-          theme.palette.type === 'light'
-              ? {
-                color: theme.palette.secondary.main,
-                backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-              }
-              : {
-                color: theme.palette.text.primary,
-                backgroundColor: theme.palette.secondary.dark,
-              },
-      spacer: {
-        flex: '1 1 100%',
-      },
-      actions: {
-        color: theme.palette.text.secondary,
-        display: 'flex'
-      },
-      title: {
-        flex: '0 0 auto',
-      },
-    });
     
-    let EnhancedTableToolbar = props => {
-      const { numSelected, classes, onApprove} = props;
-    
-      return (
-          <Toolbar
-              className={classNames(classes.root, {
-                [classes.highlight]: numSelected > 0,
-              })}
-          >
-            <div className={classes.title}>
-              {numSelected > 0 ? (
-                  <Typography color="inherit" variant="subheading">
-                    {numSelected} selected
-                  </Typography>
-              ) : (
-                  <Typography variant="subheading" id="tableTitle">
-                  </Typography>
-              )}
-            </div>
-              <div className={classes.spacer} />
-            <div className={classes.actions}>
-              {numSelected > 0 ? (
-                  <Grid container>
-                    <Grid item xs={12}>
-                      <IconButton aria-label="delete">
-                        <DeleteIcon onClick={onApprove(event,selected)}/>
-                      </IconButton>
-                      <IconButton aria-label="approve">
-                        <DoneIcon onClick={onApprove(event,selected)}/>
-                      </IconButton>
-                    </Grid>
-                  </Grid>
-              ) : (
-                  <Tooltip title="Filter list">
-                    <IconButton aria-label="Filter list">
-                      <FilterListIcon />
-                    </IconButton>
-                  </Tooltip>
-              )}
-            </div>
-          </Toolbar>
-      );
-    };
-    
-    EnhancedTableToolbar.propTypes = {
-      classes: PropTypes.object.isRequired,
-      numSelected: PropTypes.number.isRequired,
-    };
-    
-    EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
-
-
     return (
         <Paper className={classes.root}>
           <EnhancedTableToolbar 
           numSelected={selected.length} 
-          onApprove={onApprove} 
+          selected={selected}
+          onApprove={onApprove}
+          onReject={onReject}
           />
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
