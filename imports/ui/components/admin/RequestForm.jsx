@@ -21,6 +21,8 @@ import Grid from "@material-ui/core/Grid";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { lighten } from "@material-ui/core/styles/colorManipulator";
 
+import EnhancedTableToolbar from './EnhancedTableToolbar'
+
 let counter = 0;
 
 function createData(practitioner, frontEnd, backEnd, data) {
@@ -198,6 +200,7 @@ class RequestForm extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
+<<<<<<< HEAD
     const { classes, onApprove, requestArray } = this.props;
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, requestArray.length - page * rowsPerPage);
@@ -322,6 +325,66 @@ class RequestForm extends React.Component {
                       <TableCell align="right">{n.backEndLevel}</TableCell>
                       <TableCell align="right">{n.dataLevel}</TableCell>
                       <TableCell align="right">{n.createdAt.toString().substring(0, 16)}</TableCell>
+=======
+    const { classes, onApprove, onReject, requestArray} = this.props;
+    const { order, orderBy, selected, rowsPerPage, page } = this.state;
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, requestArray.length - page * rowsPerPage);
+
+
+    console.log("request array",requestArray)
+    
+    return (
+        <Paper className={classes.root}>
+          <EnhancedTableToolbar 
+          numSelected={selected.length} 
+          selected={selected}
+          onApprove={onApprove}
+          onReject={onReject}
+          />
+          <div className={classes.tableWrapper}>
+            <Table className={classes.table} aria-labelledby="tableTitle">
+              <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onSelectAllClick={this.handleSelectAllClick}
+                  onRequestSort={this.handleRequestSort}
+                  rowCount={requestArray.length}
+              />
+              <TableBody>
+                {stableSort(requestArray, getSorting(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map(n => {
+                      const isSelected = this.isSelected(n._id);
+                      return (
+                            <TableRow
+                            hover
+                         //   onClick={event => this.handleEnableEdition (event, n._id)} // click to make each row editable instead of being checked
+                            role="checkbox"
+                            aria-checked={isSelected}
+                            tabIndex={-1}
+                            key={n._id}
+                            selected={isSelected}
+                        >
+                          <TableCell padding="checkbox">
+                            <Checkbox checked={isSelected}
+                                      onClick={event => this.handleClick(n._id)} />
+                          </TableCell>
+                          <TableCell component="th" scope="row" padding="none">
+                            {n.name}
+                          </TableCell>
+                          <TableCell align="right">{n.frontEndLevel}</TableCell>
+                          <TableCell align="right">{n.backEndLevel}</TableCell>
+                          <TableCell align="right">{n.dataLevel}</TableCell>
+                          <TableCell align="right">{n.createdAt.toString().substring(0, 16)}</TableCell>
+                        </TableRow>
+                
+                      );
+                    })}
+                {emptyRows > 0 && (
+                    <TableRow style={{ height: 49 * emptyRows }}>
+                      <TableCell colSpan={6} />
+>>>>>>> 195f2ce13ab3a367c24aff99a98a817491f68aeb
                     </TableRow>
 
                   );

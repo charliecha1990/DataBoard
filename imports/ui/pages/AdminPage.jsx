@@ -10,7 +10,7 @@ import AdminTab from "../components/admin/AdminTab";
 import Loading from "../components/Loading";
 import RejectDialog from "../components/admin/RejectDialog";
 import { Provider } from "../helpers/Context";
-import DataSet from "/imports/api/dataSet/DataSet";
+
 
 import Grid from "@material-ui/core/Grid";
 
@@ -21,16 +21,22 @@ class AdminPage extends React.Component {
     notice: ""
   };
 
+<<<<<<< HEAD
   handleApprove = (event, ids) => {
 
     event.preventDefault();
 
     console.log("selected IDs are:", ids);
+=======
+  handleApprove = ids => {
+    console.log('selected IDs are:', ids)
+>>>>>>> 195f2ce13ab3a367c24aff99a98a817491f68aeb
 
     ids.forEach(id => {
       const paras = {
         dataSet_id: id,
         approve: true
+<<<<<<< HEAD
       };
 
       callWithPromise("dataSet.approve", paras)
@@ -44,8 +50,26 @@ class AdminPage extends React.Component {
 
   handleReject = (event, ids) => {
     event.preventDefault();
+=======
+      } 
+  
+    callWithPromise('dataSet.approve', paras)
+      .then(id => console.log(id))
+      .then(() => {})
 
+>>>>>>> 195f2ce13ab3a367c24aff99a98a817491f68aeb
 
+    callWithPromise('dataSet.search', id)
+      .then(response => {
+        callWithPromise('requestHistory.create', response);
+        console.log(response)
+        })
+    .then(() => {})
+    });
+    
+  };
+
+<<<<<<< HEAD
     ids.forEach(id => {
       const paras = {
         dataSet_id: id,
@@ -58,10 +82,30 @@ class AdminPage extends React.Component {
         });
 
     });
+=======
+  handleReject= (ids) => {
+    ids.forEach( id => {
+      const paras = {
+        dataSet_id: id,
+        approve: false
+      } 
 
-    // this.setState({ rejectDialogOpen: true})
+      const dataSetId = id;
+  
+    callWithPromise('dataSet.approve', paras)
+      .then(id => console.log(id))
+      .then(() => {})
+    })
 
+    callWithPromise('dataSet.search', dataSetId)
+    .then(response =>{
+      callWithPromise('requestHistory.create', response)
+    })
+    .then(() => {})
   };
+>>>>>>> 195f2ce13ab3a367c24aff99a98a817491f68aeb
+
+
 
   /******************************** Event handlers for reject dialog   *******************************/
 
@@ -81,7 +125,7 @@ class AdminPage extends React.Component {
   /********************************************************************************/
 
   render() {
-    const { users, showRemoved, dataSet, requestArray, loading, ...props } = this.props;
+    const { users, showRemoved, dataSet, requestArray, loading, requestHistory,  ...props } = this.props;
     const { rejectDialogOpen, notice } = this.state;
 
 
@@ -92,6 +136,7 @@ class AdminPage extends React.Component {
     return (
       <PageBase {...props}>
         <Provider value={this.state.notice}>
+<<<<<<< HEAD
           <Grid container justify="center">
             <Grid item xs={12}>
               <AdminTab
@@ -106,6 +151,23 @@ class AdminPage extends React.Component {
                 onNoticeChange={this.handleNoticeChange}
               />
             </Grid>
+=======
+        <Grid container justify="center">
+          <Grid item xs={12}>
+            <AdminTab 
+              requestHistory={requestHistory}
+              requestArray={requestArray}
+              onApprove={this.handleApprove} 
+              onReject={this.handleReject}
+            />
+            <RejectDialog
+              open={rejectDialogOpen} 
+              notice={notice}
+              onClose={this.handleRejectDialogClose}
+              onSend={this.handleSendRejection}
+              onNoticeChange={this.handleNoticeChange}
+            />
+>>>>>>> 195f2ce13ab3a367c24aff99a98a817491f68aeb
           </Grid>
         </Provider>
       </PageBase>
