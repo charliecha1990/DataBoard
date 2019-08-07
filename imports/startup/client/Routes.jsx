@@ -20,7 +20,7 @@ const Routes = () => (
     <MuiThemeProvider theme={ThemeDefault}>
       <Switch>
         <Route path="/signin" component={LoginPage} />
-        <Route path="/enroll-account" component={EnrollPage} />
+        <Route path="/enroll" component={EnrollPage} />
         {/* <Route path="/enroll-account/:token" component={EnrollPage} /> */}
         <AppContainer />
       </Switch>

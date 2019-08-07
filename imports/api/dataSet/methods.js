@@ -11,13 +11,13 @@ Meteor.methods({
   },
 
   async "dataSet.update"(params = {}) {
-    const dataSet = DataSet.findOne(params.user_id);
+    const dataSet = DataSet.findOne({userId:params.userId});
+    DataSet.findOne({userId:params.userId});
     dataSet.set({
-      practitioner: params._practitioner,
-      frontEnd: params._frontEnd,
-      backEnd: params._backEnd,
-      data: params._data,
-      isApproved: params._isApproved
+      frontend: params.frontend,
+      backend: params.backend,
+      data: params.data,
+      isApproved: params.isApproved
     });
 
     return new Promise((res, rej) =>

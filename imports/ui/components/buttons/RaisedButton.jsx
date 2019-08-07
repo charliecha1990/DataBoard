@@ -13,7 +13,7 @@ const styles = theme => ({
 });
 
 const RaisedButtons = ({classes, children, ...props}) => (
-  <Button variant="raised" className={classes.button} {...props}>
+  <Button variant="contained" color="secondary" className={classes.button} {...props}>
     { children }
   </Button>
 );

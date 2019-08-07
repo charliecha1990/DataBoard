@@ -57,7 +57,7 @@ class AdminTab extends React.Component {
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
-            fullWidth={true}
+            fullwidth="true"
             centered={true}
             value={this.state.value}
             onChange={this.handleChange}
@@ -76,8 +76,8 @@ class AdminTab extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-              <RequestForm 
-              onApprove={onApprove} 
+              <RequestForm
+              onApprove={onApprove}
               requestArray={requestArray}
               />
           </TabContainer>

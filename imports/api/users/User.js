@@ -1,59 +1,68 @@
-import { Class } from 'meteor/jagi:astronomy';
-import _ from 'lodash';
+import { Class } from "meteor/jagi:astronomy";
+import _ from "lodash";
 
 export const Users = Meteor.users;
 
 Users.deny({
   insert: () => true,
   update: () => true,
-  remove: () => true,
+  remove: () => true
 });
 
 const User = Class.create({
-  name: 'User',
+  name: "User",
   collection: Users,
   fields: {
+    profile: {
+      type: Object,
+      fields:{
+        firstName: String,
+        lastName: String
+      }
+    },
     roles: {
       type: [String],
-      optional: true,
+      optional: true
     },
     emails: {
       type: [Object],
-      optional: false,
+      optional: false
     },
     services: {
       type: Object,
-      optional: false,
+      optional: false
     },
     createdAt: {
       type: Date,
-      optional: false,
-    },
+      optional: false
+    }
   },
   behaviors: {
     timestamp: {
       hasUpdatedField: true,
-      updatedFieldName: 'updatedAt',
+      updatedFieldName: "updatedAt"
     },
     softremove: {
-      removedFieldName: 'removed',
+      removedFieldName: "removed",
       hasRemovedAtField: true,
-      removedAtFieldName: 'removedAt'
-    },
+      removedAtFieldName: "removedAt"
+    }
   },
   helpers: {
     authorize() {
-      if (!userHasRole(User.findOne(Meteor.userId()), 'admin')) { throw 'Unauthorized' }
+      if (!userHasRole(User.findOne(Meteor.userId()), "admin")) {
+        throw "Unauthorized";
+      }
     },
 
     email() {
-      return _.get(this.emails, [0, 'address'], '');
-    },
+      return _.get(this.emails, [0, "address"], "");
+    }
   }
 });
 
 export const userHasRole = (user, role) => {
-  const roles = user.roles || ['user']
+  const roles = user.roles || ["user"];
   return roles.includes(role);
 };
 

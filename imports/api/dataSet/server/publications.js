@@ -7,12 +7,12 @@ Meteor.publish('dataSet', function () {
   if (!this.userId) {
     return this.ready();
   }
-  return DataSet.find({ userId: Meteor.userId() });
+  return DataSet.find({});
 });
 
 Meteor.publish('dataSets', function () {
   if (!this.userId) {
     return this.ready();
   }
-  return DataSet.find({ userId: Meteor.userId() });
+  return DataSet.find({});
 });

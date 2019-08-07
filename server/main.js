@@ -1,7 +1,5 @@
-import loadEnv from './load-env';
-import Raven from 'raven';
-import User from '../imports/api/users/User'
-import dataset from '../imports/api/dataSet/DataSet'
+import loadEnv from "./load-env";
+import Raven from "raven";
 
 /*
   First, load environment variables. loadEnv will contain a promise which will
@@ -18,9 +16,8 @@ loadEnv.then(() => {
   Raven.context(function() {
     Meteor.startup(() => {
       // console.log(dataset.find().fetch());
-      require('/imports/startup/server');
-      require('/imports/startup/both');
-
+      require("/imports/startup/server");
+      require("/imports/startup/both");
     });
   });
 });
