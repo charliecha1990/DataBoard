@@ -1,5 +1,5 @@
 import { withMessageContext } from "/imports/ui/helpers/MessageContext";
-import ProfilePage from "/imports/ui/pages/ProfilePage";
+import SearchPage from "/imports/ui/pages/SearchPage";
 import { Meteor } from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
 import DataSet from "/imports/api/dataSet/DataSet";
@@ -47,4 +47,4 @@ export default compose(
     };
   }),
   withMessageContext
-)(ProfilePage);
+)(SearchPage);

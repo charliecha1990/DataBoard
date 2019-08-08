@@ -1,96 +1,121 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
-import { compose } from "recompose";
-import { withStyles } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
-import _ from 'lodash';
-import Grid from '@material-ui/core/Grid';
-
-import Dialog from "../components/Profile/Dialog";
+import React, { Component } from "react";
 import PageBase from "../components/PageBase";
-import PersonalTable from "../components/Profile/PersonalTable";
-import callWithPromise from '/imports/util/callWithPromise';
+import { createRows, mapDataNew, generateFields } from "../../util/getDatabaseFields";
+import MaterialTable from "material-table";
+import Grid from "@material-ui/core/Grid";
+import callWithPromise from "../../util/callWithPromise";
+import { Meteor } from "meteor/meteor";
 
 
-const styles = _theme => ({});
+let createEmptyObject = (frontendSkills, backendSkills, dataSkills) => {
+  let user = Meteor.user();
+  let emptyObject = {};
+  emptyObject["id"] = Meteor.userId();
+  frontendSkills.forEach(skill => emptyObject[skill] = 0);
+  backendSkills.forEach(skill => emptyObject[skill] = 0);
+  dataSkills.forEach(skill => emptyObject[skill] = 0);
+  emptyObject["isApproved"] = false;
+  emptyObject["practitioner"] = user.profile.firstName + " " + user.profile.lastName;
+  return emptyObject;
+};
 
-class ProfilePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-      frontEndLevel: '',
-      backEndLevel: '',
-      dataLevel: '',
-      name: ''
-    };
+class ProfilePage extends Component {
+  state = {
+    columns: [],
+    data: []
+  };
+  columns = [];
+  dynamicRows = [];
+
+  componentDidMount() {
+    this.dynamicRows = createRows(this.props.frontendSkills, this.props.backendSkills, this.props.dataSkills);
+    this.dynamicRows.forEach(row => {
+      let update = "onUpdate";
+      if (row["id"] === "practitioner") {
+        update = "never";
+      }
+      this.columns.push({ title: row["id"], field: row["id"], editable: update });
+    });
+    this.setState({ columns: this.columns });
+
+    // console.log(this.props);
   }
 
-  handleChange = attribute => event => {
-    this.setState({ 
-        [attribute]: event.target.value
-    });
-  };
-/*
-------------------------------------------------------------------------------------------
-isEmpty(DataSet)?
-Yes:   callWithPromise('dataSet.create',para)
-No:    callWithPromise('dataSet.update',para)
-For  Satark
-*/
-  handleSubmit = () => {
-    this.setState({ open: false });
-
-    const para = {
-      name: this.state.name,
-      frontEndLevel:this.state.frontEndLevel,
-      backEndLevel: this.state.backEndLevel,
-      dataLevel: this.state.dataLevel,
-      isApproved: false
-    };
-
-    callWithPromise('dataSet.create',para)
-      .then(id => console.log(id))
-      .then(() => {});
-  };
-/*
-------------------------------------------------------------------------------------------
-*/
-  handleClose = () => {
-    this.setState({ open: false });
-  };
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.dataSet !== this.props.dataSet) {
+      let updatedData = [];
+      if(this.props.found){
+        updatedData = mapDataNew([this.props.dataSet], this.dynamicRows);
+        updatedData.forEach(row => {
+          delete row.id;
+        });
+      }
+      else{
+        updatedData = [createEmptyObject(this.props.frontendSkills, this.props.backendSkills, this.props.dataSkills)];
+      }
+      // console.log(this.props.dataSet[0]);
+      this.setState({ data: updatedData });
+    }
+  }
 
   render() {
-    const { dataSets, dataSet, loading, classes, match, ...props } = this.props;
-    // console.log(dataSet,dataSets);
-    const { name, frontEndLevel, backEndLevel, dataLevel, open } = this.state;
-
+    const { dataSets, dataSet, loading, classes,match, frontendSkills, backendSkills, dataSkills, ...props } = this.props;
+    let {found} = this.props;
+    // console.log(dataToShow);
     return (
       <PageBase
         {...props}
-        actionIcon={<AddIcon />}
-        onAction={() => {
-          this.setState({ open: true });
-        }}
       >
         <Grid container justify="center">
           <Grid item xs={12}>
-             <PersonalTable 
-            name={dataSet.name}
-            frontEndLevel={dataSet.frontEndLevel}
-            backEndLevel={dataSet.backEndLevel}
-            dataLevel={dataSet.dataLevel}
+            <MaterialTable
+              title="Your Skills"
+              columns={this.columns}
+              data={this.state.data}
+              editable={{
+                onRowUpdate: (newData, oldData) =>
+                  new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                      {
+                        const data = this.state.data;
+                        const index = data.indexOf(oldData);
+                        data[index] = newData;
+                        this.setState({ data }, () => {
+                          let params = {};
+                          params["userId"] = Meteor.userId();
+                          params["name"] = this.state.data[0]["practitioner"];
+                          let frontend = {}, backend = {}, data = {};
+                          frontendSkills.forEach(skill => {
+                            frontend[skill] = this.state.data[0][skill];
+                          });
+                          params["frontend"] = frontend;
+                          backendSkills.forEach(skill => {
+                            backend[skill] = this.state.data[0][skill];
+                          });
+                          params["backend"] = backend;
+                          dataSkills.forEach(skill => {
+                            data[skill] = this.state.data[0][skill];
+                          });
+                          params["data"] = data;
+                          params["isApproved"] = false;
+                          console.log("found",this.props.found);
+                          if(found){
+                            callWithPromise("dataSet.update", params).then(() => resolve());
+                          }
+                          else{
+                            callWithPromise("dataSet.create",params).then(() => {
+                              found=true;
+                              resolve()
+                            });
+                          }
+                          // resolve();
+                        });
+                      }
+                      resolve();
+                    }, 125);
+                  })
+              }}
             />
-           <Dialog
-             name={name}
-             frontEndLevel={frontEndLevel}
-             backEndLevel={backEndLevel}
-             dataLevel={dataLevel}
-             open={open}
-             onClose={this.handleClose}
-             onChange={this.handleChange}
-             onSubmit={this.handleSubmit}
-           />      
           </Grid>
         </Grid>
       </PageBase>
@@ -98,4 +123,4 @@ For  Satark
   }
 }
 
-export default withStyles(styles)(ProfilePage);
+export default ProfilePage;

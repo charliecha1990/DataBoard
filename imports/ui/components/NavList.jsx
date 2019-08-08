@@ -30,11 +30,14 @@ const styles = theme => ({
   },
   listRoot: {
     height: '100%',
+    padding:"0 10px 0 10px"
   },
   listItem: {
     color: theme.palette.primary.contrastText,
     opacity: 0.8,
     height: '100%',
+    marginLeft:"10%",
+    marginTop:"3%"
   },
   listItemActive: {
     color: theme.palette.primary.dark,
@@ -59,7 +62,7 @@ const NavListItem = withStyles(styles)(
         className={colorClass}
         onMouseOver={() => hoverEvent(link)}
         onMouseOut={() => hoverEvent('none')}>
-        <ListItemIcon className={colorClass}>
+        <ListItemIcon className={colorClass} padding="10%" color="red">
           { icon }
         </ListItemIcon>
         <ListItemText
@@ -70,13 +73,13 @@ const NavListItem = withStyles(styles)(
         />
         <ListItemSecondaryAction style={{height: '100%'}}>
           <Tooltip
-              title={text}
-              open={showTooltip}
-              position="right"
-              distance={DRAWER_WIDTH_CLOSED * -1}
-              duration={200}
-              animation="scale"
-              style={{height: '100%', display: 'block'}}
+            title={text}
+            open={showTooltip}
+            position="right"
+            distance={DRAWER_WIDTH_CLOSED * -1}
+            duration={200}
+            animation="scale"
+            style={{height: '100%', display: 'block'}}
           ><div style={{height: '100%'}} /></Tooltip>
         </ListItemSecondaryAction>
       </ListItem>

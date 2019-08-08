@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { Session } from 'meteor/session';
 import { withTracker } from 'meteor/react-meteor-data';
 import AdminPage from '/imports/ui/pages/AdminPage';
 import {compose} from "recompose";
@@ -28,18 +27,18 @@ export default compose(
       const getRequestNumber = () => {
         var requestArray = [];
         let dataSet = DataSet.find().fetch();
-      
-      
+
+
         dataSet.forEach(element => {
           if(element.isApproved == false){
               requestArray.push(element);
           }
         });
-      
+
         return requestArray.length;
-      
+
       };
-      
+
 
       return {
         requestArray,

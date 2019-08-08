@@ -1,5 +1,4 @@
 import { Class } from "meteor/jagi:astronomy";
-// import createRemoteCollection from '/imports/api/createRemoteCollection';
 
 export const DataSets = new Mongo.Collection("dataSets");
 
@@ -9,16 +8,48 @@ DataSets.deny({
   remove: () => true
 });
 
-const DataSet = Class.create({
+const Dataset = Class.create({
   name: "DataSet",
   collection: DataSets,
   fields: {
     userId: String,
-    name: String,
-    frontEndLevel: String,
-    backEndLevel: String,
-    dataLevel: String,
-    isApproved: Boolean,
+
+    frontend: {
+      type: Object,
+      optional: true,
+      fields: {
+        react: Number,
+        angular: Number,
+        javascript: Number,
+        html: Number,
+        vue: Number
+      }
+    },
+
+    backend: {
+      type: Object,
+      optional: true,
+      fields: {
+        java: Number,
+        chsharp: Number,
+        python: Number,
+        node: Number,
+        cpp: Number
+      }
+    },
+    data: {
+      type: Object,
+      optional: true,
+      fields: {
+        sql: Number,
+        r: Number,
+        pandas: Number,
+        numpy: Number,
+        spark: Number,
+        sklearn: Number
+      }
+    },
+    isApproved: Boolean
     // availability: String
   },
   behaviors: {
@@ -34,4 +65,4 @@ const DataSet = Class.create({
   }
 });
 
-export default DataSet;
+export default Dataset;

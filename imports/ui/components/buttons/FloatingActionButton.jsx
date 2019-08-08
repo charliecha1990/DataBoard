@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Fab from "@material-ui/core/Fab";
 
 const styles = theme => ({
   button: {
@@ -13,9 +14,9 @@ const styles = theme => ({
 });
 
 const FloatingActionButton = ({classes, children, ...props}) => (
-  <Button variant="fab" className={classes.button} {...props}>
+  <Fab className={classes.button} {...props}>
     { children }
-  </Button>
+  </Fab>
 );
 
 FloatingActionButton.propTypes = {

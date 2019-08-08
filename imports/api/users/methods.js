@@ -30,6 +30,11 @@ Meteor.methods({
     user.save();
   },
 
+  async "user.find"(params = {}){
+    let user = User.findOne(params.userId);
+    console.log("User",Meteor.user());
+  },
+
   /* Create a user without logging in as that user (server-side only) */
   /* Note that you need to set a password (see Accounts#setPassword)
    * before the user can log in, but we don't do so here to avoid

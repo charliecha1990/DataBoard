@@ -16,7 +16,7 @@ es5-shim@4.8.0                # ECMAScript 5 compatibility for older browsers.
 ecmascript@0.12.4              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.4.0
 
-accounts-password@1.5.1
+accounts-password
 
 static-html
 less@2.7.12

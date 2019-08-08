@@ -43,7 +43,7 @@ class RejectDialog extends React.Component {
                   id="name"
                   value={context}
                   onChange={onNoticeChange}
-                  fullWidth={true}
+                  fullwidth={true}
                 />
                 }
               </Consumer>
