@@ -129,8 +129,8 @@ EnhancedTableHead.propTypes = {
 
 const styles = theme => ({
   root: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 3
+    width: '100%',
+    marginTop: theme.spacing(3),
   },
   table: {
     minWidth: 800
@@ -206,7 +206,7 @@ class RequestForm extends React.Component {
 
     const toolbarStyles = theme => ({
       root: {
-        paddingRight: theme.spacing.unit
+        paddingRight: theme.spacing(1)
       },
       highlight:
         theme.palette.type === "light"

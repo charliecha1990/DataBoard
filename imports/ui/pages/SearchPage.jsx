@@ -8,8 +8,8 @@ import AdminTab from "../components/admin/AdminTab";
 const styles = theme => ({
   root: {
     width: "100%",
-    marginBottom: theme.spacing.unit * 3,
-    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing(3),
+    marginTop: theme.spacing(3),
     backgroundColor: "black"
   },
 })
