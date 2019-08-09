@@ -57,7 +57,7 @@ const StackingTopBar = ({classes, children, theme, ...props}) => (
   >
     <AppBar position="static" elevation={0} className={classes.bar}>
       <Toolbar>
-        <Grid container spacing={theme.spacing.unit * 2} alignItems="center" wrap="nowrap" className={classNames(classes.container, classes.contentContainer)} {...props}>
+        <Grid container spacing={theme.spacing(2)} alignItems="center" wrap="nowrap" className={classNames(classes.container, classes.contentContainer)} {...props}>
           { children }
         </Grid>
       </Toolbar>
