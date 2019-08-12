@@ -45,41 +45,49 @@ class EnrollPage extends Component {
     notFound: false
   };
 
-  onChange = (e) => {
+  onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   checkErrors = () => {
-    const { email, password, firstName, lastName, confirmPassword } = this.state;
+    const {
+      email,
+      password,
+      firstName,
+      lastName,
+      confirmPassword
+    } = this.state;
     if (!email || !password || !firstName || !lastName || !confirmPassword) {
       //if error return true
       return true;
     }
 
     return !(password === confirmPassword);
-
   };
 
-  onSubmit = (e) => {
+  onSubmit = e => {
+    console.log("Submiting");
     e.preventDefault();
     if (!this.checkErrors()) {
-      Accounts.createUser({
-        email: this.state.email,
-        password: this.state.password,
-        profile: {
-          firstName: this.state.firstName,
-          lastName: this.state.lastName
+      Accounts.createUser(
+        {
+          email: this.state.email,
+          password: this.state.password,
+          profile: {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName
+          }
+        },
+        (err, user) => {
+          if (err) throw err;
+          console.log(user);
+          this.props.history.push("/signin");
         }
-      }, (err, user) => {
-        if (err) throw err;
-        console.log(user);
-        this.props.history.push("/signin");
-      });
+      );
     }
   };
 
   render() {
-    // console.log(this.props);
     const { classes } = this.props;
     const { errors } = this.state;
     return (
@@ -88,7 +96,7 @@ class EnrollPage extends Component {
           key="paper"
           square
           className={classNames(classes.container, classes.paper)}
-          ref={(node) => (this.container = findDOMNode(node))}
+          ref={node => this.container = findDOMNode(node)}
         >
           <Typography variant="h5" paragraph style={{ textAlign: "center" }}>
             Almost there!
