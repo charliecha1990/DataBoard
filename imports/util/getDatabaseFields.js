@@ -8,7 +8,7 @@ let generateFields = (name) => {
   return Object.keys(mapping[0]);
 };
 
-let flattenData = (dataset,requestDate) => {
+let flattenData = (dataset, requestDate) => {
   dataset = dataset || [];
   let flatData = [];
   dataset.forEach(row => {
@@ -27,7 +27,7 @@ let flattenData = (dataset,requestDate) => {
     Object.keys(datasci).forEach(s => {
       newRow[s] = datasci[s] || 0;
     });
-    if(requestDate){
+    if (requestDate) {
       newRow[requestDate] = row[requestDate]
     }
     flatData.push(newRow);
@@ -36,7 +36,7 @@ let flattenData = (dataset,requestDate) => {
 };
 let generateRowFormat = (skillsList, dynamicRows) => {
   skillsList.forEach(skill => {
-    dynamicRows.push({ id: skill, numeric: true, align:"center", disablePadding: false, label: _.capitalize(skill) });
+    dynamicRows.push({ id: skill, numeric: true, align: "center", disablePadding: false, label: _.capitalize(skill) });
   });
 };
 let createRows = (frontendSkills, backendSkills, dataSkills) => {
@@ -50,8 +50,8 @@ let createRows = (frontendSkills, backendSkills, dataSkills) => {
   return dynamicRows;
 };
 
-let mapDataNew = (dataset, dynamicRows,requestDate) => {
-  let flatData = flattenData(dataset,requestDate);
+let mapDataNew = (dataset, dynamicRows, requestDate) => {
+  let flatData = flattenData(dataset, requestDate);
   let skills = dynamicRows.map(row => row["id"]);
   let mappedData = [];
   // console.log(skills);
