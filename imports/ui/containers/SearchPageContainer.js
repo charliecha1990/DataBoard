@@ -15,9 +15,8 @@ export default compose(
     let frontendSkills = generateFields("frontend");
     let backendSkills = generateFields("backend");
     let dataSkills = generateFields("data");
-    let fieldstring = "frontend.react";
-    let res = Dataset.find({ "frontend.react": 4 }).fetch()
-    console.log(res);
+    let skillRange = ["0", "1", "2", "3", "4", "5"];
+    console.log(datasetHandleSearch)
     return {
       loading: !dataSetsHandle.ready(),
       frontendSkills,

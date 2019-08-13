@@ -25,6 +25,19 @@ class SearchPage extends React.Component {
   constructor(props) {
     super(props);
   }
+  constructSearchObject = () => {
+    let searchObject = {}
+    if(this.state.frontendSkill){
+      searchObject["frontend."+this.state.frontendSkill] = this.state.frontendSkillLevel?{$gte:Number(this.state.frontendSkillLevel)}:{$gte:0}
+    }
+    if(this.state.backendSkill){
+      searchObject["backend."+this.state.backendSkill] = this.state.backendSkillLevel?Number(this.state.backendSkillLevel):0
+    }
+    if(this.state.dataSkill){
+      searchObject["data."+this.state.dataSkill] = this.state.dataSkillLevel?Number(this.state.dataSkillLevel):0
+    }
+    return searchObject;
+  }
   state = {
     selectedFrontEndSkill: "",
     selectedFrontEndLevel: "",
@@ -35,10 +48,11 @@ class SearchPage extends React.Component {
   }
   onSubmit = (e) => {
     e.preventDefault();
-    let dataset = Dataset.find().fetch();
-    let fronendRecords = dataset.map(elem => elem["frontend"]).filter(elem => elem[this.state.selectedFrontEndSkill] >= this.state.selectedFrontEndLevel);
-    console.log(this.state.selectedFrontEndSkill, this.state.selectedFrontEndLevel)
-    console.log(fronendRecords);
+    let searchObject = this.constructSearchObject();
+    let res = Dataset.find(searchObject).fetch();
+    let field = "frontend."+this.state.frontendSkill;
+    console.log(Dataset.find({[field]:{$gte:Number(this.state.frontendSkillLevel)}}).fetch())
+    console.log(res);
   }
   setFrontendSkill = (value) => {
     this.setState({ selectedFrontEndSkill: _.lowerCase(value) })
