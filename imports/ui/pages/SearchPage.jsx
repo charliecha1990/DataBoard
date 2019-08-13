@@ -8,18 +8,18 @@ import _ from "lodash";
 import RaisedButton from "../components/buttons/RaisedButton";
 
 const styles = theme => ({
-  root: {
-    width: "100%",
-    marginBottom: theme.spacing(3),
-    marginTop: theme.spacing(3),
-  },
-  frontend: {
-    marginLeft: "10px",
-    marginRight: "10px"
-  },
-  frontendLevel: {
-    marginLeft: "10px"
-  }
+  // root: {
+  //   width: "100%",
+  //   marginBottom: theme.spacing(3),
+  //   marginTop: theme.spacing(3),
+  // },
+  // frontend: {
+  //   marginLeft: "10px",
+  //   marginRight: "10px"
+  // },
+  // frontendLevel: {
+  //   marginLeft: "10px"
+  // }
 })
 class SearchPage extends React.Component {
   constructor(props) {
@@ -39,12 +39,12 @@ class SearchPage extends React.Component {
     return searchObject;
   }
   state = {
-    selectedFrontEndSkill: "",
-    selectedFrontEndLevel: "",
-    selectedBackendSkill: "",
-    selectedBackendLevel: "",
-    selectedDataSkill: "",
-    selectedDataLevel: "",
+    frontendSkill: "",
+    frontendSkillLevel: "",
+    backendSkill: "",
+    backendSkillLevel: "",
+    dataSkill:"",
+    dataSkillLevel: "",
   }
   onSubmit = (e) => {
     e.preventDefault();
@@ -55,24 +55,24 @@ class SearchPage extends React.Component {
     console.log(res);
   }
   setFrontendSkill = (value) => {
-    this.setState({ selectedFrontEndSkill: _.lowerCase(value) })
+    this.setState({ frontendSkill: _.lowerCase(value) })
   }
 
   setFrontEndLevel = (value) => {
-    this.setState({ selectedFrontEndLevel: value });
+    this.setState({ frontendSkillLevel: value });
   }
 
   setBackendSkill = (value) => {
-    this.setState({ selectedBackendSkill: _.lowerCase(value) })
+    this.setState({ backendSkill: _.lowerCase(value) })
   }
   setBackendLevel = (value) => {
-    this.setState({ selectedBackendLevel: value })
+    this.setState({ backendSkillLevel: value })
   }
   setDataSkill = (value) => {
-    this.setState({ selectedDataSkill: _.lowerCase(value) });
+    this.setState({ dataSkill: _.lowerCase(value) });
   }
   setDataLevel = (value) => {
-    this.setState({ selectedDataSkill: value });
+    this.setState({ dataSkillLevel: value });
   }
   render() {
     let frontendSkills = this.props.frontendSkills.map(skill => _.capitalize(skill));
