@@ -40,14 +40,14 @@ function getSorting(order, orderBy) {
   return order === "desc" ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
+// EnhancedTableHead.propTypes = {
+//   numSelected: PropTypes.number.isRequired,
+//   onRequestSort: PropTypes.func.isRequired,
+//   onSelectAllClick: PropTypes.func.isRequired,
+//   order: PropTypes.string.isRequired,
+//   orderBy: PropTypes.string.isRequired,
+//   rowCount: PropTypes.number.isRequired,
+// };
 
 const toolbarStyles = theme => ({
   root: {
@@ -202,8 +202,11 @@ class EnhancedTable extends React.Component {
   render() {
     const { classes, frontendSkills, backendSkills, dataSkills } = this.props;
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
-    let dynamicRows = createRows(frontendSkills, backendSkills, dataSkills);
+    let dynamicRows = this.props.rows || createRows(frontendSkills, backendSkills, dataSkills);
+    // console.log("incoming data",this.props.data);
+    // console.log("rows",dynamicRows);
     let newData = mapDataNew(this.props.data, dynamicRows);
+    // console.log("Data",newData);
     // const data = mapData(this.props.data); /* @author:Sujay. Removed data from state and got it from props*/
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, newData.length - page * rowsPerPage);
     return (
@@ -227,7 +230,7 @@ class EnhancedTable extends React.Component {
                 .map(n => {
                   // const isSelected = this.isSelected(n.id);
                   return (
-                    <DisplayRow key={n.id} row={n}/>
+                    <DisplayRow key={n.id} row={n} align = {this.props.dataAlign}/>
 
                   );
                 })}

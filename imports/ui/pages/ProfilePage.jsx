@@ -86,15 +86,15 @@ class ProfilePage extends Component {
                           params["name"] = this.state.data[0]["practitioner"];
                           let frontend = {}, backend = {}, data = {};
                           frontendSkills.forEach(skill => {
-                            frontend[skill] = this.state.data[0][skill];
+                            frontend[skill] = Number(this.state.data[0][skill]);
                           });
                           params["frontend"] = frontend;
                           backendSkills.forEach(skill => {
-                            backend[skill] = this.state.data[0][skill];
+                            backend[skill] = Number(this.state.data[0][skill]);
                           });
                           params["backend"] = backend;
                           dataSkills.forEach(skill => {
-                            data[skill] = this.state.data[0][skill];
+                            data[skill] =  Number(this.state.data[0][skill]);
                           });
                           params["data"] = data;
                           params["isApproved"] = false;

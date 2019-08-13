@@ -34,18 +34,20 @@ let flattenData = (dataset, requestDate) => {
   });
   return flatData;
 };
-let generateRowFormat = (skillsList, dynamicRows) => {
-  skillsList.forEach(skill => {
-    dynamicRows.push({ id: skill, numeric: true, align: "center", disablePadding: false, label: _.capitalize(skill) });
-  });
+let generateRowFormat = (skillsList, dynamicRows,align) => {
+  if(skillsList){
+    skillsList.forEach(skill => {
+      dynamicRows.push({ id: skill, numeric: true, align: align || "center", disablePadding: false, label: _.capitalize(skill) });
+    });
+  }
 };
-let createRows = (frontendSkills, backendSkills, dataSkills) => {
+let createRows = (frontendSkills, backendSkills, dataSkills,align) => {
 
   let dynamicRows = [];
   dynamicRows.push({ id: "practitioner", numeric: false, disablePadding: true, label: "Practitioner" });
-  generateRowFormat(frontendSkills, dynamicRows);
-  generateRowFormat(backendSkills, dynamicRows);
-  generateRowFormat(dataSkills, dynamicRows);
+  generateRowFormat(frontendSkills, dynamicRows,align);
+  generateRowFormat(backendSkills, dynamicRows,align);
+  generateRowFormat(dataSkills, dynamicRows,align);
   // console.log(dynamicRows);
   return dynamicRows;
 };

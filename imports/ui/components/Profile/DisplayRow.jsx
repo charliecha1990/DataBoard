@@ -34,7 +34,7 @@ class DisplayRow extends Component {
 
   isSelected = id=> this.state.selected.indexOf(id)!==-1;
   render() {
-    const { row } = this.props;
+    const { row,align } = this.props;
     // console.log(row);
     const selected = this.isSelected(row.id);
     const keys = Object.keys(row).filter(key => key !== "id");
@@ -45,7 +45,7 @@ class DisplayRow extends Component {
                     onClick={event => this.handleClick(event, row.id)}/>
         </TableCell>
         {keys.map(key=> (
-          <DisplayTableCell key={key} cellValue={row[key]} align="center"/>
+          <DisplayTableCell key={key} cellValue={row[key]} align={align || "center"}/>
         ))}
       </TableRow>
 
