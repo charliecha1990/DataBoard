@@ -18,11 +18,26 @@ const Dataset = Class.create({
       type: Object,
       optional: true,
       fields: {
-        react: Number,
-        angular: Number,
-        javascript: Number,
-        html: Number,
-        vue: Number
+        react: {
+          type:Number,
+          default:0
+        },
+        angular:  {
+          type:Number,
+          default:0
+        },
+        javascript:  {
+          type:Number,
+          default:0
+        },
+        html:  {
+          type:Number,
+          default:0
+        },
+        vue:  {
+          type:Number,
+          default:0
+        }
       }
     },
 
@@ -30,23 +45,56 @@ const Dataset = Class.create({
       type: Object,
       optional: true,
       fields: {
-        java: Number,
-        chsharp: Number,
-        python: Number,
-        node: Number,
-        cpp: Number
+        java:  {
+          type:Number,
+          default:0
+        },
+        chsharp:  {
+          type:Number,
+          default:0
+        },
+        python:  {
+          type:Number,
+          default:0
+        },
+        node:  {
+          type:Number,
+          default:0
+        },
+        cpp:  {
+          type:Number,
+          default:0
+        }
       }
     },
     data: {
       type: Object,
       optional: true,
       fields: {
-        sql: Number,
-        r: Number,
-        pandas: Number,
-        numpy: Number,
-        spark: Number,
-        sklearn: Number
+        sql:  {
+          type:Number,
+          default:0
+        },
+        r:  {
+          type:Number,
+          default:0
+        },
+        pandas:  {
+          type:Number,
+          default:0
+        },
+        numpy:  {
+          type:Number,
+          default:0
+        },
+        spark:  {
+          type:Number,
+          default:0
+        },
+        sklearn:  {
+          type:Number,
+          default:0
+        }
       }
     },
     isApproved: Boolean

@@ -25,6 +25,23 @@ import { linkWithParams } from '/imports/ui/helpers/routes';
 import { DRAWER_WIDTH, PAGE_TRANSITION_TIME } from '/imports/ui/helpers/constants';
 
 const styles = theme => ({
+  root:{
+
+  },
+  clear:{
+
+  },
+
+  skillBox:{
+
+  },
+
+  valueBox:{
+
+  },
+  search:{
+
+  },
   /* containers that will shift with the opening of the NavDrawer */
   shiftable: {
     width: '100%',
