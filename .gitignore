@@ -6,3 +6,4 @@ docker-compose.stack*
 .DS_Store
 .idea/*
 run_instructions_mac.txt
+package-lock.json
