@@ -18,7 +18,8 @@ const User = Class.create({
       fields:{
         firstName: String,
         lastName: String
-      }
+      },
+      optional: true
     },
     roles: {
       type: [String],

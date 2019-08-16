@@ -4,6 +4,7 @@ import AdminPage from '/imports/ui/pages/AdminPage';
 import {compose} from "recompose";
 import {withRouter} from "react-router-dom";
 import DataSet from "../../api/dataSet/DataSet";
+import User from "../../api/users/User";
 import RequestHistory from "../../api/requestHistory/RequestHistory";
 import {withMessageContext} from "../helpers/MessageContext";
 

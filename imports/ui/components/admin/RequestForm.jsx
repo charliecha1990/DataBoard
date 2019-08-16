@@ -204,6 +204,7 @@ class RequestForm extends React.Component {
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, requestArray.length - page * rowsPerPage);
 
+    console.log(requestArray)
     const toolbarStyles = theme => ({
       root: {
         paddingRight: theme.spacing(1)
@@ -320,9 +321,9 @@ class RequestForm extends React.Component {
                       <TableCell component="th" scope="row" padding="none">
                         {n.name}
                       </TableCell>
-                      <TableCell align="right">{n.frontEndLevel}</TableCell>
-                      <TableCell align="right">{n.backEndLevel}</TableCell>
-                      <TableCell align="right">{n.dataLevel}</TableCell>
+                      <TableCell align="right">{n.frontend.React}</TableCell>
+                      <TableCell align="right">{n.backend.chsharp}</TableCell>
+                      <TableCell align="right">{n.data.sql}</TableCell>
                       <TableCell align="right">{n.createdAt.toString().substring(0, 16)}</TableCell>
                     </TableRow>
 

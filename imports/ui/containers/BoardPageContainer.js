@@ -32,7 +32,6 @@ export default compose(
     dataset.forEach(row => {
       let user = User.findOne({_id:row.userId});
 
-      console.log('debugiing:',user);
       row["name"] = user.profile.firstName+" "+user.profile.lastName
     });
     /*

@@ -16,6 +16,8 @@ let createEmptyObject = (frontendSkills, backendSkills, dataSkills) => {
   dataSkills.forEach(skill => emptyObject[skill] = 0);
   emptyObject["isApproved"] = false;
   emptyObject["practitioner"] = user.profile.firstName + " " + user.profile.lastName;
+  // emptyObject["practitioner"] = 'Charlie' + " " + 'Zha';
+
   return emptyObject;
 };
 
