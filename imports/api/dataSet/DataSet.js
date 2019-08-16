@@ -97,8 +97,11 @@ const Dataset = Class.create({
         }
       }
     },
-    isApproved: Boolean
-    // availability: String
+    isApproved: Boolean,
+    availability: {
+      type:[String],
+      optional:true
+    }
   },
   behaviors: {
     timestamp: {
