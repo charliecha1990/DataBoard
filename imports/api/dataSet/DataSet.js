@@ -13,7 +13,10 @@ const Dataset = Class.create({
   collection: DataSets,
   fields: {
     userId: String,
-
+    name:{
+      optional:true,
+      type:String
+    },
     frontend: {
       type: Object,
       optional: true,

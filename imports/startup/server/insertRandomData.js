@@ -88,7 +88,8 @@ function populateDatabase() {
       frontend: ftend,
       backend: bkend,
       data: dt,
-      isApproved: false
+      isApproved: false,
+      name:params["name"]
     });
     dataSet.save();
   }

@@ -2,17 +2,22 @@ import DataSet from "./DataSet";
 
 Meteor.methods({
   async "dataSet.create"(params = {}) {
-    const dataSet = new DataSet(
-      Object.assign({}, params, { userId: Meteor.userId() })
-    );
+    const dataSet = new DataSet({
+      userId: params.userId,
+      frontend: params.frontend,
+      backend: params.backend,
+      data: params.data,
+      isApproved: params.isApproved,
+      name: params.name
+    });
 
     return new Promise((res, rej) =>
       dataSet.save((err, id) => err ? rej(err) : res(id)));
   },
 
   async "dataSet.update"(params = {}) {
-    const dataSet = DataSet.findOne({userId:params.userId});
-    DataSet.findOne({userId:params.userId});
+    const dataSet = DataSet.findOne({ userId: params.userId });
+    DataSet.findOne({ userId: params.userId });
     dataSet.set({
       frontend: params.frontend,
       backend: params.backend,
@@ -31,10 +36,10 @@ Meteor.methods({
   async "dataSet.search"(dataSetId) {
     return DataSet.findOne(dataSetId);
   },
-  async "dataSet.approve"(params= {}) {
-    const dataSet = DataSet.findOne( params.dataSet_id );
+  async "dataSet.approve"(params = {}) {
+    const dataSet = DataSet.findOne(params.dataSet_id);
 
-    if(params.approve == true) {
+    if (params.approve == true) {
 
       dataSet.set({
         isApproved: true
@@ -51,6 +56,6 @@ Meteor.methods({
 
     }
 
-   
+
   },
 });
