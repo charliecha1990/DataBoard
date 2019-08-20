@@ -1,8 +1,8 @@
 // Random data insert
-import callWithPromise from "../../util/callWithPromise";
 import Dataset from "../../api/dataSet/DataSet";
 import User from "../../api/users/User";
 import Availability from "../../api/availability/availability";
+
 const dg = require("random-date-generator");
 
 // Accounts.removeDefaultRateLimit();
@@ -33,14 +33,13 @@ function fillSkills(skillList, skillObject) {
 
 function populateDatabase() {
   let done = new Set();
-  let randomData = [];
   let firstNames = ["Jack", "Jane", "Xavier", "Super", "Bob", "Andy"];
   let lastNames = ["Doe", "Murray", "User", "Winters", "Dillon"];
   let frontend = ["react", "angular", "html", "javascript", "vue"];
   let backend = ["java", "python", "node", "chsharp", "cpp"];
   let data = ["sql", "r", "pandas", "numpy", "sklearn", "spark"];
 
-  for (; done.size < 10; ) {
+  for (; done.size < 10;) {
     let firstName = getSkills(firstNames, 1, firstNames.length, 0)[0];
     let lastname = getSkills(lastNames, 1, lastNames.length, 0)[0];
     let email = firstName + "." + lastname + "@example.com";
@@ -65,7 +64,7 @@ function populateDatabase() {
         ftend[skill] = 0;
       }
     });
-    console.log(ftend);
+    // console.log(ftend);
     params["frontend"] = ftend;
     let bkend = fillSkills(backSkills, {});
     backend.forEach(skill => {
@@ -89,7 +88,7 @@ function populateDatabase() {
       backend: bkend,
       data: dt,
       isApproved: false,
-      name:params["name"]
+      name: params["name"]
     });
     dataSet.save();
   }
@@ -123,6 +122,7 @@ function randomDate(start, end, n) {
         break;
       }
     }
+    // console.log("Begin",begin,"Finish",finish);
     start = finish;
     count++;
   }
@@ -137,11 +137,14 @@ function populateAvailabities() {
   let availabilities = [];
   for (let i = 0; i < 10; i++) {
     let res = randomDate(new Date(2018, 0, 1), new Date(2020, 11, 31), 5);
-    res["name"] = Math.random().toString(36).substring(7);
+    res["name"] = Math.random()
+      .toString(36)
+      .substring(7);
     availabilities.push(res);
   }
   return availabilities;
 }
+
 populateDatabase();
 
 let availabilities = populateAvailabities();
@@ -151,52 +154,46 @@ users.forEach(user => {
   let email = user.emails[0]["address"];
   let current = availabilities[index];
   index++;
-  for(let j=0;j<current["startList"].length;j++){
+  for (let j = 0; j < current["startList"].length; j++) {
     let startList = current["startList"];
     let endList = current["endList"];
     const availability = new Availability({
-        email:email,
-        startDate: startList[j],
-        endDate:endList[j]
+      email: email,
+      startDate: startList[j],
+      endDate: endList[j]
     });
     availability.save();
   }
 });
 
-let records = Availability.find().fetch()
+let records = Availability.find().fetch();
 records.forEach(record => {
-    let user = User.findOne({
-        emails:{$elemMatch:{address:record.email}}
-    })
-    
-    let dataset = Dataset.findOne({userId:user._id})
-    // console.log(dataset["frontend"]["react"])
-    let avl = dataset["availability"]
-    if(avl){
-        avl.push(record._id);
-    }
-    else{
-        avl = [record._id]
-    }
-    // // console.log("Avl",avl);
-    dataset.set({
-        availability:avl
-    });
-    dataset.save();
-    console.log("avl for user",user.email(), dataset["availability"]);
+  let user = User.findOne({
+    emails: { $elemMatch: { address: record.email } }
+  });
+
+  let dataset = Dataset.findOne({ userId: user._id });
+  // console.log(dataset["frontend"]["react"])
+  let avl = dataset["availability"];
+  if (avl) {
+    avl.push(record._id);
+  } else {
+    avl = [record._id];
+  }
+  // // console.log("Avl",avl);
+  dataset.set({
+    availability: avl
+  });
+  dataset.save();
+  // console.log("avl for user", user.email(), dataset["availability"]);
 });
 
-// Dataset.find().fetch().forEach(record => console.log(record["availability"]))
-// for (let i = 0; i < availabilities.length; i++) {
-//   let array = [];
-//   let current = availabilities[i];
-//   for (let j = 0; j < current["startList"].length; j++) {
-//     let startList = current["startList"];
-//     let endList = current["endList"];
-//     array[j] = new Test(availabilities[i].name, startList[j], endList[j]);
-//   }
-//   people[i] = array;
-// }
 
-
-
+Availability.find().fetch()
+  .forEach(record => {
+    let currentStart = record["startDate"];
+    let currentEnd = record["endDate"];
+    record.set({ "startDate": new Date(currentStart.toDateString()) });
+    record.set({"endDate": new Date(currentEnd.toDateString())});
+    record.save();
+  });
