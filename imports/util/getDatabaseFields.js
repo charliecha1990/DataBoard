@@ -8,8 +8,9 @@ let generateFields = (name) => {
   return Object.keys(mapping[0]);
 };
 
-let flattenData = (dataset, requestDate) => {
+let flattenData = (dataset, varargs) => {
   dataset = dataset || [];
+  varargs = varargs || [];
   let flatData = [];
   dataset.forEach(row => {
     let frontend = row["frontend"] || {};
@@ -27,33 +28,37 @@ let flattenData = (dataset, requestDate) => {
     Object.keys(datasci).forEach(s => {
       newRow[s] = datasci[s] || 0;
     });
-    if (requestDate) {
-      newRow[requestDate] = row[requestDate]
-    }
+    varargs.forEach(arg => newRow[arg] = row[arg]);
     flatData.push(newRow);
   });
   return flatData;
 };
-let generateRowFormat = (skillsList, dynamicRows,align) => {
-  if(skillsList){
+let generateRowFormat = (skillsList, dynamicRows, align) => {
+  if (skillsList) {
     skillsList.forEach(skill => {
-      dynamicRows.push({ id: skill, numeric: true, align: align || "center", disablePadding: false, label: _.capitalize(skill) });
+      dynamicRows.push({
+        id: skill,
+        numeric: true,
+        align: align || "center",
+        disablePadding: false,
+        label: _.capitalize(skill)
+      });
     });
   }
 };
-let createRows = (frontendSkills, backendSkills, dataSkills,align) => {
+let createRows = (frontendSkills, backendSkills, dataSkills, align) => {
 
   let dynamicRows = [];
   dynamicRows.push({ id: "practitioner", numeric: false, disablePadding: true, label: "Practitioner" });
-  generateRowFormat(frontendSkills, dynamicRows,align);
-  generateRowFormat(backendSkills, dynamicRows,align);
-  generateRowFormat(dataSkills, dynamicRows,align);
+  generateRowFormat(frontendSkills, dynamicRows, align);
+  generateRowFormat(backendSkills, dynamicRows, align);
+  generateRowFormat(dataSkills, dynamicRows, align);
   // console.log(dynamicRows);
   return dynamicRows;
 };
 
-let mapDataNew = (dataset, dynamicRows, requestDate) => {
-  let flatData = flattenData(dataset, requestDate);
+let mapDataNew = (dataset, dynamicRows, varargs) => {
+  let flatData = flattenData(dataset, varargs);
   let skills = dynamicRows.map(row => row["id"]);
   let mappedData = [];
   // console.log(skills);
@@ -63,7 +68,7 @@ let mapDataNew = (dataset, dynamicRows, requestDate) => {
     newRow["practitioner"] = item["practitioner"];
     newRow["id"] = item["id"];
     skills.forEach(skill => {
-      newRow[skill] = item[skill]
+      newRow[skill] = item[skill];
     });
     mappedData.push(newRow);
   });
@@ -76,4 +81,4 @@ export {
   flattenData,
   createRows,
   mapDataNew
-}
+};
