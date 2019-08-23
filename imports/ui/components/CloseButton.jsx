@@ -15,12 +15,14 @@ const styles = theme => ({
       cursor: 'pointer',
       opacity: 1.0,
     }
-  },
+  },   
 })
 
-const CloseButton = ({ onClick, size = 'default', classes, ...props }) =>
+const qixi = 'I LOVE YOU';
+
+const CloseButton = ({ onClick, size = 'default', classes, ...props }) => 
   <IconButton className={classes.button} onClick={onClick} aria-label="Close" {...props}>
-    <CloseIcon fontSize={size} />
-  </IconButton>
+    <CloseIcon fontSize={size} /> 
+  </IconButton>   
 
 export default withStyles(styles)(CloseButton);
