@@ -1,226 +1,196 @@
-import React from 'react';
-import { findDOMNode } from 'react-dom';
-import { withRouter } from 'react-router';
-import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
-import callWithPromise from '/imports/util/callWithPromise';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import MiscPageBase from "../components/MiscPageBase";
+import Typography from "@material-ui/core/Typography";
+import classNames from "classnames";
+import { findDOMNode } from "react-dom";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import { TextField } from "@material-ui/core";
+import _ from "lodash";
+import callWithPromise from "../../util/callWithPromise";
+import Popover from "@material-ui/core/Popover";
+import RaisedButtons from "../components/buttons/RaisedButton";
+import { withStyles } from "@material-ui/core/styles";
+import { withRouter } from "react-router";
 
-import { Link } from 'react-router-dom';
-
-import RaisedButton from '/imports/ui/components/buttons/RaisedButton';
-import Loading from '/imports/ui/components/Loading';
-import MiscPageBase from '/imports/ui/components/MiscPageBase';
-
-import Collapse from '@material-ui/core/Collapse';
-import Popover from '@material-ui/core/Popover';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-
-import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
 const styles = _theme => ({
-	container: {
-		position: 'absolute',
-		top: '50%',
-		left: '50%',
-		transform: 'translate(-50%, -50%)',
-		width: 360
-	},
-	paper: {
-		padding: 24,
-		overflow: 'hidden'
-	},
-	errorContainer: {
-		width: 240
-	}
+  container: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 360
+  },
+  paper: {
+    padding: 24,
+    overflow: "hidden"
+  },
+  errorContainer: {
+    width: 240
+  }
 });
 
-class EnrollPage extends React.Component {
-	state = {
-		user: {},
-		errors: {},
-		email: '',
-		password: '',
-		confirm: '',
-		notFound: false
-	};
+class EnrollPage extends Component {
+  state = {
+    user: {},
+    errors: {},
+    email: "",
+    password: "",
+    confirmPassword: "",
+    firstName: "",
+    lastName: "",
+    notFound: false
+  };
 
-	componentDidMount() {
-		const token = this.props.match.params.token;
-		callWithPromise('users.findByToken', token).then(
-			(user) => (_.isEmpty(user) ? this.setState({ notFound: true }) : this.setState({ user, token }))
-		);
-	}
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-	onSubmit = (event) => {
-		event.preventDefault();
-		this.setState({ working: true }, () =>
-			this.createAccount()
-				.then(() => this.props.history.push('/'))
-				.catch((errors) => this.setState({ errors }))
-				.finally(() => this.setState({ working: false }))
-		);
-	};
+  checkErrors = () => {
+    const {
+      email,
+      password,
+      firstName,
+      lastName,
+      confirmPassword
+    } = this.state;
+    if (!email || !password || !firstName || !lastName || !confirmPassword) {
+      //if error return true
+      return true;
+    }
 
-	onSignIn = event =>{
-		event.preventDefault();
-		this.props.history.push('/signin');
-	}
+    return !(password === confirmPassword);
+  };
 
-	createAccount = () =>
-		new Promise((resolve, reject) => {
-			const { email, password, confirm, token } = this.state;
-			const errors = {};
+  onSubmit = e => {
+    console.log("Submiting");
+    e.preventDefault();
+    if (!this.checkErrors()) {
+      Accounts.createUser(
+        {
+          email: this.state.email,
+          password: this.state.password,
+          profile: {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName
+          }
+        },
+        (err, user) => {
+          if (err) throw err;
+          console.log(user);
+          this.props.history.push("/signin");
+        }
+      );
+    }
+  };
 
-
-			if (!email) {
-				errors.email = 'Email required';
-			}
-			if (!password) {
-				errors.password = 'Password required';
-			}
-			if (!confirm) {
-				errors.password = 'Confirmation required';
-			}
-			if (password !== confirm) {
-				errors.confirm = 'Passwords do not match';
-			}
-
-			if (Object.keys(errors).length) {
-				return reject(errors);
-			}
-
-			Accounts.resetPassword(token, password, (error = false) => {
-				if (error) {
-					reject({ misc: error });
-				} else {
-					resolve();
-				}
-			});
-		});
-
-	onClosePopover = () => {
-		this.setState({ errors: {} });
-	};
-
-	updateField = (field, value) => {
-		this.setState({ [field]: value });
-	};
-
-	render() {
-		const { classes } = this.props;
-		const { errors, user, password, confirm, working, notFound } = this.state;
-		const errorClass = (key) => errors[key] && 'error';
-
-		if (notFound) {
-			return (
-				<MiscPageBase>
-					<Typography variant="title">Whoops! That enrollment link is expired.</Typography>
-					<Typography variant="title">
-						If you already finalized your account, try <Link to="/login">logging in</Link>.
-					</Typography>
-				</MiscPageBase>
-			);
-		}
-		if (_.isEmpty(user)) {
-			return <Loading />;
-		}
-
-		const email = user.email();
-
-		return (
-			<MiscPageBase>
-				<Paper
-					key="paper"
-					square
-					className={classNames(classes.container, classes.paper)}
-					ref={(node) => (this.container = findDOMNode(node))}
-				>
-					<Typography variant="headline" paragraph style={{ textAlign: 'center' }}>
-						Almost there!
-					</Typography>
-					<Grid container spacing={16} direction="column" alignItems="center">
-						<Grid item xs={12}>
-     						<TextField
-     								id="accountCreate"
-     								autoComplete="new-account"
-     								inputProps={{ autoComplete: 'new-account' }}
-     								disabled={working}
-     								error={!_.isEmpty(errors.email)}
-     								helperText={errors.email}
-     								type="account"
-     								name="emailCreate"
-     								// value={email}
-     								onChange={({ target: { value } }) => this.updateField('email', value)}
-     								label={<T>auth.email</T>}
-     								placeholder={i18n.__('auth.email')}
-     								fullWidth
-     							/>
-     						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								id="passwordCreate"
-								autoComplete="new-password"
-								inputProps={{ autoComplete: 'new-password' }}
-								disabled={working}
-								error={!_.isEmpty(errors.password)}
-								helperText={errors.password}
-								type="password"
-								name="passwordCreate"
-								value={password}
-								onChange={({ target: { value } }) => this.updateField('password', value)}
-								label={<T>auth.password</T>}
-								placeholder={i18n.__('auth.password')}
-								fullWidth
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								id="confirm"
-								autoComplete="new-password"
-								inputProps={{ autoComplete: 'new-password' }}
-								disabled={working}
-								error={!_.isEmpty(errors.confirm)}
-								helperText={errors.confirm}
-								type="password"
-								name="passwordCreateConfirm"
-								value={confirm}
-								onChange={({ target: { value } }) => this.updateField('confirm', value)}
-								label="Confirm password"
-								placeholder="Confirm password"
-								fullWidth
-							/>
-						</Grid>
-						<Grid item xs={12}>
-     						<RaisedButton color="secondary" onClick={this.onSubmit}>
-     							Finalize Account
-     						</RaisedButton>
-     						<RaisedButton color="secondary" onClick={this.onSignIn}>
-     							Sign In
-     						</RaisedButton>
-						</Grid>		
-					</Grid>
-				</Paper>
-				<Popover
-					key="popover"
-					open={!_.isEmpty(errors.misc)}
-					onClose={this.onClosePopover}
-					anchorEl={this.container}
-					anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-					transformOrigin={{ vertical: 'top', horizontal: 'center' }}
-					classes={{ paper: classNames(classes.paper, classes.errorContainer) }}
-					PaperProps={{ square: true }}
-				>
-					<Typography>
-						<T>auth.signInError</T>
-					</Typography>
-				</Popover>
-			</MiscPageBase>
-		);
-	}
+  render() {
+    const { classes } = this.props;
+    const { errors } = this.state;
+    return (
+      <MiscPageBase>
+        <Paper
+          key="paper"
+          square
+          className={classNames(classes.container, classes.paper)}
+          ref={node => this.container = findDOMNode(node)}
+        >
+          <Typography variant="h5" paragraph style={{ textAlign: "center" }}>
+            Almost there!
+          </Typography>
+          <Grid container spacing={16} direction="column" alignItems="center">
+            <Grid item xs={12}>
+              <TextField
+                id="emailField"
+                inputProps={{ autoComplete: "new-account" }}
+                error={!_.isEmpty(errors.email)}
+                type="account"
+                name="email"
+                label={<T>auth.email</T>}
+                placeholder="Enter your email"
+                onChange={this.onChange}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="firstName"
+                inputProps={{ autoComplete: "new-first-name" }}
+                error={!_.isEmpty(errors.firstName)}
+                type="firstName"
+                name="firstName"
+                onChange={this.onChange}
+                label={<T>auth.firstName</T>}
+                placeholder="First Name"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="lastName"
+                inputProps={{ autoComplete: "new-last-name" }}
+                error={!_.isEmpty(errors.lastName)}
+                type="lastName"
+                name="lastName"
+                onChange={this.onChange}
+                label={<T>auth.lastName</T>}
+                placeholder="Last Name"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="passwordField"
+                inputProps={{ autoComplete: "new-password" }}
+                error={!_.isEmpty(errors.password)}
+                type="password"
+                name="password"
+                onChange={this.onChange}
+                label={<T>auth.password</T>}
+                placeholder="Your password"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="confirmPassword"
+                inputProps={{ autoComplete: "new-password" }}
+                error={!_.isEmpty(errors.confirmPassword)}
+                type="password"
+                name="confirmPassword"
+                onChange={this.onChange}
+                label={<T>auth.confirmPassword</T>}
+                placeholder="Enter password again"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <RaisedButtons color="secondary" onClick={this.onSubmit}>
+                Register
+              </RaisedButtons>
+            </Grid>
+          </Grid>
+        </Paper>
+        <Popover
+          key="popover"
+          open={!_.isEmpty(errors.misc)}
+          onClose={this.onClosePopover}
+          anchorEl={this.container}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          transformOrigin={{ vertical: "top", horizontal: "center" }}
+          classes={{ paper: classNames(classes.paper, classes.errorContainer) }}
+          PaperProps={{ square: true }}
+        >
+          <Typography>
+            <T>auth.signInError</T>
+          </Typography>
+        </Popover>
+      </MiscPageBase>
+    );
+  }
 }
 
 export default withStyles(styles, { withTheme: true })(withRouter(EnrollPage));

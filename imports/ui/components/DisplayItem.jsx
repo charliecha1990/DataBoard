@@ -23,7 +23,7 @@ const styles = theme => ({
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    // margin: theme.spacing.unit * 2,
+    // margin: theme.spacing * 2,
   },
   itemContainer: {
     height: '100%',
@@ -31,9 +31,9 @@ const styles = theme => ({
   },
   title: {
     verticalAlign: 'center',
-    marginTop: theme.spacing.unit,
-    marginLeft: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit,
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(2),
+    marginBottom: theme.spacing(1),
     display: 'flex',
     alignItems: 'center',
     '& > *': {

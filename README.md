@@ -34,11 +34,12 @@ meteor shell
 > import User from '/imports/api/users/User'
 > user = User.findOne('2efa737faf3')
 > user.set({ roles: ['user', 'admin'] })
+> user.set({ profile: {firstName: '', lastName: ''} })
 > user.save()
 > .exit
 Shell exiting...
 ```
-##  admin:  admin@deloitte.ca  123 (for personal reference)
+##  admin:  admin@admin.ca  123 (for personal reference)
 
 You can now log in at `localhost:3000` and start using the app!
 

@@ -8,8 +8,8 @@ const styles = theme => ({
   button: {
     zIndex: 100,
     position: 'absolute',
-    top: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
+    top: theme.spacing(2),
+    right: theme.spacing(2),
     opacity: 0.5,
     '&:hover': {
       cursor: 'pointer',

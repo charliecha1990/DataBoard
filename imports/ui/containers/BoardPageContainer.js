@@ -1,40 +1,52 @@
-import { Meteor } from 'meteor/meteor';
-import { Session } from 'meteor/session';
-import { withTracker } from 'meteor/react-meteor-data';
+import { Meteor } from "meteor/meteor";
+import { withTracker } from "meteor/react-meteor-data";
+import BoardPage from "/imports/ui/pages/BoardPage";
+import { compose } from "recompose";
+import { withRouter } from "react-router-dom";
+import Dataset from "../../api/dataSet/DataSet";
+import { withMessageContext } from "../helpers/MessageContext";
+import {generateFields} from "/imports/util/getDatabaseFields";
+import User from "/imports/api/users/User";
 
-import BoardPage from '/imports/ui/pages/BoardPage';
-import {compose} from "recompose";
-import {withRouter} from "react-router-dom";
-import DataSet from "../../api/dataSet/DataSet";
-import {withMessageContext} from "../helpers/MessageContext";
-import ProfilePage from "../pages/ProfilePage";
-
-// export default withTracker(() => {
-//   const queryHandle = Meteor.subscribe('queries.currentUser');
-//
-//   return {
-//     connected: Meteor.status().connected,
-//     loading: queryHandle.ready(),
-//   };
-// })(BoardPage);
 /*
 @author:Sujay
 subscribe to dataSets for change in data
 register the board page
  */
+// let generateFields = (name) => {
+//   let fields = Dataset.getFields();
+//   let mapping = fields.filter(element => element["name"] === name)
+//     .map(element => element["fields"]);
+//   return Object.keys(mapping[0]);
+// };
+
+
 export default compose(
-    withRouter,
-    withTracker(() => {
+  withRouter,
+  withTracker(() => {
 
-      const dataSetsHandle = Meteor.subscribe("dataSets");
+    Meteor.subscribe("dataSets");
+    Meteor.subscribe("users");
+    let dataset = Dataset.find().fetch();
 
-      let dataSet = DataSet.find().fetch();
+    dataset.forEach(row => {
+      let user = User.findOne({_id:row.userId});
 
-      return {
-        dataSet,
-        connected: Meteor.status().connected,
-        loading: !dataSetsHandle.ready()
-      };
-    }),
-    withMessageContext
+      row["name"] = user.profile.firstName+" "+user.profile.lastName
+    });
+    /*
+    * Get fields from database and pass them to header
+    * */
+    let frontendSkills = generateFields("frontend");
+    let backendSkills = generateFields("backend");
+    let dataSkills = generateFields("data");
+
+    return {
+      dataset,
+      frontendSkills,
+      backendSkills,
+      dataSkills
+    };
+  }),
+  withMessageContext
 )(BoardPage);

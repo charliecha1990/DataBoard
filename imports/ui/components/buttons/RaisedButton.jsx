@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit
+    margin: theme.spacing(1)
   },
   input: {
     display: 'none',
@@ -13,7 +13,7 @@ const styles = theme => ({
 });
 
 const RaisedButtons = ({classes, children, ...props}) => (
-  <Button variant="raised" className={classes.button} {...props}>
+  <Button variant="contained" color="secondary" className={classes.button} {...props}>
     { children }
   </Button>
 );

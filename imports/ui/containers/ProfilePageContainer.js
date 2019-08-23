@@ -5,28 +5,46 @@ import { withTracker } from "meteor/react-meteor-data";
 import DataSet from "/imports/api/dataSet/DataSet";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
-import _ from "lodash";
+import { generateFields } from "/imports/util/getDatabaseFields";
+import User from "/imports/api/users/User";
+import callWithPromise from "../../util/callWithPromise";
+
+
+let frontendSkills = generateFields("frontend");
+let backendSkills = generateFields("backend");
+let dataSkills = generateFields("data");
 
 
 
 export default compose(
-    withRouter,
-    withTracker(() => {
-        const dataSetsHandle = Meteor.subscribe("dataSets");
+  withRouter,
+  withTracker(() => {
+    let found = false;
+    const dataSetsHandle = Meteor.subscribe("dataSets");
+    Meteor.subscribe("users");
+    let dataSet = DataSet.find(
+      { userId: Meteor.userId() }
+    ).fetch();
 
-        var dataSet = DataSet.find(
-            { userId: Meteor.userId() },
-            { sort: { createdAt: -1 }, limit: 1 }
-        ).fetch();
-        dataSet = dataSet.length == 0 ? "" : dataSet[0];
-        var dataSets = DataSet.find({}).fetch();
-
-        return {
-            dataSet,
-            dataSets,
-            connected: Meteor.status().connected,
-            loading: !dataSetsHandle.ready()
-        };
-    }),
-    withMessageContext
+    // if(dataSet.length===0){
+    //   dataSet = createEmptyObject();
+    // }
+    // let dataSets = DataSet.find({}).fetch();
+    if (dataSet.length > 0) {
+      dataSet = dataSet[0];
+      let user = User.findOne({ _id: dataSet.userId });
+      dataSet["name"] = user.profile.firstName + " " + user.profile.lastName;
+      found = true;
+    }
+    return {
+      dataSet,
+      found,
+      connected: Meteor.status().connected,
+      loading: !dataSetsHandle.ready(),
+      frontendSkills,
+      backendSkills,
+      dataSkills
+    };
+  }),
+  withMessageContext
 )(ProfilePage);
