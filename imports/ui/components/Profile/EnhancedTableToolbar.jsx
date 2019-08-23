@@ -77,8 +77,7 @@ let EnhancedTableToolbar = props => {
 };
 
 EnhancedTableToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(toolbarStyles)(EnhancedTableToolbar);

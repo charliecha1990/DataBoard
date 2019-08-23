@@ -61,8 +61,6 @@ let mapDataNew = (dataset, dynamicRows, varargs) => {
   let flatData = flattenData(dataset, varargs);
   let skills = dynamicRows.map(row => row["id"]);
   let mappedData = [];
-  // console.log(skills);
-  // console.log(flatData);
   flatData.forEach(item => {
     let newRow = {};
     newRow["practitioner"] = item["practitioner"];
@@ -72,7 +70,6 @@ let mapDataNew = (dataset, dynamicRows, varargs) => {
     });
     mappedData.push(newRow);
   });
-  // console.log(mappedData);
   return mappedData;
 };
 

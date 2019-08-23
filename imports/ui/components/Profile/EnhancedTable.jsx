@@ -123,13 +123,12 @@ class EnhancedTable extends React.Component {
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
     let dynamicRows = this.props.rows || createRows(frontendSkills, backendSkills, dataSkills);
     let newData = mapDataNew(this.props.data, dynamicRows,this.props.optional);
-    // const data = mapData(this.props.data); /* @author:Sujay. Removed data from state and got it from props*/
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, newData.length - page * rowsPerPage);
     return (
       <Paper className={classes.root}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
-          <Table className={classes.table} aria-labelledby="tableTitle">
+          <Table className={classes.table} aria-labelledby="tableTitle" size="small">
             <EnhancedTableHead
               order={order}
               orderBy={orderBy}

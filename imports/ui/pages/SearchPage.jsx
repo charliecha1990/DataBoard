@@ -1,22 +1,22 @@
-import React from "react";
-import PageBase from "../components/PageBase";
-import "react-widgets/dist/css/react-widgets.css";
+import React, { Component } from "react";
 import Dataset from "../../api/dataSet/DataSet";
-import { withStyles } from "@material-ui/styles";
+import { createRows, generateFields } from "../../util/getDatabaseFields";
+import _ from "loadsh";
+import PageBase from "../components/PageBase";
+import { withStyles } from "@material-ui/core/styles";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import { SingleSelect } from "react-select-material-ui";
-import _ from "lodash";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 import RaisedButton from "../components/buttons/RaisedButton";
-import { createRows } from "../../util/getDatabaseFields";
 import Paper from "@material-ui/core/Paper";
-import User from "../../api/users/User";
 import EnhancedTable from "../components/Profile/EnhancedTable";
-import { generateFields } from "../../util/getDatabaseFields";
-import TextField from "@material-ui/core/TextField";
 import Availability from "../../api/availability/availability";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import { InputLabel } from "@material-ui/core";
-import FormControl from "@material-ui/core/FormControl";
+import User from "../../api/users/User";
+import SnackbarComponent from "../components/SnackbarComponent";
 
 const styles = theme => ({
   root: {
@@ -25,6 +25,11 @@ const styles = theme => ({
     marginBottom: theme.spacing(3),
     marginRight: theme.spacing(3),
     marginLeft: theme.spacing(5)
+  },
+
+  dates: {
+    width: "12%",
+    margin: theme.spacing(1)
   },
   clear: {
     marginLeft: theme.spacing(5)
@@ -42,13 +47,17 @@ const styles = theme => ({
   }
 });
 
-class SearchPage extends React.Component {
+class SearchPage extends Component {
   constructor(props) {
     super(props);
     let date = new Date();
-    const today = date.getFullYear() + "-" +
+    const today =
+      date.getFullYear() +
+      "-" +
       (date.getMonth() < 10 ? "0" : "") +
-      (date.getMonth() + 1) + "-" + date.getDate();
+      (date.getMonth() + 1) +
+      "-" +
+      date.getDate();
     this.state = {
       firstSkill: "",
       firstSkillLevel: "",
@@ -61,13 +70,17 @@ class SearchPage extends React.Component {
       dataSkills: new Set(),
       startDate: today,
       endDate: today,
-      searching: false,
+      hasError: false,
       searchResults: [],
-      rows: []
+      rows: [],
+      searching: false,
+      snackbarOpen: false
     };
-
   }
 
+  /*
+  Lifecycle methods
+   */
   componentDidMount() {
     this.setState({
       frontendSkills: new Set(this.props.frontendSkills),
@@ -76,90 +89,18 @@ class SearchPage extends React.Component {
     });
   }
 
-  performSearch = () => {
-    this.setState({ searching: true });
-    let searchObject = this.constructSearchObject();
-    // console.log(searchObject);
-    let res = Dataset.find(searchObject).fetch();
-    let rows = createRows(
-      this.getEnteredSkills(this.state.firstSkill),
-      this.getEnteredSkills(this.state.secondSkill),
-      this.getEnteredSkills(this.state.thirdSkill),
-      "left"
-    );
-    rows.push({ id: "startDate", label: "Start Date", disablePadding: false, align: "left", numeric: false });
-    rows.push({ id: "endDate", label: "End Date", disablePadding: false, align: "left", numeric: false });
-    // console.log("res before",res);
-    res = res.filter(row => {
-      let availabilities = row["availability"];
-      availabilities = availabilities.map(e => Availability.findOne({ _id: e }));
-      for (let i = 0; i < availabilities.length - 1; i++) {
-        let stateStartDate = new Date(this.state.startDate);
-        let stateEndDate = new Date(this.state.endDate);
-        if (availabilities[i].endDate <= stateStartDate
-          && availabilities[i + 1].startDate >= stateEndDate) {
-          let actualStartDate = availabilities[i].endDate;
-          actualStartDate.setDate(actualStartDate.getDate()+1);
-          let actualEndDate = availabilities[i+1].startDate;
-          actualEndDate.setDate(actualEndDate.getDate()-1);
-          row["startDate"] = actualStartDate.toDateString();
-          row["endDate"] = actualEndDate.toDateString();
-          return true;
-        }
-      }
-      return false;
-    });
-    // console.log("res after",res);
-    res.forEach(row => {
-      // console.log("Every row",row.userId)
-      let user = User.findOne({ _id: row.userId });
-      row["name"] = user.profile.firstName + " " + user.profile.lastName;
-    });
-    console.log(this.state.startDate,this.state.endDate);
-    console.log(res);
-    this.setState({ searchResults: res, rows });
-    // this.searchQuery(this.state,this.getSkillType);
-
-  };
-
-  searchQuery = (state, getSkillType) => {
-    let query = {
-      $where: function() {
-        let firstSkillType = getSkillType(state.firstSkill);
-        let firstSkillLevel = state.firstSkillLevel ? Number(state.firstSkillLevel) : 1;
-        let secondSkillType = getSkillType(state.secondSkill);
-        let secondSkillLevel = state.secondSkillLevel ? Number(state.secondSkillLevel) : 1;
-        let thirdSkillType = getSkillType(state.thirdSkill);
-        let thirdSkillLevel = state.thirdSkillLevel ? Number(state.thirdSkillLevel) : 1;
-        let availabilities = this.availability;
-        let available = false;
-        availabilities = availabilities.map(e => Availability.findOne({ _id: e }));
-        for (let i = 0; i < availabilities.length - 1; i++) {
-          if (availabilities[i].endDate <= new Date(state.startDate) && availabilities[i + 1].startDate >= new Date(state.endDate)) {
-            available = true;
-            break;
-          }
-        }
-
-        return (this[firstSkillType] ? this[firstSkillType][state.firstSkill] >= firstSkillLevel : true)
-          && (this[secondSkillType] ? this[secondSkillType][state.secondSkill] >= secondSkillLevel : true)
-          && (this[thirdSkillType] ? this[thirdSkillType][state.thirdSkill] >= thirdSkillLevel : true)
-          && available;
-      }
-    };
-    console.log(Dataset.find(query).fetch());
-  };
-
   shouldComponentUpdate(nextProps, nextState) {
-    if (!nextState.searching) {
-      return true;
-    }
     return (
-      nextState.searching &&
-      this.state.searchResults !== nextState.searchResults
+      !nextState.searching ||
+      this.state.searching !== nextState.searching ||
+      this.state.searchResults !== nextState.searchResults ||
+      this.state.hasError !== nextState.hasError
     );
   }
 
+  /*
+  Page Functionality
+   */
   getSkillType = skill => {
     if (this.state.frontendSkills.has(skill)) {
       return "frontend";
@@ -170,7 +111,6 @@ class SearchPage extends React.Component {
     }
     return "";
   };
-
   constructSearchObject = () => {
     let searchObject = {};
     if (this.state.firstSkill) {
@@ -203,134 +143,197 @@ class SearchPage extends React.Component {
     return searchObject;
   };
 
-  onClear = () => {
-    this.setState(
-      {
-        searching: false
-      },
-      () => console.log("reset", this.state)
-    );
-  };
+  /*
+  Utilities
+   */
+
   getEnteredSkills = skill => {
     let selected = [];
     let isEmpty = !skill || 0 === skill.length;
     if (!isEmpty) {
-      // console.log("Skill",skill)
       selected.push(skill);
       return selected;
     }
   };
 
+  /*
+  Search function
+  */
+  performSearch = () => {
+    this.setState({ searching: true });
+    if (
+      this.state.firstSkill ||
+      this.state.secondSkill ||
+      this.state.thirdSkill
+    ) {
+      let searchObject = this.constructSearchObject();
+      let res = Dataset.find(searchObject).fetch();
+      let rows = createRows(
+        this.getEnteredSkills(this.state.firstSkill),
+        this.getEnteredSkills(this.state.secondSkill),
+        this.getEnteredSkills(this.state.thirdSkill),
+        "left"
+      );
+      rows.push({
+        id: "startDate",
+        label: "Start Date",
+        disablePadding: false,
+        align: "left",
+        numeric: false
+      });
+      rows.push({
+        id: "endDate",
+        label: "End Date",
+        disablePadding: false,
+        align: "left",
+        numeric: false
+      });
+      res = res.filter(row => {
+        let availabilities = row["availability"];
+        availabilities = availabilities.map(e =>
+          Availability.findOne({ _id: e })
+        );
+        availabilities.sort((a,b) => a.endDate>b.endDate?1:-1);
+        for (let i = 0; i < availabilities.length - 1; i++) {
+          let stateStartDate = new Date(this.state.startDate);
+          let stateEndDate = new Date(this.state.endDate);
+          if (
+            availabilities[i].endDate <= stateStartDate &&
+            availabilities[i + 1].startDate >= stateEndDate
+          ) {
+            let actualStartDate = availabilities[i].endDate;
+            actualStartDate.setDate(actualStartDate.getDate() + 1);
+            let actualEndDate = availabilities[i + 1].startDate;
+            actualEndDate.setDate(actualEndDate.getDate() - 1);
+            row["startDate"] = actualStartDate.toDateString();
+            row["endDate"] = actualEndDate.toDateString();
+            return true;
+          }
+        }
+        return false;
+      });
+      res.forEach(row => {
+        let user = User.findOne({ _id: row.userId });
+        row["name"] = user.profile.firstName + " " + user.profile.lastName;
+      });
+      this.setState({
+        searchResults: res,
+        rows,
+        hasError: false
+      });
+    } else {
+      this.setState({ hasError: true });
+    }
+  };
   SelectProps = {
     isClearable: true
+  };
+
+  onClear = () => {
+    this.setState({ hasError: false, searching: false });
   };
   onSubmit = e => {
     e.preventDefault();
     this.performSearch();
-    // this.searchQuery(this.state, this.getSkillType);
-  };
-  setFirstSkill = value => {
-    console.log(value);
-    this.setState({ firstSkill: _.lowerCase(value) });
   };
 
-  setFirstSkillLevel = value => {
-    this.setState({ firstSkillLevel: value });
+  handleDate = (field, value) => {
+    this.setState({ [field]: value });
   };
 
-  setSecondSkill = value => {
-    this.setState({ secondSkill: _.lowerCase(value) });
-  };
-  setSecondSkillLevel = value => {
-    this.setState({ secondSkillLevel: value });
-  };
-  setThirdSkill = value => {
-    this.setState({ thirdSkill: _.lowerCase(value) });
-  };
-  setThirdSkillLevel = value => {
-    this.setState({ thirdSkillLevel: value });
-  };
-  setDate = (e) => {
-    this.setState({ [e.target.id]: e.target.value });
+  handleChange = (field, value) => {
+    this.setState({ [field]: _.lowerCase(value) })
   };
 
-  customChange = (e) => {
-    this.setState({[e.target.name]: _.lowerCase(e.target.value)},
-      () => console.log(this.state));
-  };
   render() {
-    // console.log(this.state);
     let skills = this.props.skills.map(skill => _.capitalize(skill));
     let skillRange = this.props.skillRange;
     const { classes } = this.props;
-    let date = new Date();
-    const today = date.getFullYear() + "-" + (date.getMonth() < 10 ? "0" : "") + (date.getMonth() + 1) + "-" + date.getDate();
-    // console.log("Today", today, date);
     return (
       <PageBase {...this.props}>
+        {/*
+        First Skill Entry
+         */}
         <SingleSelect
           className={classes.skillBox}
           SelectProps={this.SelectProps}
           placeholder="Skill"
           options={skills}
-          onChange={this.setFirstSkill}
+          onChange={skill => this.handleChange("firstSkill", skill)}
         />
         <SingleSelect
           className={classes.valueBox}
           SelectProps={this.SelectProps}
           placeholder="Value"
           options={skillRange}
-          onChange={this.setFirstSkillLevel}
+          onChange={value => this.handleChange("firstSkillLevel", value)}
         />
-        <br/>
-        <br/>
+        <br />
+        <br />
+        {/*
+        Second Skill Entry
+         */}
         <SingleSelect
           className={classes.skillBox}
           placeholder="Skill"
           SelectProps={this.SelectProps}
           options={skills}
-          onChange={this.setSecondSkill}
+          onChange={skill => this.handleChange("secondSkill", skill)}
         />
         <SingleSelect
           className={classes.valueBox}
           SelectProps={this.SelectProps}
           placeholder="Value"
           options={skillRange}
-          onChange={this.setSecondSkillLevel}
+          onChange={value => this.handleChange("secondSkillLevel", value)}
         />
-        <br/>
-        <br/>
+        <br />
+        <br />
+        {/*
+          Third Skill Entry
+           */}
         <SingleSelect
           className={classes.skillBox}
           placeholder="Skill"
           options={skills}
           SelectProps={this.SelectProps}
-          onChange={this.setThirdSkill}
+          onChange={skill => this.handleChange("thirdSkill", skill)}
         />
         <SingleSelect
           className={classes.valueBox}
           SelectProps={this.SelectProps}
           placeholder="Value"
           options={skillRange}
-          onChange={this.setThirdSkillLevel}
+          onChange={value => this.handleChange("thirdSkillLevel", value)}
         />
-        <br/>
-        <br/>
-        <TextField
-          className="startDate"
-          type="date"
-          id="startDate"
-          defaultValue={today}
-          onChange={this.setDate}
-        /> &nbsp; &nbsp;
-        <TextField
-          className="endDate"
-          type="date"
-          id="endDate"
-          defaultValue={today}
-          onChange={this.setDate}
-        />
-        <br/> <br/>
+        <br />
+        <br />
+        {/*
+          Start Date
+           */}
+        <MuiThemeProvider theme={createMuiTheme({})}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              className={classes.dates}
+              onChange={date => this.handleDate("startDate", date)}
+              variant="dialog"
+              value={this.state.startDate}
+              format="MM/dd/yyyy"
+            />
+          </MuiPickersUtilsProvider>
+        </MuiThemeProvider>
+        <MuiThemeProvider theme={createMuiTheme({})}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              className={classes.dates}
+              onChange={date => this.handleDate("endDate", date)}
+              variant="dialog"
+              value={this.state.endDate}
+              format="MM/dd/yyyy"
+            />
+          </MuiPickersUtilsProvider>
+        </MuiThemeProvider>
+        <br /> <br />
         <RaisedButton
           className={classes.search}
           color="secondary"
@@ -338,33 +341,27 @@ class SearchPage extends React.Component {
         >
           Search
         </RaisedButton>
-        {this.state.searching && (
-          <Paper className={classes.root}>
-            {this.state.firstSkill ||
-            this.state.secondSkill ||
-            this.state.thirdSkill ? (
-              <EnhancedTable
-                data={this.state.searchResults}
-                rows={this.state.rows}
-                dataAlign="left"
-                optional={["startDate","endDate"]}
-              />
-            ) : (
-              <EnhancedTable
-                data={this.state.searchResults}
-                frontendSkills={generateFields("frontend")}
-                backendSkills={generateFields("backend")}
-                dataSkills={generateFields("data")}
-              />
-            )}
-          </Paper>
-        )}
-        {this.state.searching && (
+        <Paper className={classes.root}>
+          {this.state.searching && !this.state.hasError && (
+            <EnhancedTable
+              data={this.state.searchResults}
+              rows={this.state.rows}
+              dataAlign="left"
+              optional={["startDate", "endDate"]}
+            />
+          )}
+          {this.state.searching && this.state.hasError && (
+            <SnackbarComponent
+              message={"Please enter at least 1 skill"}
+              open={true}
+            />
+          )}
+        </Paper>
+        {this.state.searching && !this.state.hasError && (
           <RaisedButton
             className={classes.clear}
             color="secondary"
             onClick={this.onClear}
-            className={classes.clear}
           >
             Clear
           </RaisedButton>
