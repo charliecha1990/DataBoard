@@ -5,7 +5,7 @@ import { compose } from "recompose";
 import { withRouter } from "react-router-dom";
 import Dataset from "../../api/dataSet/DataSet";
 import { withMessageContext } from "../helpers/MessageContext";
-import {generateFields} from "/imports/util/getDatabaseFields";
+import { generateFields } from "/imports/util/getDatabaseFields";
 import User from "/imports/api/users/User";
 
 /*
@@ -20,23 +20,21 @@ register the board page
 //   return Object.keys(mapping[0]);
 // };
 
-
 export default compose(
   withRouter,
   withTracker(() => {
-
     Meteor.subscribe("dataSets");
     Meteor.subscribe("users");
     let dataset = Dataset.find().fetch();
 
     dataset.forEach(row => {
-      let user = User.findOne({_id:row.userId});
+      let user = User.findOne({ _id: row.userId });
 
-      row["name"] = user.profile.firstName+" "+user.profile.lastName
+      row["name"] = user.profile.firstName + " " + user.profile.lastName;
     });
     /*
-    * Get fields from database and pass them to header
-    * */
+     * Get fields from database and pass them to header
+     * */
     let frontendSkills = generateFields("frontend");
     let backendSkills = generateFields("backend");
     let dataSkills = generateFields("data");

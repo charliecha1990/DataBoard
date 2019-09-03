@@ -5,15 +5,13 @@ import AdminIcon from "@material-ui/icons/Build";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import SearchIcon from "@material-ui/icons/Search"
 import Badge from "@material-ui/core/Badge";
-
-import BoardPage from "/imports/ui/pages/BoardPage";
 import ProfilePageContainer from "/imports/ui/containers/ProfilePageContainer";
 import Authorization from "/imports/ui/helpers/Authorization";
 import BoardPageContainer from "../containers/BoardPageContainer";
 import AdminPageContainer from "../containers/AdminPageContainer";
-import DataSet from "../../api/dataSet/DataSet";
-import SearchPage from "../pages/SearchPage";
 import SearchPageContainer from "../containers/SearchPageContainer";
+import AvailabilityContainer from "../containers/AvailabilityContainer";
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 
 const Admin = Authorization(["admin"]);
 
@@ -41,6 +39,13 @@ export const ROUTES = {
       hasSubRoutes: true,
       component: SearchPageContainer,
       icon: <SearchIcon/>
+    },
+    {
+      text:"Availability",
+      link:"/availability",
+      hasSubRoutes:true,
+      component: AvailabilityContainer,
+      icon:<EventAvailableIcon/>
     }
   ],
   admin: [

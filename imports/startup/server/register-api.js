@@ -7,3 +7,5 @@ import '/imports/api/dataSet/methods';
 
 import '/imports/api/requestHistory/server/publications';
 import '/imports/api/requestHistory/methods';
+
+import "/imports/api/availability/server/publications";

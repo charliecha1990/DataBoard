@@ -105,7 +105,7 @@ class LoginPage extends React.Component {
             <Typography variant="h6" paragraph style={{ textAlign: "center" }}>
               <T>auth.signInTitle</T>
             </Typography>
-            <Grid container spacing={16} direction="column" alignItems="center">
+            <Grid container spacing={1} direction="column" alignItems="center">
               <Grid item xs={12}>
                 <TextField
                   id="email"

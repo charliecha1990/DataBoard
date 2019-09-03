@@ -13,6 +13,10 @@ const Dataset = Class.create({
   collection: DataSets,
   fields: {
     userId: String,
+    name:{
+      optional:true,
+      type:String
+    },
     frontend: {
       type: Object,
       optional: true,
@@ -96,8 +100,11 @@ const Dataset = Class.create({
         }
       }
     },
-    isApproved: Boolean
-    // availability: String
+    isApproved: Boolean,
+    availability: {
+      type:[String],
+      optional:true
+    }
   },
   behaviors: {
     timestamp: {
