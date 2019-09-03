@@ -14,48 +14,57 @@ import { Provider } from "../helpers/Context";
 import Grid from "@material-ui/core/Grid";
 
 class AdminPage extends React.Component {
-  state = {
-    rejectDialogOpen: false,
-    notice: ""
-  };
+  constructor(props){
+    super(props);
+    
+    this.state = {
+      rejectDialogOpen: false,
+      notice: ""
+    };
 
-  handleApprove = (event, ids) => {
+    this.handleApprove = this.handleApprove.bind(this);
+    this.handleReject = this.handleReject.bind(this);
+  }
+ 
+  handleApprove = ids => {
     event.preventDefault();
 
     console.log("selected IDs are:", ids);
 
-    ids.forEach(id => {
-      const paras = {
-        dataSet_id: id,
-        approve: true
-      };
+    // ids.forEach(id => {
+    //   const paras = {
+    //     dataSet_id: id,
+    //     approve: true
+    //   };
 
-      callWithPromise("dataSet.approve", paras)
-        .then(id => console.log(id))
-        .then(() => {});
-    });
+    //   callWithPromise("dataSet.approve", paras)
+    //     .then(id => console.log(id))
+    //     .then(() => {});
+    // });
   };
 
-  handleReject = (event, ids) => {
+  handleReject = ids => {
     event.preventDefault();
 
-    callWithPromise("dataSet.search", id)
-      .then(response => {
-        callWithPromise("requestHistory.create", response);
-        console.log(response);
-      })
-      .then(() => {});
+    console.log('rejected')
 
-    ids.forEach(id => {
-      const paras = {
-        dataSet_id: id,
-        approve: false
-      };
+    // callWithPromise("dataSet.search", ids)
+    //   .then(response => {
+    //     callWithPromise("requestHistory.create", response);
+    //     console.log(response);
+    //   })
+    //   .then(() => {});
 
-      callWithPromise("dataSet.approve", paras)
-        .then(id => console.log(id))
-        .then(() => {});
-    });
+    // ids.forEach(id => {
+    //   const paras = {
+    //     dataSet_id: id,
+    //     approve: false
+    //   };
+
+    //   callWithPromise("dataSet.approve", paras)
+    //     .then(id => console.log(id))
+    //     .then(() => {});
+    // });
   };
 
   /******************************** Event handlers for reject dialog   *******************************/
@@ -98,6 +107,7 @@ class AdminPage extends React.Component {
               <AdminTab
                 requestArray={requestArray}
                 onApprove={this.handleApprove}
+                onReject={this.handleReject}
               />
               <RejectDialog
                 open={rejectDialogOpen}

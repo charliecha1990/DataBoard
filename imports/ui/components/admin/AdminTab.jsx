@@ -78,8 +78,9 @@ class AdminTab extends React.Component {
         >
           <TabContainer dir={theme.direction}>
               <RequestForm
-              onApprove={onApprove}
-              requestArray={requestArray}
+                onApprove={onApprove}
+                onReject={onReject}
+                requestArray={requestArray}
               />
           </TabContainer>
           <TabContainer dir={theme.direction}>

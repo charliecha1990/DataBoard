@@ -29,6 +29,7 @@ meteor run --inspect
 While meteor is running:
 ```
 meteor shell
+
 > Accounts.createUser({ email: 'user', password: 'mypassword' })
 '2efa737faf3'
 > import User from '/imports/api/users/User'
@@ -37,6 +38,8 @@ meteor shell
 > user.save()
 > .exit
 Shell exiting...
+
+> DeeKLccXvFkNyCrgL Bob.Winters@example.com  // latest test admin account info
 ```
 ##  admin:  admin@deloitte.ca  123 (for personal reference)
 
