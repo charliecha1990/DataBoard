@@ -51,7 +51,9 @@ const styles = theme => ({
     minWidth: 800
   },
   tableWrapper: {
-    overflowX: "auto"
+    overflowX: "auto",
+    padding: theme.spacing(2),
+
   }
 });
 
@@ -126,7 +128,7 @@ class EnhancedTable extends React.Component {
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, newData.length - page * rowsPerPage);
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle" size="small">
             <EnhancedTableHead

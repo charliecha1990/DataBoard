@@ -3,7 +3,7 @@ import { withTracker } from "meteor/react-meteor-data";
 import BoardPage from "/imports/ui/pages/BoardPage";
 import { compose } from "recompose";
 import { withRouter } from "react-router-dom";
-import Dataset from "../../api/dataSet/DataSet";
+import dataSet from "../../api/dataSet/DataSet";
 import { withMessageContext } from "../helpers/MessageContext";
 import { generateFields } from "/imports/util/getDatabaseFields";
 import User from "/imports/api/users/User";
@@ -14,7 +14,7 @@ subscribe to dataSets for change in data
 register the board page
  */
 // let generateFields = (name) => {
-//   let fields = Dataset.getFields();
+//   let fields = dataSet.getFields();
 //   let mapping = fields.filter(element => element["name"] === name)
 //     .map(element => element["fields"]);
 //   return Object.keys(mapping[0]);
@@ -25,9 +25,9 @@ export default compose(
   withTracker(() => {
     Meteor.subscribe("dataSets");
     Meteor.subscribe("users");
-    let dataset = Dataset.find().fetch();
+    let dataSets = dataSet.find({}).fetch();
 
-    dataset.forEach(row => {
+    dataSets.forEach(row => {
       let user = User.findOne({ _id: row.userId });
 
       row["name"] = user.profile.firstName + " " + user.profile.lastName;
@@ -40,7 +40,7 @@ export default compose(
     let dataSkills = generateFields("data");
 
     return {
-      dataset,
+      dataSets,
       frontendSkills,
       backendSkills,
       dataSkills

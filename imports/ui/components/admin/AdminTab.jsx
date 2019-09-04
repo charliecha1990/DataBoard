@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import RequestForm from './RequestForm';
+import EnhancedTable from "../../components/Profile/EnhancedTable";
 import UserList from './UserList';
 import DisplayItem from '../DisplayItem';
 import RequestHistory from './RequestHistory';
@@ -52,7 +52,20 @@ class AdminTab extends React.Component {
 
   render() {
 
-    const { users, classes, requestArray, theme, showRemoved, onApprove, onReject, requestHistory} = this.props;
+    const { 
+      users, 
+      classes, 
+      requestArray, 
+      theme, 
+      showRemoved, 
+      onApprove, 
+      onReject, 
+      requestHistory,
+      frontendSkills,
+      backendSkills,
+      dataSkills,
+      dataSets //all practitioners' skill data, including name
+    } = this.props;
 
     return (
       <div className={classes.root}>
@@ -77,11 +90,12 @@ class AdminTab extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-              <RequestForm
-                onApprove={onApprove}
-                onReject={onReject}
-                requestArray={requestArray}
-              />
+            <EnhancedTable
+              data={dataSets} /*Pass data from the container to enhanced table as props */
+              frontendSkills={frontendSkills}
+              backendSkills={backendSkills}
+              dataSkills={dataSkills}
+            />
           </TabContainer>
           <TabContainer dir={theme.direction}>
             <DisplayItem show xs={12} sm={12}>

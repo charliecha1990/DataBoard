@@ -1,5 +1,5 @@
 // Random data insert
-import Dataset from "../../api/dataSet/DataSet";
+import dataSet from "../../api/dataSet/DataSet";
 import User from "../../api/users/User";
 import Availability from "../../api/availability/availability";
 
@@ -82,7 +82,7 @@ function populateDatabase() {
     params["data"] = dt;
     params["isApproved"] = false;
     // console.log("params",params);
-    const dataSet = new Dataset({
+    const dataSet = new dataSet({
       userId: id,
       frontend: ftend,
       backend: bkend,
@@ -180,20 +180,20 @@ function processAvailabilities() {
       emails: { $elemMatch: { address: record.email } }
     });
 
-    let dataset = Dataset.findOne({ userId: user._id });
-    // console.log(dataset["frontend"]["react"])
-    let avl = dataset["availability"];
+    let dataSet = dataSet.findOne({ userId: user._id });
+    // console.log(dataSet["frontend"]["react"])
+    let avl = dataSet["availability"];
     if (avl) {
       avl.push(record._id);
     } else {
       avl = [record._id];
     }
     // // console.log("Avl",avl);
-    dataset.set({
+    dataSet.set({
       availability: avl
     });
-    dataset.save();
-    // console.log("avl for user", user.email(), dataset["availability"]);
+    dataSet.save();
+    // console.log("avl for user", user.email(), dataSet["availability"]);
   });
 
   Availability.find()

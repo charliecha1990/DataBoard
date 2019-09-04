@@ -18,7 +18,7 @@ export default compose(
     let dataSkills = generateFields("data");
     let skillRange = ["0", "1", "2", "3", "4", "5"];
     let skills = [...frontendSkills,...backendSkills,...dataSkills];
-    // console.log(datasetHandleSearch)
+    // console.log(dataSetHandleSearch)
     return {
       loading: !dataSetsHandle.ready(),
       loadingAvail:!availabilityHandle.ready(),

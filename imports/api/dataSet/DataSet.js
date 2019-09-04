@@ -1,16 +1,16 @@
 import { Class } from "meteor/jagi:astronomy";
 
-export const DataSets = new Mongo.Collection("dataSets");
+export const dataSets = new Mongo.Collection("dataSets");
 
-DataSets.deny({
+dataSets.deny({
   insert: () => true,
   update: () => true,
   remove: () => true
 });
 
-const Dataset = Class.create({
-  name: "DataSet",
-  collection: DataSets,
+const dataSet = Class.create({
+  name: "dataSet",
+  collection: dataSets,
   fields: {
     userId: String,
     name:{
@@ -119,4 +119,4 @@ const Dataset = Class.create({
   }
 });
 
-export default Dataset;
+export default dataSet;

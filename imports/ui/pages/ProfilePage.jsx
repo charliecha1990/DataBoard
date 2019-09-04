@@ -44,10 +44,10 @@ class ProfilePage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.dataSet !== this.props.dataSet) {
+    if (prevProps.dataSets !== this.props.dataSets) {
       let updatedData = [];
       if(this.props.found){
-        updatedData = mapDataNew([this.props.dataSet], this.dynamicRows);
+        updatedData = mapDataNew([this.props.dataSets], this.dynamicRows);
         updatedData.forEach(row => {
           delete row.id;
         });
@@ -61,7 +61,7 @@ class ProfilePage extends Component {
   }
 
   render() {
-    const { dataSets, dataSet, loading, classes,match, frontendSkills, backendSkills, dataSkills, ...props } = this.props;
+    const { dataSets, loading, classes,match, frontendSkills, backendSkills, dataSkills, ...props } = this.props;
     let {found} = this.props;
     // console.log(dataToShow);
     return (
@@ -71,7 +71,7 @@ class ProfilePage extends Component {
         <Grid container justify="center">
           <Grid item xs={12}>
             <MaterialTable
-              title="Your Skills"
+              title="Skills"
               columns={this.columns}
               data={this.state.data}
               editable={{

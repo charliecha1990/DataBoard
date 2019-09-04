@@ -1,52 +1,44 @@
-import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
+import { withMessageContext } from "/imports/ui/helpers/MessageContext";
+import ProfilePage from "/imports/ui/pages/ProfilePage";
+import { Meteor } from "meteor/meteor";
+import { withTracker } from "meteor/react-meteor-data";
+import dataSet from "/imports/api/dataSet/DataSet";
+import { withRouter } from "react-router-dom";
+import { compose } from "recompose";
+import { generateFields } from "/imports/util/getDatabaseFields";
+import User from "/imports/api/users/User";
 import AdminPage from '/imports/ui/pages/AdminPage';
-import {compose} from "recompose";
-import {withRouter} from "react-router-dom";
-import DataSet from "../../api/dataSet/DataSet";
-import User from "../../api/users/User";
-import RequestHistory from "../../api/requestHistory/RequestHistory";
-import {withMessageContext} from "../helpers/MessageContext";
+
+let frontendSkills = generateFields("frontend");
+let backendSkills = generateFields("backend");
+let dataSkills = generateFields("data");
+
 
 
 export default compose(
-    withRouter,
-    withTracker(() => {
-      const dataSetsHandle = Meteor.subscribe("dataSets");
-      const requestHistoryHandle = Meteor.subscribe("histories")
+  withRouter,
+  withTracker(() => {
+    let found = false;
+    const dataSetsHandle = Meteor.subscribe("dataSets");
+    Meteor.subscribe("users");
+ 
+    // if(dataSet.length===0){
+    //   dataSet = createEmptyObject();
+    // }
+    // let dataSets = dataSet.find({}).fetch();
+    
+    let dataSets = dataSet.find({}).fetch();
 
-      const dataSet = DataSet.find().fetch();
-      const requestHistory = RequestHistory.find().fetch();
-      const requestArray = [];
-
-      dataSet.forEach(element => {
-          if(element.isApproved == false){
-              requestArray.push(element);
-          }
-      });
-
-      const getRequestNumber = () => {
-        var requestArray = [];
-        let dataSet = DataSet.find().fetch();
-
-
-        dataSet.forEach(element => {
-          if(element.isApproved == false){
-              requestArray.push(element);
-          }
-        });
-
-        return requestArray.length;
-
-      };
-
-
-      return {
-        requestArray,
-        requestHistory,
-        connected: Meteor.status().connected,
-        loading: (!dataSetsHandle.ready() && requestHistoryHandle.ready())
-      };
-    }),
-    withMessageContext
+    return {
+      dataSets,
+      found,
+      connected: Meteor.status().connected,
+      loading: !dataSetsHandle.ready(),
+      frontendSkills,
+      backendSkills,
+      dataSkills
+    };
+  }),
+  withMessageContext
 )(AdminPage);
+

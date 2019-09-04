@@ -87,10 +87,15 @@ class AdminPage extends React.Component {
     const {
       users,
       showRemoved,
-      dataSet,
+      dataSets,
       requestArray,
       loading,
       requestHistory,
+      classes,
+      match, 
+      frontendSkills, 
+      backendSkills, 
+      dataSkills,
       ...props
     } = this.props;
     const { rejectDialogOpen, notice } = this.state;
@@ -108,6 +113,10 @@ class AdminPage extends React.Component {
                 requestArray={requestArray}
                 onApprove={this.handleApprove}
                 onReject={this.handleReject}
+                frontendSkills={frontendSkills} 
+                backendSkills={backendSkills} 
+                dataSkills={dataSkills}
+                dataSets={dataSets}
               />
               <RejectDialog
                 open={rejectDialogOpen}

@@ -15,7 +15,7 @@ loadEnv.then(() => {
   // console.log('Starting server.....');
   Raven.context(function() {
     Meteor.startup(() => {
-      // console.log(dataset.find().fetch());
+      // console.log(dataSet.find().fetch());
       require("/imports/startup/server");
       require("/imports/startup/both");
     });

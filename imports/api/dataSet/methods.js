@@ -1,8 +1,8 @@
-import DataSet from "./DataSet";
+import dataSet from "./DataSet";
 
 Meteor.methods({
   async "dataSet.create"(params = {}) {
-    const dataSet = new DataSet({
+    const dataSet = new dataSet({
       userId: params.userId,
       frontend: params.frontend,
       backend: params.backend,
@@ -16,8 +16,8 @@ Meteor.methods({
   },
 
   async "dataSet.update"(params = {}) {
-    const dataSet = DataSet.findOne({ userId: params.userId });
-    DataSet.findOne({ userId: params.userId });
+    const dataSet = dataSet.findOne({ userId: params.userId });
+    dataSet.findOne({ userId: params.userId });
     dataSet.set({
       frontend: params.frontend,
       backend: params.backend,
@@ -30,14 +30,14 @@ Meteor.methods({
   },
 
   async "dataSet.delete"(params = {}) {
-    const dataSet = DataSet.findOne(params.dataSet_id);
+    const dataSet = dataSet.findOne(params.dataSet_id);
     dataSet.softRemove();
   },
   async "dataSet.search"(dataSetId) {
-    return DataSet.findOne(dataSetId);
+    return dataSet.findOne(dataSetId);
   },
   async "dataSet.approve"(params = {}) {
-    const dataSet = DataSet.findOne(params.dataSet_id);
+    const dataSet = dataSet.findOne(params.dataSet_id);
 
     if (params.approve == true) {
 

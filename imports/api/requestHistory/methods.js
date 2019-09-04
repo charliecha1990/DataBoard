@@ -1,5 +1,5 @@
 import RequestHistory from "./RequestHistory";
-import DataSet from "../../api/dataSet/DataSet";
+import dataSet from "../../api/dataSet/DataSet";
 
 Meteor.methods({
   async "requestHistory.create"(params={}) {

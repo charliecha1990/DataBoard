@@ -40,10 +40,10 @@ class DisplayRow extends Component {
     const keys = Object.keys(row).filter(key => key !== "id");
     return (
       <TableRow hover role="checkbox" aria-checked={selected} key={row.key} selected={selected}>
-        <TableCell padding="checkbox">
+        {/* <TableCell padding="checkbox">
           <Checkbox checked={selected}
                     onClick={event => this.handleClick(event, row.id)}/>
-        </TableCell>
+        </TableCell> */}
         {keys.map(key=> (
           <DisplayTableCell key={key} cellValue={row[key]} align={align || "center"}/>
         ))}
