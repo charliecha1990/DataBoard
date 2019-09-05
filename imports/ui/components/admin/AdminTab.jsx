@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import EnhancedTable from "../../components/Profile/EnhancedTable";
+import EnhancedTable from "./EnhancedTable";
 import UserList from './UserList';
 import DisplayItem from '../DisplayItem';
 import RequestHistory from './RequestHistory';

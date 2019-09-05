@@ -22,7 +22,7 @@ const styles = _theme => ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 360
+    width: 400
   },
   paper: {
     padding: 24,
@@ -101,7 +101,7 @@ class EnrollPage extends Component {
           <Typography variant="h5" paragraph style={{ textAlign: "center" }}>
             Almost there!
           </Typography>
-          <Grid container spacing={16} direction="column" alignItems="center">
+          <Grid container spacing={12} direction="column" alignItems="center">
             <Grid item xs={12}>
               <TextField
                 id="emailField"

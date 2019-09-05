@@ -76,19 +76,23 @@ class EnhancedTable extends React.Component {
   @author:Sujay
   removed data field from state
    */
-  state = {
-    order: "asc",
-    orderBy: "practitioner",
-    selected: [],
-    mockData: {
-      practitioner: "string",
-      frontEnd: "string",
-      backEnd: "string",
-      dataLevel: "string"
-    },
-    page: 0,
-    rowsPerPage: 5
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      order: "asc",
+      orderBy: "practitioner",
+      selected: [],
+      mockData: {
+        practitioner: "string",
+        frontEnd: "string",
+        backEnd: "string",
+        dataLevel: "string"
+      },
+      page: 0,
+      rowsPerPage: 5,
+      isEditable: false
+    };
+  }
 
 
   handleRequestSort = (event, property) => {
@@ -120,12 +124,23 @@ class EnhancedTable extends React.Component {
   };
 
 
+  handleEnableEdit = () => {
+    this.setState((prevState, prevProps)=> ({
+      isEditable: !prevState.isEditable
+    }))
+  }
+
+  
+
   render() {
     const { classes, frontendSkills, backendSkills, dataSkills } = this.props;
-    const { order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { order, orderBy, selected, rowsPerPage, page, isEditable } = this.state;
     let dynamicRows = this.props.rows || createRows(frontendSkills, backendSkills, dataSkills);
     let newData = mapDataNew(this.props.data, dynamicRows,this.props.optional);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, newData.length - page * rowsPerPage);
+
+    console.log(this.state.isEditable)
+
     return (
       <Paper className={classes.root}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
@@ -139,6 +154,7 @@ class EnhancedTable extends React.Component {
               rowCount={newData.length}
               rows={dynamicRows}
               data={newData}
+              onEnableEdit={this.handleEnableEdit}
             />
 
             <TableBody>
@@ -147,7 +163,12 @@ class EnhancedTable extends React.Component {
                 .map(n => {
                   // const isSelected = this.isSelected(n.id);
                   return (
-                    <DisplayRow key={n.id} row={n} align={this.props.dataAlign} />
+                    <DisplayRow 
+                      key={n.id} 
+                      row={n} 
+                      align={this.props.dataAlign} 
+                      isEditable={isEditable}
+                    />
 
                   );
                 })}

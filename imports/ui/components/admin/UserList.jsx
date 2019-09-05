@@ -148,7 +148,7 @@ class UserList extends React.Component {
     const displayUsers = showRemoved ? users : users.filter(u => !u.removed || success[u._id])
 
     return (
-      <Grid container spacing={16} direction="column" alignItems="center">
+      <Grid container spacing={10} direction="column" alignItems="center">
         {/* <Grid item xs={12}>
           <Typography variant="headline" paragraph style={{ textAlign: 'center' }}>
             Users

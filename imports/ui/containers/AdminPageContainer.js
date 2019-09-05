@@ -1,5 +1,4 @@
 import { withMessageContext } from "/imports/ui/helpers/MessageContext";
-import ProfilePage from "/imports/ui/pages/ProfilePage";
 import { Meteor } from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
 import dataSet from "/imports/api/dataSet/DataSet";
@@ -27,7 +26,20 @@ export default compose(
     // }
     // let dataSets = dataSet.find({}).fetch();
     
-    let dataSets = dataSet.find({}).fetch();
+    let allDataSets = dataSet.find({}).fetch();
+
+    allDataSets.forEach(row => {
+      let user = User.findOne({ _id: row.userId });
+
+      row["name"] = user.profile.firstName + " " + user.profile.lastName;
+    });
+
+    let dataSets = allDataSets.filter(element => {
+      return element.isApproved == false;
+    })
+
+    console.log(dataSets)
+    // let dataSets = allDataSets.filter()
 
     return {
       dataSets,
