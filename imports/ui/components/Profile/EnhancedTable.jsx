@@ -126,6 +126,7 @@ class EnhancedTable extends React.Component {
     let dynamicRows = this.props.rows || createRows(frontendSkills, backendSkills, dataSkills);
     let newData = mapDataNew(this.props.data, dynamicRows,this.props.optional);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, newData.length - page * rowsPerPage);
+    console.log("Alignment",this.props);
     return (
       <Paper className={classes.root}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}

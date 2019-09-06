@@ -1,8 +1,8 @@
-import dataSet from "../api/dataSet/DataSet";
+import DataSet from "../api/dataSet/DataSet";
 import _ from "lodash";
 
 let generateFields = (name) => {
-  let fields = dataSet.getFields();
+  let fields = DataSet.getFields();
   let mapping = fields.filter(element => element["name"] === name)
     .map(element => element["fields"]);
   return Object.keys(mapping[0]);

@@ -193,7 +193,7 @@ class SearchPage extends Component {
         availabilities = availabilities.map(e =>
           Availability.findOne({ _id: e })
         );
-        availabilities.sort((a,b) => a.endDate>b.endDate?1:-1);
+        availabilities.sort((a, b) => (a.endDate > b.endDate ? 1 : -1));
         for (let i = 0; i < availabilities.length - 1; i++) {
           let stateStartDate = new Date(this.state.startDate);
           let stateEndDate = new Date(this.state.endDate);
@@ -242,7 +242,7 @@ class SearchPage extends Component {
   };
 
   handleChange = (field, value) => {
-    this.setState({ [field]: _.lowerCase(value) })
+    this.setState({ [field]: _.lowerCase(value) });
   };
 
   render() {
@@ -370,5 +370,6 @@ class SearchPage extends Component {
     );
   }
 }
+
 
 export default withStyles(styles)(SearchPage);

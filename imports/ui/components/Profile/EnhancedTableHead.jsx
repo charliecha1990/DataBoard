@@ -39,8 +39,7 @@ class EnhancedTableHead extends React.Component {
   render() {
     const { order, orderBy, rowCount, rows } = this.props;
     const numSelected = this.state.selected.length;
-
-    console.log(rows)
+    console.log(rows);
     return (
       
       <TableHead>
@@ -55,8 +54,8 @@ class EnhancedTableHead extends React.Component {
             row => (
               <TableCell
                 key={row.id}
-                // align={row.numeric ? row.align||"right" : row.align||"left"}
-                align="right"
+                align={row.numeric ? row.align||"right" : row.align||"left"}
+                // align="right"
                 padding={row.disablePadding ? "none" : "default"}
                 sortDirection={orderBy === row.id ? order : false}
               >
