@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import dataSet from "../../api/dataSet/DataSet";
+import DataSet from "../../api/dataSet/DataSet";
 import { createRows, generateFields } from "../../util/getDatabaseFields";
 import _ from "loadsh";
 import PageBase from "../components/PageBase";
@@ -167,7 +167,7 @@ class SearchPage extends Component {
       this.state.thirdSkill
     ) {
       let searchObject = this.constructSearchObject();
-      let res = dataSet.find(searchObject).fetch();
+      let res = DataSet.find(searchObject).fetch();
       let rows = createRows(
         this.getEnteredSkills(this.state.firstSkill),
         this.getEnteredSkills(this.state.secondSkill),

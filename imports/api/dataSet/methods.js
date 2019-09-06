@@ -1,4 +1,4 @@
-import dataSet from "./DataSet";
+import DataSet from "./DataSet";
 
 Meteor.methods({
   async "dataSet.create"(params = {}) {
@@ -16,8 +16,8 @@ Meteor.methods({
   },
 
   async "dataSet.update"(params = {}) {
-    const dataSet = dataSet.findOne({ userId: params.userId });
-    dataSet.findOne({ userId: params.userId });
+    const dataSet = DataSet.findOne({ userId: params.userId });
+    // dataSet.findOne({ userId: params.userId });
     dataSet.set({
       frontend: params.frontend,
       backend: params.backend,

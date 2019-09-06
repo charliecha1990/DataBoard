@@ -8,7 +8,7 @@ dataSets.deny({
   remove: () => true
 });
 
-const dataSet = Class.create({
+const DataSet = Class.create({
   name: "dataSet",
   collection: dataSets,
   fields: {
@@ -119,4 +119,4 @@ const dataSet = Class.create({
   }
 });
 
-export default dataSet;
+export default DataSet;

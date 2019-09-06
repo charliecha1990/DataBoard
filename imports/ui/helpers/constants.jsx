@@ -55,8 +55,8 @@ export const ROUTES = {
       hasSubRoutes: true,
       component: Admin(AdminPageContainer),
       icon: <Badge color="secondary" badgeContent={3}> {/* badge number needes to be coded  */}
-        <AdminIcon/>
-      </Badge>
+              <AdminIcon/>
+            </Badge>
     }
   ]
 };
