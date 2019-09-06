@@ -30,7 +30,7 @@ Meteor.methods({
   },
 
   async "dataSet.delete"(params = {}) {
-    const dataSet = dataSet.findOne(params.dataSet_id);
+    const dataSet = DataSet.findOne(params.dataSet_id);
     dataSet.softRemove();
   },
   async "dataSet.search"(dataSetId) {
