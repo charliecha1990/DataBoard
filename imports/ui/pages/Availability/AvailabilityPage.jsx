@@ -10,6 +10,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import { withStyles } from "@material-ui/core/styles";
 import PageBase from "../../components/PageBase";
 
+
 function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -50,7 +51,7 @@ class AvailabilityPage extends Component {
     order: "asc",
     orderBy: "practitioner",
     page: 0,
-    rowsPerPage: 5
+    rowsPerPage: 10
   };
 
   handleRequestSort = (event, property) => {
@@ -74,6 +75,8 @@ class AvailabilityPage extends Component {
   render() {
     const { rowsPerPage, page, order, orderBy } = this.state;
     const { rows, data, classes } = this.props;
+
+    console.log(data)
     return (
      <PageBase {...this.props}>
        <Paper className={classes.root}>
@@ -95,11 +98,12 @@ class AvailabilityPage extends Component {
                    const labelId = `table-checkbox-${index}`;
                    return(
                      <TableRow key={n.practitioner}>
-                       <TableCell component="th" key={labelId} scope="row" align="center" padding="none">
-                         {n.practitioner}
+                       <TableCell variant='body' component="th" key={labelId} scope="row" align="center" padding="none">
+                         {/* <Typography variant="body2" gutterBottom> */}
+                           {n.practitioner}
+                         {/* <Typography /> */}
                        </TableCell>
-
-                       <TableCell style={{whiteSpace:"pre-line"}} align="center">
+                       <TableCell style={{whiteSpace:"pre-line"}} align='center'>
                          {n.availability.map(record => (
                            <span key={record}>
                             {record}

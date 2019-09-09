@@ -87,7 +87,7 @@ class EnhancedTable extends React.Component {
       dataLevel: "string"
     },
     page: 0,
-    rowsPerPage: 5
+    rowsPerPage: 10
   };
 
 

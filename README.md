@@ -40,7 +40,7 @@ meteor shell
 > .exit
 Shell exiting...
 
-> DeeKLccXvFkNyCrgL Bob.Winters@example.com  // latest test admin account info
+> DeeKLccXvFkNyCrgL Jack.Winters@example.com  // latest test admin account info
 ```
 ##  admin:  admin@admin.ca  123 (for personal reference)
 

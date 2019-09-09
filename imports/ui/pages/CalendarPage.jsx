@@ -1,15 +1,15 @@
-import BigCalendar from 'react-big-calendar'
+import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
-import React from 'react';
-import 'react-big-calendar/lib/css/react-big-calendar.css'
+import React from 'react'
+// import classNames from 'classnames'
+import { withStyles } from '@material-ui/core/styles'
+// import 'react-big-calendar/lib/sass/styles'
+// import 'react-big-calendar/lib/sass/styles';
 
-// Setup the localizer by providing the moment (or globalize) Object
-// to the correct localizer.
-const localizer = BigCalendar.momentLocalizer(moment) // or globalizeLocalizer
+const localizer = momentLocalizer(moment)
 
-moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
 
-myEventsList = [{
+const myEventsList = [{
     title: 'Eat',
     start: Date,
     end: Date,
@@ -25,18 +25,22 @@ myEventsList = [{
   }
 ]
 
-export default class CalendarPage extends React.PureComponent {
-
-    render () {
-        return (
-            <div>
-              <BigCalendar
-                localizer={localizer}
-                events={myEventsList}
-                startAccessor="start"
-                endAccessor="end"
-              />
-            </div>
-        )
+const styles = theme => ({
+    root: {
+        width: 1000,
+        width: 500
     }
-}
+  });
+
+const CalendarPage = props => (
+  <div style={{height: '100%'}, {width: '100%'}}> 
+    <Calendar
+      localizer={localizer}
+      events={myEventsList}
+      startAccessor="start"
+      endAccessor="end"
+    />
+  </div>
+)
+
+export default withStyles(styles, { withTheme: true })(CalendarPage)

@@ -14,7 +14,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Popover from "@material-ui/core/Popover";
 import i18n from "meteor/universe:i18n";
-import RaisedButton from "/imports/ui/components/buttons/RaisedButton";
 
 
 function Copyright() {
