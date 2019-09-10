@@ -1,46 +1,65 @@
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import React from 'react'
-// import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
-// import 'react-big-calendar/lib/sass/styles'
-// import 'react-big-calendar/lib/sass/styles';
+import Grid from "@material-ui/core/Grid";
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import Button from '@material-ui/core/Button';
+import { withRouter } from "react-router";
 
-const localizer = momentLocalizer(moment)
-
-
-const myEventsList = [{
-    title: 'Eat',
-    start: Date,
-    end: Date,
-    allDay: true,
-    resource: 'no',
-  },
-  {
-    title: 'Sleep',
-    start: Date,
-    end: Date,
-    allDay: false,
-    resource: 'team',
-  }
-]
+import Dnd from '../components/calendar/BigCalendar';
+import EventModal from '../components/calendar/EventModal';
 
 const styles = theme => ({
-    root: {
-        width: 1000,
-        width: 500
+  root: {
+    width: '100%',
+    height: '100%',
+    // display: 'center'
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+});
+
+class CalendarPage extends React.Component {
+  constructor (props,context) {
+    super(props);
+    this.state = {
+      open: false
     }
-  });
 
-const CalendarPage = props => (
-  <div style={{height: '100%'}, {width: '100%'}}> 
-    <Calendar
-      localizer={localizer}
-      events={myEventsList}
-      startAccessor="start"
-      endAccessor="end"
-    />
-  </div>
-)
+    this.backToHome = this.backToHome.bind(this);
+  }
 
-export default withStyles(styles, { withTheme: true })(CalendarPage)
+  backToHome () {
+    console.log(this.props)
+    this.props.history.push('/');
+  }
+
+  render() {
+    const localizer = momentLocalizer(moment)
+    const { classes, ...props } = this.props;
+
+    return (
+        <Grid 
+          container 
+          justify="center" 
+          className={classes.root}
+        >
+          <Grid item xs={10}>
+            <Button onClick={this.backToHome} color="secondary" variant="contained" className={classes.button}>
+              Home
+            </Button>
+            <Dnd onChange={this.handleChange} open={this.handleOpen} localizer={localizer}/>
+            {/* <EventModal 
+              open={this.state.open}
+              onClose={this.handleClose}
+            /> */}
+         
+          </Grid>
+        </Grid>  
+    );
+  }
+}
+
+export default withStyles(styles, { withTheme: true })(withRouter(CalendarPage))

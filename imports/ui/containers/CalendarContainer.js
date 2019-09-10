@@ -20,18 +20,9 @@ export default compose(
       let user = User.findOne({ _id: row.userId });
       row["name"] = user.profile.firstName + " " + user.profile.lastName;
     });
-    /*
-     * Get fields from database and pass them to header
-     * */
-    let frontendSkills = generateFields("frontend");
-    let backendSkills = generateFields("backend");
-    let dataSkills = generateFields("data");
 
     return {
-      dataSets,
-      frontendSkills,
-      backendSkills,
-      dataSkills
+      dataSets
     };
   }),
   withMessageContext

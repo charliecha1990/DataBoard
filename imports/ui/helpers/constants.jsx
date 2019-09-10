@@ -13,6 +13,7 @@ import SearchPageContainer from "../containers/SearchPageContainer";
 import AvailabilityContainer from "../containers/AvailabilityContainer";
 import CalendarContainer from "../containers/CalendarContainer";
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import AvTimerIcon from '@material-ui/icons/AvTimer';
 
 const Admin = Authorization(["admin"]);
 
@@ -46,7 +47,7 @@ export const ROUTES = {
       link:"/availability",
       hasSubRoutes:true,
       component: AvailabilityContainer,
-      icon:<EventAvailableIcon/>
+      icon:<AvTimerIcon/>
     },
     {
       text:"Calendar",
