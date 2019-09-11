@@ -72,8 +72,8 @@ export default [
   {
     id: 10,
     title: 'Dinner',
-    start: new Date(2015, 3, 12, 20, 0, 0, 0),
-    end: new Date(2015, 3, 12, 21, 0, 0, 0),
+    start: now,
+    end: now,
   },
   {
     id: 11,
@@ -90,8 +90,8 @@ export default [
   {
     id: 12.5,
     title: 'Late Same Night Event',
-    start: new Date(2015, 3, 17, 19, 30, 0),
-    end: new Date(2015, 3, 17, 23, 30, 0),
+    start: now,
+    end: now,
   },
   {
     id: 13,
@@ -101,13 +101,13 @@ export default [
   },
   {
     id: 14,
-    title: 'Today',
+    title: 'Project Kick-off',
     start: new Date(new Date().setHours(new Date().getHours() - 3)),
     end: new Date(new Date().setHours(new Date().getHours() + 3)),
   },
   {
     id: 15,
-    title: 'Point in Time Event',
+    title: 'Omnia birthday party',
     start: now,
     end: now,
   },

@@ -24,9 +24,6 @@ const styles = theme => ({
 class CalendarPage extends React.Component {
   constructor (props,context) {
     super(props);
-    this.state = {
-      open: false
-    }
 
     this.backToHome = this.backToHome.bind(this);
   }
@@ -50,7 +47,7 @@ class CalendarPage extends React.Component {
             <Button onClick={this.backToHome} color="secondary" variant="contained" className={classes.button}>
               Home
             </Button>
-            <Dnd onChange={this.handleChange} open={this.handleOpen} localizer={localizer}/>
+            <Dnd localizer={localizer}/>
             {/* <EventModal 
               open={this.state.open}
               onClose={this.handleClose}

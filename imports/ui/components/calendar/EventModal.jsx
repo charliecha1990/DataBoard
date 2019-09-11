@@ -4,8 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import TimePicker from './TimePicker'
 
 export default function EventModal(props) {
 
@@ -26,7 +26,7 @@ export default function EventModal(props) {
             type="email"
             fullWidth
             value={props.event.title}
-            onChange={(event) => props.onChange("title", event)}
+            onChange={event => props.onChange("title", event)}
           />
           <TextField
             autoFocus
@@ -36,7 +36,7 @@ export default function EventModal(props) {
             type="email"
             fullWidth
             value={props.event.start}
-            onChange={(event) => props.onChange("start", event)}
+            onChange={event => props.onChange("start", event)}
           />
           <TextField
             autoFocus
@@ -45,8 +45,8 @@ export default function EventModal(props) {
             label="End Date"
             type="email"
             fullWidth
-            value={props.event.start}
-            onChange={(event) => props.onChange("end", event)}
+            value={props.event.end}
+            onChange={event => props.onChange("end", event)}
           />
         </DialogContent>
         <DialogActions>

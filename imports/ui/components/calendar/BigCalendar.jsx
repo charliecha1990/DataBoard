@@ -21,7 +21,7 @@ class Dnd extends React.Component {
     this.moveEvent = this.moveEvent.bind(this)
     this.newEvent = this.newEvent.bind(this)
     this.handleClose = this.handleClose.bind(this)
-    this.handleOpen = this.handleOpen.bind(this)
+    // this.handleOpen = this.handleOpen.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -47,7 +47,7 @@ class Dnd extends React.Component {
       events: nextEvents,
     })
 
-    alert(`${event.title} was dropped onto ${updatedEvent.start}`)
+    // alert(`${event.title} was dropped onto ${updatedEvent.start}`)
   }
 
   resizeEvent = ({ event, start, end }) => {
@@ -64,16 +64,12 @@ class Dnd extends React.Component {
       open: false
     })
 
-    alert(`${event.title} was resized to ${start}-${end}`)
+    // alert(`${event.title} was resized to ${start}-${end}`)
   }
 
-  newEvent(event) { 
+  newEvent(event) {
+    const title = window.prompt()
 
-    this.setState({
-        open: true
-      })
-
-    // const title = window.prompt('New Event name')
     let idList = this.state.events.map(a => a.id)
     let newId = Math.max(...idList) + 1
     let hour = {
@@ -96,14 +92,24 @@ class Dnd extends React.Component {
     })
   }
 
-  handleOpen () {
+  handleSubmit () {
+    const title = window.prompt('New Event name')
+    let idList = this.state.events.map(a => a.id)
+    let newId = Math.max(...idList) + 1
+    let hour = {
+      id: newId,
+      title: title,
+      allDay: false,
+      start: this.state.start,
+      end: this.state.end,
+    }
+
     this.setState({
+      events: this.state.events.concat([hour]),
       open: false
     })
-  }
-
-  handleSubmit () {
-
+    
+    console.log('hour is'+hour)
   }
 
   handleChange = (field, event) => {
