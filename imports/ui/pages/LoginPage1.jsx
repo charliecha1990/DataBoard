@@ -116,9 +116,16 @@ function SignIn(props) {
               </Link>         
             </Grid>
             <Grid item>
-              <Link href='http://localhost:3000/enroll' variant="body2" color="textSecondary">
+              <Link href='http://172.20.10.11:3000/enroll' variant="body2" color="textSecondary">
                 {"Don't have an account? Sign Up"}
               </Link>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs>
+              <Link href="http://172.20.10.11:3000" variant="body2" color="textSecondary">
+                Deloitte SSO
+              </Link>         
             </Grid>
           </Grid>
         </form>

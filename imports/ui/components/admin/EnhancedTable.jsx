@@ -133,13 +133,11 @@ class EnhancedTable extends React.Component {
   
 
   render() {
-    const { classes, frontendSkills, backendSkills, dataSkills } = this.props;
+    const { classes, frontendSkills, backendSkills, dataSkills, onApprove, onReject } = this.props;
     const { order, orderBy, selected, rowsPerPage, page, isEditable } = this.state;
     let dynamicRows = this.props.rows || createRows(frontendSkills, backendSkills, dataSkills);
     let newData = mapDataNew(this.props.data, dynamicRows,this.props.optional);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, newData.length - page * rowsPerPage);
-
-    console.log(this.state.isEditable)
 
     return (
       <Paper className={classes.root}>
@@ -165,9 +163,13 @@ class EnhancedTable extends React.Component {
                   return (
                     <DisplayRow 
                       key={n.id} 
+                      userId={n.id}
+                      name={n.practitioner}
                       row={n} 
                       align={this.props.dataAlign} 
                       isEditable={isEditable}
+                      onApprove={onApprove}
+                      onReject={onReject}
                     />
 
                   );

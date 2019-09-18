@@ -82,6 +82,7 @@ class AdminTab extends React.Component {
             <Tab label="Requests" />
             <Tab label="Users" />
             <Tab label="History" />
+            <Tab label="Projects" />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -95,6 +96,8 @@ class AdminTab extends React.Component {
               frontendSkills={frontendSkills}
               backendSkills={backendSkills}
               dataSkills={dataSkills}
+              onApprove={onApprove}
+              onReject={onReject}
             />
           </TabContainer>
           <TabContainer dir={theme.direction}>
@@ -107,6 +110,10 @@ class AdminTab extends React.Component {
               <RequestHistory
                 requestHistory={requestHistory}
               />
+            </DisplayItem>
+          </TabContainer>
+          <TabContainer dir={theme.direction}>
+            <DisplayItem show xs={12} sm={12}>
             </DisplayItem>
           </TabContainer>
         </SwipeableViews>

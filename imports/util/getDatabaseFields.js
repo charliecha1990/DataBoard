@@ -12,13 +12,18 @@ let flattenData = (dataSet, varargs) => {
   dataSet = dataSet || [];
   varargs = varargs || [];
   let flatData = [];
+
+  console.log('table',dataSet)
   dataSet.forEach(row => {
     let frontend = row["frontend"] || {};
     let backend = row["backend"] || {};
     let datasci = row["data"] || {};
     let newRow = {};
-    newRow["id"] = row["_id"];
+
+    newRow["id"] = row["userId"];
     newRow["practitioner"] = row["name"];
+    // newRow['userId'] = row['userId'];
+
     Object.keys(frontend).forEach(s => {
       newRow[s] = frontend[s] || 0;
     });
@@ -28,9 +33,11 @@ let flattenData = (dataSet, varargs) => {
     Object.keys(datasci).forEach(s => {
       newRow[s] = datasci[s] || 0;
     });
+  
     varargs.forEach(arg => newRow[arg] = row[arg]);
     flatData.push(newRow);
   });
+
   return flatData;
 };
 let generateRowFormat = (skillsList, dynamicRows, align) => {
@@ -61,6 +68,8 @@ let mapDataNew = (dataSet, dynamicRows, varargs) => {
   let flatData = flattenData(dataSet, varargs);
   let skills = dynamicRows.map(row => row["id"]);
   let mappedData = [];
+
+  console.log()
   flatData.forEach(item => {
     let newRow = {};
     newRow["practitioner"] = item["practitioner"];

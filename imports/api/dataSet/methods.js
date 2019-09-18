@@ -1,4 +1,5 @@
 import DataSet from "./DataSet";
+import _ from "lodash";
 
 Meteor.methods({
   async "dataSet.create"(params = {}) {
@@ -37,25 +38,27 @@ Meteor.methods({
     return dataSet.findOne(dataSetId);
   },
   async "dataSet.approve"(params = {}) {
-    const dataSet = dataSet.findOne(params.dataSet_id);
-
-    if (params.approve == true) {
-
+    const dataSet = DataSet.findOne({userId: params.userId});
+     
+    if(!_.isEmpty(params.userId)) {
       dataSet.set({
         isApproved: true
       });
-      return new Promise((res, rej) =>
-        dataSet.save((err, id) => err ? rej(err) : res(id)));
-    } else {
 
+      return new Promise((res, rej) =>
+      dataSet.save((err, id) => err ? rej(err) : res(id))); 
+    } 
+  },
+  async "dataSet.reject"(params = {}) {
+    const dataSet = DataSet.findOne({userId: params.userId});
+     
+    if(!_.isEmpty(params.userId)) {
       dataSet.set({
         isApproved: false
       });
+
       return new Promise((res, rej) =>
-        dataSet.save((err, id) => err ? rej(err) : res(id)));
-
-    }
-
-
+      dataSet.save((err, id) => err ? rej(err) : res(id))); 
+    } 
   },
 });

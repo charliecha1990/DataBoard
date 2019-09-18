@@ -36,11 +36,15 @@ class DisplayRow extends Component {
   };
 
   isSelected = id=> this.state.selected.indexOf(id)!==-1;
+
   render() {
-    const { row, align, isEditable } = this.props;
+    const { row, align, isEditable, userId, onApprove, onReject, name} = this.props;
     // console.log(row);
     const selected = this.isSelected(row.id);
     const keys = Object.keys(row).filter(key => key !== "id");
+
+
+    console.log(this.props)
     return (
       <TableRow hover role="checkbox" aria-checked={selected} key={row.key} selected={selected}>
         {!isEditable && <TableCell align={align}></TableCell>}
@@ -49,10 +53,10 @@ class DisplayRow extends Component {
           {/* <Checkbox checked={selected}
                     onClick={event => this.handleClick(event, row.id)}/> */}
             <Button>
-              <Done color='secondary'/>
+              <Done onClick={()=> onApprove(userId,name)} color='secondary'/>
             </Button>
             <Button>
-              <Close color='secondary'/>
+              <Close onClick={()=> onReject(userId,name)} color='secondary'/>
             </Button>       
         </TableCell>}
         {keys.map(key=> (

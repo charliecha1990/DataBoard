@@ -10,8 +10,9 @@ import AdminTab from "../components/admin/AdminTab";
 import Loading from "../components/Loading";
 import RejectDialog from "../components/admin/RejectDialog";
 import { Provider } from "../helpers/Context";
-
+import Message from '../components/message/Message'
 import Grid from "@material-ui/core/Grid";
+import { requiredSubselectionMessage } from "graphql/validation/rules/ScalarLeafs";
 
 class AdminPage extends React.Component {
   constructor(props){
@@ -19,53 +20,56 @@ class AdminPage extends React.Component {
     
     this.state = {
       rejectDialogOpen: false,
-      notice: ""
+      notice: "",
+      message: '',
+      open: false,
+      type: ''
     };
 
     this.handleApprove = this.handleApprove.bind(this);
     this.handleReject = this.handleReject.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
  
-  handleApprove = ids => {
+  handleApprove = (id,name) => {
     event.preventDefault();
+    let params= { userId: id }
 
-    console.log("selected IDs are:", ids);
+    callWithPromise("dataSet.approve", params)
+      .then(error => this.props.pushMessage(error));
 
-    // ids.forEach(id => {
-    //   const paras = {
-    //     dataSet_id: id,
-    //     approve: true
-    //   };
+    this.pushMessage(`${name}'s request has been approved`, 'success')
 
-    //   callWithPromise("dataSet.approve", paras)
-    //     .then(id => console.log(id))
-    //     .then(() => {});
-    // });
+    // this.props.pushMessage(<Message type={{success: true}} message={`${name}'s request has been approved`}/>);
   };
 
-  handleReject = ids => {
+  handleReject = (id,name) => {
     event.preventDefault();
+    let params= { userId: id }
 
-    console.log('rejected')
+    callWithPromise("dataSet.reject", params)
+      // .then(error => this.props.pushMessage(<Message message={error} type='error'/>));
+      .then(error => this.props.pushMessage(error));
 
-    // callWithPromise("dataSet.search", ids)
-    //   .then(response => {
-    //     callWithPromise("requestHistory.create", response);
-    //     console.log(response);
-    //   })
-    //   .then(() => {});
+    this.pushMessage(`${name}'s request has been rejected`, 'error')
 
-    // ids.forEach(id => {
-    //   const paras = {
-    //     dataSet_id: id,
-    //     approve: false
-    //   };
-
-    //   callWithPromise("dataSet.approve", paras)
-    //     .then(id => console.log(id))
-    //     .then(() => {});
-    // });
+    // this.props.pushMessage(<Message type={{warning: true}} message={`${name}'s request has been rejected`}/>);
   };
+
+
+  pushMessage = (message, type) => {
+    this.setState({
+      message,
+      type,
+      open: true
+    })
+  }
+
+  handleClose = () => {
+    this.setState({
+      open: false
+    })
+  }
 
   /******************************** Event handlers for reject dialog   *******************************/
 
@@ -98,7 +102,7 @@ class AdminPage extends React.Component {
       dataSkills,
       ...props
     } = this.props;
-    const { rejectDialogOpen, notice } = this.state;
+    const { rejectDialogOpen, notice, message, type, open } = this.state;
 
     if (loading) {
       return <PageBase {...props}><Loading /></PageBase>;
@@ -125,6 +129,7 @@ class AdminPage extends React.Component {
                 onSend={this.handleSendRejection}
                 onNoticeChange={this.handleNoticeChange}
               />
+              {this.state.open && <Message open={open} onClose={this.handleClose} message={message} type={type}/>}
             </Grid>
           </Grid>
         </Provider>

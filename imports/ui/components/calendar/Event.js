@@ -103,7 +103,7 @@ export default [
     id: 14,
     title: 'Project Kick-off',
     start: new Date(new Date().setHours(new Date().getHours() - 3)),
-    end: new Date(new Date().setHours(new Date().getHours() + 3)),
+    end: new Date(new Date().setHours(new Date().getHours() + 60)),
   },
   {
     id: 15,
