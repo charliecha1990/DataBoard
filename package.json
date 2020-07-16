@@ -21,7 +21,7 @@
     "dotenv": "^5.0.1",
     "graphql": "^14.4.2",
     "loadsh": "0.0.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "material-table": "^1.40.1",
     "material-ui-image": "^3.0.0",
     "material-ui-pickers": "^1.0.0-rc.14",
